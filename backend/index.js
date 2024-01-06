@@ -26,6 +26,25 @@ app.get(
     controllers.profile
 );
 
+app.post(
+    "/api/generate-2fa-secret",
+    passport.authenticate("jwt", { session: false }),
+    controllers.generate2faSecret
+);
+
+app.post(
+    "/api/verify-otp",
+    passport.authenticate("jwt", { session: false }),
+    controllers.verifyOtp
+);
+
+app.post("/api/login-step2", controllers.loginStep2);
+app.post(
+    "/api/disable-2fa",
+    passport.authenticate("jwt", { session: false }),
+    controllers.disable2fa
+);
+
 app.listen(PORT, () => {
   console.log(`App works on http://localhost:${PORT}`);
 });

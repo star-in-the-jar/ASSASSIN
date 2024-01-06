@@ -107,7 +107,54 @@ const verifyOtp = async (req, res) => {
             twofaEnabled: user.twofaEnabled,
         });
     }
-};``
+};
+
+const loginStep2 = async (req, res) => {
+    let loginStep2VerificationToken = null;
+    try {
+        loginStep2VerificationToken = jwt.verify(
+            req.body.loginStep2VerificationToken,
+            env.JWT_SECRET
+        );
+    } catch (err) {
+        return res.status(401).json({
+            message: "You are not authorized to perform login step-2",
+        });
+    }
+
+    const token = req.body.twofaToken.replaceAll(" ", "");
+    const user = await UserModel.findOne({
+        email: loginStep2VerificationToken.loginStep2Verification.email,
+    });
+    if (!authenticator.check(token, user.twofaSecret)) {
+        return res.status(400).json({
+            message: "OTP verification failed: Invalid token",
+        });
+    } else {
+        return res.json({
+            message: "OTP verification successful",
+            token: jwt.sign(
+                {
+                    user: { email: user.email },
+                },
+                env.JWT_SECRET
+            ),
+        });
+    }
+};
+
+const disable2fa = async (req, res) => {
+    const user = await UserModel.findOne({ email: req.user.email });
+    user.twofaEnabled = false;
+    user.twofaSecret = "";
+    await user.save();
+
+    return res.json({
+        message: "2FA disabled successfully",
+        twofaEnabled: user.twofaEnabled,
+    });
+};
+
 
 module.exports = {
     signup,
@@ -115,4 +162,6 @@ module.exports = {
     profile,
     generate2faSecret,
     verifyOtp,
+    loginStep2,
+    disable2fa,
 };
