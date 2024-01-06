@@ -107,7 +107,7 @@ const verifyOtp = async (req, res) => {
             twofaEnabled: user.twofaEnabled,
         });
     }
-};
+};``
 
 module.exports = {
     signup,
