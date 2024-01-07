@@ -40,6 +40,7 @@ function App() {
             </div>
           }
         />
+        <Route path="/home" element={<Home />} />
         <Route path="login" element={<LoginUser />} />
         <Route path="login-hos" element={<LoginHospital />} />
         <Route path="/landing" element={<LandingPage />} />
