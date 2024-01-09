@@ -1,5 +1,5 @@
 {
-    "test_results": [
+    "test_results":
         {
             "test_number": 1337213769,
             "pesel": "43345435345",
@@ -9,46 +9,5 @@
                 "HGB": 5.5,
                 "HCT": 56.6
             }
-        },
-        {
-            "test_number": 1234567890,
-            "pesel": "74120371993",
-            "blood_test_result": {
-                "RBC": 8.7,
-                "WBC": 12.5,
-                "HGB": 12,
-                "HCT": 45.3
-            }
-        },
-        {
-            "test_number": 6789008973,
-            "pesel": "06312917997",
-            "blood_test_result": {
-                "RBC": 6.3,
-                "WBC": 6.5,
-                "HGB": 8,
-                "HCT": 44
-            }
-        },
-        {
-            "test_number": 4343567589,
-            "pesel": "88111067624",
-            "blood_test_result": {
-                "RBC": 3.1,
-                "WBC": 7.5,
-                "HGB": 7.8,
-                "HCT": 36.9
-            }
-        },
-        {
-            "test_number": 5553344132,
-            "pesel": "60091469137",
-            "blood_test_result": {
-                "RBC": 2.5,
-                "WBC": 3,
-                "HGB": 5.5,
-                "HCT": 41.2
-            }
         }
-    ]
 }

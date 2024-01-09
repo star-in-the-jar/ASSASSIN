@@ -1,25 +1,8 @@
 {
 	"auth_data":
-	[
 		{
 			"login":"pacjent3",
 			"password":"1234756"
-		},
-		{
-			"login":"abcd",
-			"password":"abcd43"
-		},
-		{
-			"login":"pac6",
-			"password":"pswrd"
-		},
-		{
-			"login":"lorem",
-			"password":"d90sadj"
-		},
-		{
-			"login":"ipsum",
-			"password":"haslo"
 		}
-	]
+
 }
