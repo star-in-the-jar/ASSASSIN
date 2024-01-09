@@ -41,6 +41,7 @@ function App() {
         />
         <Route path="login" element={<LoginUser />} />
         <Route path="login-hos" element={<LoginHospital />} />
+        <Route path="home" element={<Home />} />
       </Routes>
     </BrowserRouter>
   );
