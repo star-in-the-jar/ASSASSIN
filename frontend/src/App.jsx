@@ -5,6 +5,7 @@ import Home from './Home';
 import LoginUser from './LoginUser';
 import LoginHospital from './LoginHospital';
 import UiInput from './components/ui/UiInput.jsx';
+import LandingPage from './LandingPage';
 
 function App() {
   const [inputValue, setInputValue] = useState('');
@@ -39,9 +40,11 @@ function App() {
             </div>
           }
         />
+        <Route path="/home" element={<Home />} />
         <Route path="login" element={<LoginUser />} />
         <Route path="login-hos" element={<LoginHospital />} />
-        <Route path="home" element={<Home />} />
+        <Route path="/" element={<LandingPage />} />
+
       </Routes>
     </BrowserRouter>
   );

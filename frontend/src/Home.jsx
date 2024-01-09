@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Button from './components/Button';
 import IntelligentAssistant from './components/ui/AssistantComponent';
 import bloodTestResult from '../../exampleData/results.json';
+
+
 const Home = () => {
   const navigate = useNavigate();
 
