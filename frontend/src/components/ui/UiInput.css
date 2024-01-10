@@ -17,6 +17,8 @@
   border: 3px solid #8b5bc8;
   border-radius: 14px;
   overflow: hidden;
+  height: 56px;
+  width: 444px;
 }
 
 .ui-input {
