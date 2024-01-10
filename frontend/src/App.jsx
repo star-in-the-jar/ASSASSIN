@@ -44,6 +44,7 @@ function App() {
         <Route path="login" element={<LoginUser />} />
         <Route path="login-hos" element={<LoginHospital />} />
         <Route path="/" element={<LandingPage />} />
+
       </Routes>
     </BrowserRouter>
   );
