@@ -1,0 +1,37 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Inter&display=swap');
+
+body{
+    color:black;
+    background-color:#DCF2FB;
+    font-family: Kumbh sans-serif;
+    font-size: 20px;
+    line-height: 24px;
+}
+
+
+.patientinfo-container{
+    width: 370px;
+    height: 179px;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 14px;
+    border-color: #04387C;
+    background-color: white;
+}
+
+p{
+    position: relative;
+    top:-7px;
+    left: 32px;
+
+}
+
+.powrot{
+    font-family: Inter sans-serif;
+    font-size: 26px;
+    font-weight: 300;
+    position:relative;
+    left: 11px;
+}
