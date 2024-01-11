@@ -1,35 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import './Button.css';
+import './Button.css'; 
 
 const Button = ({ variant, label, onClick }) => {
-  const [clicked, setClicked] = useState(false);
-
-  const handleClick = () => {
-    setClicked(true);
-    localStorage.setItem('buttonClicked', 'true');
-    //localStorage.clear();
-    if (onClick) {
-      onClick();
-    }
-  };
-
-  useEffect(() => {
-    const isButtonClicked = localStorage.getItem('buttonClicked');
-    if (isButtonClicked === 'true') {
-      setClicked(true);
-    }
-  }, []); 
+  const buttonClass = `button ${variant}`;
 
   return (
-    <button className={`button ${variant} ${clicked ? 'true purple' : ''}`} onClick={handleClick}>
+    <button className={buttonClass} onClick={onClick}>
       {label}
     </button>
   );
 };
 
 Button.propTypes = {
-  variant: PropTypes.oneOf(['blue', 'darkblue', 'purple']).isRequired,
+  variant: PropTypes.oneOf(['blue', 'darkblue']).isRequired,
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func,
 };

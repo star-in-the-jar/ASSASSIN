@@ -33,9 +33,9 @@
     color: #ffff;
     white-space: nowrap;
   }
-  .purple {
+  .button:active{
     background-color:  #5751A7;
-    color: #ffffff;
+    color: #ffff;
     white-space: nowrap;
   }
   
