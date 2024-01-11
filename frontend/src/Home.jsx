@@ -13,7 +13,7 @@ const Home = () => {
   return (
     <div className="home">
       <h2>Hello World</h2>
-      <Button variant="blue" label="Default" onClick={handleButtonClick} />
+      <Button variant="darkblue" label="Default" onClick={handleButtonClick} />
     </div>
   );
 };
