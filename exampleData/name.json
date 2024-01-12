@@ -1,4 +1,9 @@
 {
-    "name": "Wiktor",
-    "surname": "Jończyk",
+	"patients":
+	{
+		"login":"pacjent3",
+		"name": "Wiktor",
+		"surname": "Jończyk"
+	}
+
 }
