@@ -55,50 +55,30 @@ const profile = async (req, res) => {
 };
 
 const generate2faSecret = async (req, res) => {
-    try {
-        console.log("req.user:", req.user);
+    const user = await PatientModel.findOne({ login: req.user.authInfo.login });
 
-        if (!req.user || !req.user.authInfo || !req.user.authInfo.login) {
-            return res.status(400).json({
-                message: "Invalid user object",
-            });
-        }
-
-        const user = await PatientModel.findOne({ "authInfo.login": req.user.authInfo.login });
-
-        if (!user) {
-            return res.status(404).json({
-                message: "User not found",
-            });
-        }
-
-        if (user.twofaEnabled) {
-            return res.status(400).json({
-                message: "2FA already verified and enabled",
-                twofaEnabled: user.twofaEnabled,
-            });
-        }
-
-        const secret = authenticator.generateSecret();
-        user.twofaSecret = secret;
-        user.save();
-        const appName = "Express 2FA Demo";
-
-        return res.json({
-            message: "2FA secret generation successful",
-            secret: secret,
-            qrImageDataUrl: await qrcode.toDataURL(
-                authenticator.keyuri(req.user.authInfo.login, appName, secret)
-            ),
+    if (user.twofaEnabled) {
+        return res.status(400).json({
+            message: "2FA already verified and enabled",
             twofaEnabled: user.twofaEnabled,
         });
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({
-            message: "Internal Server Error",
-        });
     }
+
+    const secret = authenticator.generateSecret();
+    user.twofaSecret = secret;
+    user.save();
+    const appName = "Express 2FA Demo";
+
+    return res.json({
+        message: "2FA secret generation successful",
+        secret: secret,
+        qrImageDataUrl: await qrcode.toDataURL(
+            authenticator.keyuri(req.user.authInfo.login, appName, secret)
+        ),
+        twofaEnabled: user.twofaEnabled,
+    });
 };
+
 
 const verifyOtp = async (req, res) => {
     const user = await PatientModel.findOne({ "authInfo.login": req.user.authInfo.login });

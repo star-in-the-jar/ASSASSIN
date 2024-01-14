@@ -16,10 +16,13 @@ const patientSchema = new mongoose.Schema({
             required: true,
         },
     },
-    twofaSecret: String,
     twofaEnabled: {
         type: Boolean,
         default: false,
+    },
+    twofaSecret: {
+        type: String,
+        default: "",
     },
 
     orders: [{

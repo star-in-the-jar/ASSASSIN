@@ -6,6 +6,8 @@ const {PatientModel } = require("./models/Patient");
 const env = require("./env");
 const bcrypt = require("bcrypt");
 
+
+
 passport.use(
     "signup",
     new localStrategy(
@@ -87,18 +89,13 @@ passport.use(
             secretOrKey: env.JWT_SECRET,
             jwtFromRequest: extractJwt.fromAuthHeaderAsBearerToken(),
         },
-        async (payload, done) => {
-            console.log("Decoded JWT Payload:", payload);
-
+        async (token, done) => {
             try {
-                const user = await PatientModel.findOne({"authInfo.login": payload.user?.login});
-
-                if (!user) {
-                    return done(null, false, {message: "User not found"});
-                }
-
+                const user = await PatientModel.findOne({
+                    login: token.user.authInfo.login,
+                });
                 return done(null, {
-                    login: user.authInfo.login,
+                    login: user.login,
                     twofaEnabled: user.twofaEnabled,
                 });
             } catch (error) {
@@ -107,5 +104,4 @@ passport.use(
         }
     )
 );
-
 
