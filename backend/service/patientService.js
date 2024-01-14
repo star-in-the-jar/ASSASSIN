@@ -2,8 +2,8 @@ const qrcode = require("qrcode");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const { authenticator } = require("otplib");
-const env = require("./env");
-const { UserModel } = require("./models.js");
+const env = require("../env");
+const { UserModel } = require("../models/Patient");
 
 const signup = async (req, res) => {
     return res.status(201).json({
