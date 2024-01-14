@@ -1,6 +1,4 @@
 {
-    "test_results":
-        {
             "test_number": 1337213769,
             "pesel": "43345435345",
             "blood_test_result": {
@@ -9,5 +7,4 @@
                 "HGBg": 5.5,
                 "HCT": 56.6
             }
-        }
 }
