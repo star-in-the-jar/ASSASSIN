@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require("cors");
-const services = require("./service/patientService")
+const Patientservice = require("./service/patientService")
+
 const app = express();
 const orderRoutes = require('./controllers/orderController');
 const passport = require("passport");
@@ -16,40 +17,41 @@ app.use('/api', orderRoutes);
 app.post(
     "/api/patient/signup",
     passport.authenticate("signup", { session: false }),
-    services.signup
+    Patientservice.signup
 );
 
 
 app.post(
     "/api/patient/login",
     passport.authenticate("login", { session: false }),
-    services.login
+    Patientservice.login
 );
 
 app.get(
     "/api/patient/profile",
     passport.authenticate("jwt", { session: false }),
-    services.profile
+    Patientservice.profile
 );
 
-app.post('/api/patient/generate-2fa-secret', passport.authenticate('jwt', { session: false }), services.generate2faSecret);
+app.post('/api/patient/generate-2fa-secret', passport.authenticate('jwt', { session: false }), Patientservice.generate2faSecret);
 
 
 app.post(
     "/api/patient/verify-otp",
     passport.authenticate("jwt", { session: false }),
-    services.verifyOtp
+    Patientservice.verifyOtp
 );
 
 app.post(
-    "/api/patient/login-step2", services.loginStep2
+    "/api/patient/login-step2", Patientservice.loginStep2
 );
 
 app.post(
     "/api/patient/disable-2fa",
     passport.authenticate("jwt", { session: false }),
-    services.disable2fa
+    Patientservice.disable2fa
 );
+
 app.listen(PORT, () => {
   console.log(`App works on http://localhost:${PORT}`);
 });
