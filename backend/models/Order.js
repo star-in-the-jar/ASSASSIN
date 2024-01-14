@@ -1,6 +1,7 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
+    id: mongoose.Schema.Types.ObjectId,
     hospital: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Hospital',
@@ -37,4 +38,4 @@ const orderSchema = new mongoose.Schema({
 
 const Order = mongoose.model('Order', orderSchema);
 
-export default Order;
+module.exports = Order;
