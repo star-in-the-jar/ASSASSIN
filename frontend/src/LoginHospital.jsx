@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Button from './components/Button';
+import Button from './components/ui/Button';
 import UiInput from './components/ui/UiInput';
 import './LoginUser.css'; 
 import { Link } from 'react-router-dom';
