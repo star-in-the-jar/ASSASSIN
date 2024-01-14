@@ -5,6 +5,8 @@ import Home from './Home';
 import LoginUser from './LoginUser';
 import LoginHospital from './LoginHospital';
 import UiInput from './components/ui/UiInput.jsx';
+import LandingPage from './LandingPage';
+import Test from './Test'
 
 function App() {
   const [inputValue, setInputValue] = useState('');
@@ -27,7 +29,7 @@ function App() {
       <Routes>
         <Route
           exact
-          path="/"
+          path="/input"
           element={
             <div>
               <UiInput
@@ -39,8 +41,12 @@ function App() {
             </div>
           }
         />
+        <Route path="/test" element={<Test />} />
+        <Route path="/home" element={<Home />} />
         <Route path="login" element={<LoginUser />} />
         <Route path="login-hos" element={<LoginHospital />} />
+        <Route path="/" element={<LandingPage />} />
+
       </Routes>
     </BrowserRouter>
   );
