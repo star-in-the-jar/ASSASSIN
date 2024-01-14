@@ -2,7 +2,7 @@ const passport = require("passport");
 const extractJwt = require("passport-jwt").ExtractJwt;
 const jwtStrategy = require("passport-jwt").Strategy;
 const localStrategy = require("passport-local").Strategy;
-const { UserModel } = require("./models");
+const { PatientModel } = require("./models/Patient");
 const env = require("./env");
 const bcrypt = require("bcrypt");
 
@@ -10,51 +10,52 @@ passport.use(
     "signup",
     new localStrategy(
         {
-            usernameField: "email",
+            usernameField: "login",
             passwordField: "password",
             passReqToCallback: true,
         },
-        async (req, email, password, done) => {
+        async (req, login, password, done) => {
             try {
-                if (await UserModel.findOne({ email })) {
+                console.log(req.body);
+                if (await PatientModel.findOne({ login: login })) {
                     return done(null, false, {
-                        message: `User with email ${email} already exists`,
+                        message: `User with login ${login} already exists`,
                     });
                 }
 
                 const hashedPassword = await bcrypt.hash(password, 10);
 
-                const user = await UserModel.create({
-                    email,
+                const user = await PatientModel.create({
+                    login: login,
                     password: hashedPassword,
-                    age: req.body.age,
                 });
 
                 return done(null, {
-                    email: user.email,
-                    age: user.age,
+                    login: user.login,
                 });
             } catch (error) {
+                console.error(error);
                 return done(error);
             }
         }
     )
 );
+
 passport.use(
     "login",
     new localStrategy(
         {
-            usernameField: "email",
+            usernameField: "login",
             passwordField: "password",
             passReqToCallback: true,
         },
-        async (req, email, password, done) => {
+        async (req, login, password, done) => {
             try {
-                const user = await UserModel.findOne({ email });
+                const user = await PatientModel.findOne({ login: login });
 
                 if (!user) {
                     return done(null, false, {
-                        message: "Invalid email or password",
+                        message: "Invalid login or password",
                     });
                 }
 
@@ -62,7 +63,7 @@ passport.use(
 
                 if (!validate) {
                     return done(null, false, {
-                        message: "Invalid email or password",
+                        message: "Invalid login or password",
                     });
                 }
 
@@ -75,6 +76,7 @@ passport.use(
         }
     )
 );
+
 passport.use(
     "jwt",
     new jwtStrategy(
@@ -84,12 +86,11 @@ passport.use(
         },
         async (token, done) => {
             try {
-                const user = await UserModel.findOne({
-                    email: token.user?.email,
+                const user = await PatientModel.findOne({
+                    login: token.user?.login,
                 });
                 return done(null, {
-                    email: user.email,
-                    age: user.age,
+                    login: user.login,
                     twofaEnabled: user.twofaEnabled,
                 });
             } catch (error) {

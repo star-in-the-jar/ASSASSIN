@@ -6,6 +6,7 @@ const env = require("../env");
 const { UserModel } = require("../models/Patient");
 
 const signup = async (req, res) => {
+    console.log(req.body);
     return res.status(201).json({
         message: "Signup successful",
         user: req.user,
@@ -19,7 +20,7 @@ const login = async (req, res, next) => {
         async (err, user, info) => {
             if (err || !user) {
                 return res.status(401).json({
-                    message: "Invalid email or password",
+                    message: "Invalid login or password",
                 });
             }
 
@@ -28,11 +29,11 @@ const login = async (req, res, next) => {
           message: "Login successful",
               twofaEnabled: false,
                     token: jwt.sign(
-                    {
-                        user: { email: user.email },
-                    },
-                    env.JWT_SECRET
-                ),
+                        {
+                            user: { login: user.authInfo.login },
+                        },
+                        env.JWT_SECRET
+                    ),
             });
             } else {
                 return res.json({
@@ -40,7 +41,7 @@ const login = async (req, res, next) => {
                     twofaEnabled: true,
                     loginStep2VerificationToken: jwt.sign(
                         {
-                            loginStep2Verification: { email: user.email },
+                            loginStep2Verification: { login: user.login },
                         },
                         env.JWT_SECRET,
                         { expiresIn: "5m" }
@@ -59,7 +60,7 @@ const profile = async (req, res) => {
 };
 
 const generate2faSecret = async (req, res) => {
-    const user = await UserModel.findOne({ email: req.user.email });
+    const user = await UserModel.findOne({ "authInfo.login": req.user.authInfo.login });
 
     if (user.twofaEnabled) {
         return res.status(400).json({
@@ -77,14 +78,14 @@ const generate2faSecret = async (req, res) => {
         message: "2FA secret generation successful",
         secret: secret,
         qrImageDataUrl: await qrcode.toDataURL(
-            authenticator.keyuri(req.user.email, appName, secret)
+            authenticator.keyuri(req.user.login, appName, secret)
         ),
         twofaEnabled: user.twofaEnabled,
     });
 };
 
 const verifyOtp = async (req, res) => {
-    const user = await UserModel.findOne({ email: req.user.email });
+    const user = await UserModel.findOne({ "authInfo.login": req.user.authInfo.login });
     if (user.twofaEnabled) {
         return res.json({
             message: "2FA already verified and enabled",
@@ -124,7 +125,7 @@ const loginStep2 = async (req, res) => {
 
     const token = req.body.twofaToken.replaceAll(" ", "");
     const user = await UserModel.findOne({
-        email: loginStep2VerificationToken.loginStep2Verification.email,
+        login: loginStep2VerificationToken.loginStep2Verification.login,
     });
     if (!authenticator.check(token, user.twofaSecret)) {
         return res.status(400).json({
@@ -135,7 +136,7 @@ const loginStep2 = async (req, res) => {
             message: "OTP verification successful",
             token: jwt.sign(
                 {
-                    user: { email: user.email },
+                    user: { login: user.authInfo.login },
                 },
                 env.JWT_SECRET
             ),
@@ -144,7 +145,7 @@ const loginStep2 = async (req, res) => {
 };
 
 const disable2fa = async (req, res) => {
-    const user = await UserModel.findOne({ email: req.user.email });
+    const user = await UserModel.findOne({ login: req.user.login });
     user.twofaEnabled = false;
     user.twofaSecret = "";
     await user.save();
