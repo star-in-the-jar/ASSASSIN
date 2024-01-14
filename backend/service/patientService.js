@@ -3,10 +3,9 @@ const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const { authenticator } = require("otplib");
 const env = require("../env");
-const { UserModel } = require("../models/Patient");
+const { PatientModel } = require("../models/Patient");
 
 const signup = async (req, res) => {
-    console.log(req.body);
     return res.status(201).json({
         message: "Signup successful",
         user: req.user,
@@ -14,42 +13,38 @@ const signup = async (req, res) => {
 };
 
 const login = async (req, res, next) => {
-    passport.authenticate(
-        "login",
-        { session: false },
-        async (err, user, info) => {
-            if (err || !user) {
-                return res.status(401).json({
-                    message: "Invalid login or password",
-                });
-            }
-
-            if (!user.twofaEnabled) {
-                return res.json({
-          message: "Login successful",
-              twofaEnabled: false,
-                    token: jwt.sign(
-                        {
-                            user: { login: user.authInfo.login },
-                        },
-                        env.JWT_SECRET
-                    ),
+    passport.authenticate("login", { session: false }, async (err, user, info) => {
+        if (err || !user) {
+            return res.status(401).json({
+                message: "Invalid login or password",
             });
-            } else {
-                return res.json({
-                    message: "Please complete 2-factor authentication",
-                    twofaEnabled: true,
-                    loginStep2VerificationToken: jwt.sign(
-                        {
-                            loginStep2Verification: { login: user.login },
-                        },
-                        env.JWT_SECRET,
-                        { expiresIn: "5m" }
-                    ),
-                });
-            }
         }
-    )(req, res, next);
+
+        if (!user.twofaEnabled) {
+            return res.json({
+                message: "Login successful",
+                twofaEnabled: false,
+                token: jwt.sign(
+                    {
+                        user: { login: user.authInfo.login },
+                    },
+                    env.JWT_SECRET
+                ),
+            });
+        } else {
+            return res.json({
+                message: "Please complete 2-factor authentication",
+                twofaEnabled: true,
+                loginStep2VerificationToken: jwt.sign(
+                    {
+                        loginStep2Verification: { login: user.authInfo.login },
+                    },
+                    env.JWT_SECRET,
+                    { expiresIn: "5m" }
+                ),
+            });
+        }
+    })(req, res, next);
 };
 
 const profile = async (req, res) => {
@@ -60,32 +55,53 @@ const profile = async (req, res) => {
 };
 
 const generate2faSecret = async (req, res) => {
-    const user = await UserModel.findOne({ "authInfo.login": req.user.authInfo.login });
+    try {
+        console.log("req.user:", req.user);
 
-    if (user.twofaEnabled) {
-        return res.status(400).json({
-            message: "2FA already verified and enabled",
+        if (!req.user || !req.user.authInfo || !req.user.authInfo.login) {
+            return res.status(400).json({
+                message: "Invalid user object",
+            });
+        }
+
+        const user = await PatientModel.findOne({ "authInfo.login": req.user.authInfo.login });
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found",
+            });
+        }
+
+        if (user.twofaEnabled) {
+            return res.status(400).json({
+                message: "2FA already verified and enabled",
+                twofaEnabled: user.twofaEnabled,
+            });
+        }
+
+        const secret = authenticator.generateSecret();
+        user.twofaSecret = secret;
+        user.save();
+        const appName = "Express 2FA Demo";
+
+        return res.json({
+            message: "2FA secret generation successful",
+            secret: secret,
+            qrImageDataUrl: await qrcode.toDataURL(
+                authenticator.keyuri(req.user.authInfo.login, appName, secret)
+            ),
             twofaEnabled: user.twofaEnabled,
         });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: "Internal Server Error",
+        });
     }
-
-    const secret = authenticator.generateSecret();
-    user.twofaSecret = secret;
-    user.save();
-    const appName = "Express 2FA Demo";
-
-    return res.json({
-        message: "2FA secret generation successful",
-        secret: secret,
-        qrImageDataUrl: await qrcode.toDataURL(
-            authenticator.keyuri(req.user.login, appName, secret)
-        ),
-        twofaEnabled: user.twofaEnabled,
-    });
 };
 
 const verifyOtp = async (req, res) => {
-    const user = await UserModel.findOne({ "authInfo.login": req.user.authInfo.login });
+    const user = await PatientModel.findOne({ "authInfo.login": req.user.authInfo.login });
     if (user.twofaEnabled) {
         return res.json({
             message: "2FA already verified and enabled",
@@ -124,8 +140,8 @@ const loginStep2 = async (req, res) => {
     }
 
     const token = req.body.twofaToken.replaceAll(" ", "");
-    const user = await UserModel.findOne({
-        login: loginStep2VerificationToken.loginStep2Verification.login,
+    const user = await PatientModel.findOne({
+        "authInfo.login": loginStep2VerificationToken.loginStep2Verification.login,
     });
     if (!authenticator.check(token, user.twofaSecret)) {
         return res.status(400).json({
@@ -145,7 +161,7 @@ const loginStep2 = async (req, res) => {
 };
 
 const disable2fa = async (req, res) => {
-    const user = await UserModel.findOne({ login: req.user.login });
+    const user = await PatientModel.findOne({ "authInfo.login": req.user.authInfo.login });
     user.twofaEnabled = false;
     user.twofaSecret = "";
     await user.save();
@@ -155,7 +171,6 @@ const disable2fa = async (req, res) => {
         twofaEnabled: user.twofaEnabled,
     });
 };
-
 
 module.exports = {
     signup,

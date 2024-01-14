@@ -2,7 +2,7 @@ const passport = require("passport");
 const extractJwt = require("passport-jwt").ExtractJwt;
 const jwtStrategy = require("passport-jwt").Strategy;
 const localStrategy = require("passport-local").Strategy;
-const { PatientModel } = require("./models/Patient");
+const {PatientModel } = require("./models/Patient");
 const env = require("./env");
 const bcrypt = require("bcrypt");
 
@@ -16,8 +16,7 @@ passport.use(
         },
         async (req, login, password, done) => {
             try {
-                console.log(req.body);
-                if (await PatientModel.findOne({ login: login })) {
+                if (await PatientModel.findOne({ "authInfo.login": login })) {
                     return done(null, false, {
                         message: `User with login ${login} already exists`,
                     });
@@ -26,12 +25,16 @@ passport.use(
                 const hashedPassword = await bcrypt.hash(password, 10);
 
                 const user = await PatientModel.create({
-                    login: login,
-                    password: hashedPassword,
+                    authInfo: {
+                        login: login,
+                        password: hashedPassword,
+                    },
+                    name: req.body.name,
+                    surname: req.body.surname,
                 });
 
                 return done(null, {
-                    login: user.login,
+                    login: user.authInfo.login,
                 });
             } catch (error) {
                 console.error(error);
@@ -51,7 +54,7 @@ passport.use(
         },
         async (req, login, password, done) => {
             try {
-                const user = await PatientModel.findOne({ login: login });
+                const user = await PatientModel.findOne({ "authInfo.login": login });
 
                 if (!user) {
                     return done(null, false, {
@@ -84,13 +87,18 @@ passport.use(
             secretOrKey: env.JWT_SECRET,
             jwtFromRequest: extractJwt.fromAuthHeaderAsBearerToken(),
         },
-        async (token, done) => {
+        async (payload, done) => {
+            console.log("Decoded JWT Payload:", payload);
+
             try {
-                const user = await PatientModel.findOne({
-                    login: token.user?.login,
-                });
+                const user = await PatientModel.findOne({"authInfo.login": payload.user?.login});
+
+                if (!user) {
+                    return done(null, false, {message: "User not found"});
+                }
+
                 return done(null, {
-                    login: user.login,
+                    login: user.authInfo.login,
                     twofaEnabled: user.twofaEnabled,
                 });
             } catch (error) {
@@ -99,3 +107,5 @@ passport.use(
         }
     )
 );
+
+

@@ -31,11 +31,8 @@ app.get(
     services.profile
 );
 
-app.post(
-    "/api/patient/generate-2fa-secret",
-    passport.authenticate("jwt", { session: false }),
-    services.generate2faSecret
-);
+app.post('/api/patient/generate-2fa-secret', passport.authenticate('jwt', { session: false }), services.generate2faSecret);
+
 
 app.post(
     "/api/patient/verify-otp",
