@@ -1,6 +1,6 @@
-# ASSASIN documentation
+# ASSASSIN documentation
 
-This is the place where ASSASIN documentation is mainly stored.
+This is the place where ASSASSIN documentation is mainly stored.
 
 ## PDF generation
 
