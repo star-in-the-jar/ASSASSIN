@@ -1,0 +1,10 @@
+{
+            "test_number": 1337213769,
+            "pesel": "43345435345",
+            "blood_test_result": {
+                "RBC": 5.44,
+                "WBC": 2.3,
+                "HGBg": 5.5,
+                "HCT": 56.6
+            }
+}
