@@ -37,4 +37,4 @@ patientSchema.methods.verifyPassword = async function (password) {
 
 const PatientModel = mongoose.model("patient", patientSchema);
 
-module.exports = { PatientModel };
+module.exports = PatientModel;

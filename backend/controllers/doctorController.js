@@ -66,7 +66,6 @@ router.put('/doctors/:id', async (req, res) => {
             return res.status(404).json({ message: 'Doctor not found' });
         }
 
-        // Update the doctor fields
         doctor.user = user || doctor.user;
         doctor.surname = surname || doctor.surname;
 

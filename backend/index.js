@@ -6,6 +6,7 @@ const app = express();
 const orderRoutes = require('./controllers/orderController');
 const hospitalRoutes = require('./controllers/hospitalController');
 const doctorRoutes = require('./controllers/doctorController');
+const patientRoutes = require('./controllers/patientController');
 const passport = require("passport");
 const db = require("./db");
 const auth = require("./auth");
@@ -18,6 +19,7 @@ app.use("/api", cors());
 app.use('/api', orderRoutes);
 app.use('/api', hospitalRoutes);
 app.use('/api', doctorRoutes);
+app.use('/api', patientRoutes);
 app.post(
     "/api/patient/signup",
     passport.authenticate("signup", { session: false }),
