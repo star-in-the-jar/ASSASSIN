@@ -1,9 +1,9 @@
 \documentclass{documentation}
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows}
-\tikzstyle{role} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{role} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black]
 
-\title{Opis systemu ASASSIN}
+\title{Opis systemu ASSASSIN}
 \author{Tomasz Chady}
 
 \renewcommand{\figurename}{Schemat}
@@ -14,7 +14,7 @@
 
 \section{Wprowadzenie}
 
-ASASSIN to system do przechowywania i udostępniania wyników badań pacjentom i personelowi medycznemu.
+ASSASSIN to system do przechowywania i udostępniania wyników badań pacjentom i personelowi medycznemu.
 System jest przeznaczony dla szpitali, klinik i laboratoriów.
 Głównym celem systemu jest zapewnienie bezpiecznego dostępu do wyników badań.
 System jest dostępny poprzez aplikację mobilną oraz stronę internetową.
@@ -33,7 +33,7 @@ Ogólny schemat systemu jest przedstawiony na schemacie \ref{fig:system}.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{Level_1_C4_Model.png}
-    \caption{Schemat systemu ASASSIN\label{fig:system}}
+    \caption{Schemat systemu ASSASSIN\label{fig:system}}
 \end{figure}
 
 \section{Role użytkowników}
@@ -56,7 +56,7 @@ Poniżej przedstawiono szczegółowy opis każdej z ról, a na schemacie \ref{fi
         \draw [->] (patient) -- (data);
         \draw [->] (med) -- (data);
     \end{tikzpicture}
-    \caption{Schemat ról w systemie ASASSIN\label{fig:roles}}
+    \caption{Schemat ról w systemie ASSASSIN\label{fig:roles}}
 \end{figure}
 
 \subsection{Pacjent}
