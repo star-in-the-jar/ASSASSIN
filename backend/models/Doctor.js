@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 const doctorSchema = new mongoose.Schema({
+    id: mongoose.Schema.Types.ObjectId,
     user: {
         type: String,
         ref: 'UserModel',
@@ -18,6 +19,6 @@ doctorSchema.methods.verifyPassword = async function (password) {
     return await bcrypt.compare(password, this.password);
 };
 
-const DoctorModel = mongoose.model("patient", doctorSchema);
+const DoctorModel = mongoose.model("doctor", doctorSchema);
 
-module.exports = { DoctorModel };
+module.exports = DoctorModel;
