@@ -1,6 +1,7 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const hospitalSchema = new mongoose.Schema({
+    id: mongoose.Schema.Types.ObjectId,
     name: String,
     role: {
         type: String,
@@ -33,4 +34,4 @@ const hospitalSchema = new mongoose.Schema({
 
 const Hospital = mongoose.model('Hospital', hospitalSchema);
 
-export default Hospital;
+module.exports = Hospital;
