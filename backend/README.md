@@ -114,3 +114,23 @@ This endpoint is used to disable 2FA for a specific account.
 - [db.js](./db.js) - connects with the database and initializes the models from [models.js](./models.js)
 - [controllers.js](./controllers.js) - defines route controllers
 - [auth.js](./auth.js) - declares authentication strategies for passport.js
+
+## How to start
+
+1. Ensure you have node.js installed
+
+    ```bash
+    node -v
+    ```
+
+2. Ensure you have npm installed
+
+    ```bash
+    npm -v
+    ```
+
+3. Start the backend
+
+    ```bash
+    node index.js
+    ```
