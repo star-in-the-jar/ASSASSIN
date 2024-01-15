@@ -129,7 +129,13 @@ This endpoint is used to disable 2FA for a specific account.
     npm -v
     ```
 
-3. Start the backend
+3. Install the necessary packages
+
+    ```bash
+    npm install
+    ```
+
+4. Start the backend
 
     ```bash
     node index.js

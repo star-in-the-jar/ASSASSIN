@@ -14,7 +14,13 @@
     npm -v
     ```
 
-3. Start the backend
+3. Install the necessary packages
+
+    ```bash
+    npm install
+    ```
+
+4. Start the backend
 
     ```bash
     npm run dev

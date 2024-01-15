@@ -17,3 +17,6 @@ More detailed documentation in Polish is stored [here](./doc) and includes:
 
 - [A more detailed system description](./doc/opisSystemu.pdf)
 - [User manual](./doc/userManual.pdf)
+- [Backend internal documentation](./doc/backend.pdf)
+
+Additionally you can find more detailed documentation in the [backend](./backend/) and [frontend](./frontend/) subfolder READMEs.
