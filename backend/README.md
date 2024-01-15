@@ -2,6 +2,7 @@
 
 ## API Specification
 
+Specification in the openapi format is available [here](../doc/openapi.json).
 All endpoints expect the requests to carry JSON content.
 In the following specification fields mean JSON object keys.
 Most endpoints not related to login use the JWT authentication method, and require all requests to have a token within the "Authorization" header.

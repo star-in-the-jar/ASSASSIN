@@ -1,0 +1,46 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "ASSASSIN API",
+        "version": "1.0.0",
+        "description": "ASSASSIN project API specification"
+    },
+    "paths": {
+        "/api/patient/login":{
+            "description":"Used for logging in patients",
+            "post":{
+                
+            }
+        }
+    },
+    "components": {
+        "securitySchemes":{
+            "jwt":{
+                "type":"http",
+                "description":"JWT authorization based on a token issued by the login endpoints",
+                "in":"header",
+                "scheme":"Bearer",
+                "bearerFormat":"bearer %s"
+            }
+        }
+    },
+    "security": [
+        {
+            "bearerAuth": []
+        }
+    ],
+    "externalDocs":[
+        {
+            "description":"Github repository",
+            "url":"https://github.com/Stanlee77/ASSASSIN"
+        },
+        {
+            "description":"Backend API documentation",
+            "url":"https://github.com/Stanlee77/ASSASSIN/blob/master/doc/backend.pdf"
+        },
+        {
+            "description":"System description",
+            "url":"https://github.com/Stanlee77/ASSASSIN/blob/master/doc/opisSystemu.pdf"
+        }
+    ]
+}
