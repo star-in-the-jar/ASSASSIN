@@ -12,4 +12,5 @@ db.once("open", () => {
     console.log("MongoDB connection successful");
 });
 
-require("./models");
+
+
