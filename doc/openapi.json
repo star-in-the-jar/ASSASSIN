@@ -6,14 +6,1008 @@
         "description": "ASSASSIN project API specification"
     },
     "paths": {
-        "/api/patient/login":{
-            "description":"Used for logging in patients",
+        "/api/doctors":{
+            "summary":"Used for getting all the doctors",
+            "get":{
+                "tags":["doctors"],
+                "description":"Returns all the doctors",
+                "parameters":[],
+                "responses":{
+                    "200":{
+                        "description":"List of all the doctors",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/Doctor"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default":{
+                        "description":"Unexpected error"
+                    }
+                }
+            },
             "post":{
-                
+                "tags":["doctors"],
+                "description":"Creates a new doctor",
+                "parameters":[
+                    {
+                        "name":"user",
+                        "in":"query",
+                        "description":"Doctor's user id",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "name":"surname",
+                        "in":"query",
+                        "description":"Doctor's surname",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"A doctor",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Doctor"
+                                }
+                            }
+                        }
+                    },
+                    "default":{
+                        "description":"Unexpected error"
+                    }
+                }
             }
-        }
+        },
+        "/api/doctors/{id}":{
+            "summary":"Used for getting a doctor by id",
+            "get":{
+                "tags":["doctors"],
+                "description":"Returns a doctor by id",
+                "parameters":[
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description":"Doctor's id",
+                        "required":true,
+                        "schema":{
+                            "type":"integer",
+                            "format":"int64"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"A doctor",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Doctor"
+                                }
+                            }
+                        }
+                    },
+                    "default":{
+                        "description":"Unexpected error"
+                    }
+                }
+            },
+            "put":{
+                "tags":["doctors"],
+                "description":"Updates a doctor",
+                "parameters":[
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description":"Doctor's id",
+                        "required":true,
+                        "schema":{
+                            "type":"integer",
+                            "format":"int64"
+                        }
+                    },
+                    {
+                        "name":"user",
+                        "in":"query",
+                        "description":"Doctor's user id",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "name":"surname",
+                        "in":"query",
+                        "description":"Doctor's surname",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"A doctor",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Doctor"
+                                }
+                            }
+                        }
+                    },
+                    "default":{
+                        "description":"Unexpected error"
+                    }
+                }
+            },
+            "delete":{
+                "tags":["doctors"],
+                "description":"Deletes a doctor",
+                "parameters":[
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description":"Doctor's id",
+                        "required":true,
+                        "schema":{
+                            "type":"integer",
+                            "format":"int64"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"A doctor",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Doctor"
+                                }
+                            }
+                        }
+                    },
+                    "default":{
+                        "description":"Unexpected error"
+                    }
+                }
+            }
+        },
+        "/api/hospitals":{
+            "summary":"Used for getting all the hospitals",
+            "get":{
+                "tags":["hospitals"],
+                "description":"Returns all the hospitals",
+                "parameters":[],
+                "responses":{
+                    "200":{
+                        "description":"List of all the hospitals",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/Hospital"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default":{
+                        "description":"Unexpected error"
+                    }
+                }
+            },
+            "post":{
+                "tags":["hospitals"],
+                "description":"Creates a new hospital",
+                "parameters":[
+                    {
+                        "name":"name",
+                        "in":"query",
+                        "description":"Hospital's name",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "name":"role",
+                        "in":"query",
+                        "description":"Hospital's role",
+                        "required":true,
+                        "schema":{
+                            "type":"string",
+                            "enum":[
+                                "hospital"
+                            ]
+                        }
+                    },
+                    {
+                        "name":"authInfo",
+                        "in":"query",
+                        "description":"Hospital's auth info",
+                        "required":true,
+                        "schema":{
+                            "type":"object",
+                            "properties":{
+                                "login":{
+                                    "type":"string"
+                                },
+                                "password":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name":"address",
+                        "in":"query",
+                        "description":"Hospital's address",
+                        "required":true,
+                        "schema":{
+                            "type":"object",
+                            "properties":{
+                                "street":{
+                                    "type":"string"
+                                },
+                                "city":{
+                                    "type":"string"
+                                },
+                                "zipCode":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"A hospital",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Hospital"
+                                }
+                            }
+                        }
+                    },
+                    "default":{
+                        "description":"Unexpected error"
+                    }
+                }
+            }
+        },
+        "/api/hospitals/{id}":{
+            "summary":"Used for getting a hospital by id",
+            "get":{
+                "tags":["hospitals"],
+                "description":"Returns a hospital by id",
+                "parameters":[
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description":"Hospital's id",
+                        "required":true,
+                        "schema":{
+                            "type":"integer",
+                            "format":"int64"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"A hospital",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Hospital"
+                                }
+                            }
+                        }
+                    },
+                    "default":{
+                        "description":"Unexpected error"
+                    }
+                }
+            },
+            "put":{
+                "tags":["hospitals"],
+                "description":"Updates a hospital",
+                "parameters":[
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description":"Hospital's id",
+                        "required":true,
+                        "schema":{
+                            "type":"integer",
+                            "format":"int64"
+                        }
+                    },
+                    {
+                        "name":"name",
+                        "in":"query",
+                        "description":"Hospital's name",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "name":"role",
+                        "in":"query",
+                        "description":"Hospital's role",
+                        "required":true,
+                        "schema":{
+                            "type":"string",
+                            "enum":[
+                                "hospital"
+                            ]
+                        }
+                    },
+                    {
+                        "name":"authInfo",
+                        "in":"query",
+                        "description":"Hospital's auth info",
+                        "required":true,
+                        "schema":{
+                            "type":"object",
+                            "properties":{
+                                "login":{
+                                    "type":"string"
+                                },
+                                "password":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name":"address",
+                        "in":"query",
+                        "description":"Hospital's address",
+                        "required":true,
+                        "schema":{
+                            "type":"object",
+                            "properties":{
+                                "street":{
+                                    "type":"string"
+                                },
+                                "city":{
+                                    "type":"string"
+                                },
+                                "zipCode":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"A hospital",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Hospital"
+                                }
+                            }
+                        }
+                    },
+                    "default":{
+                        "description":"Unexpected error"
+                    }
+                }
+            },
+            "delete":{
+                "tags":["hospitals"],
+                "description":"Deletes a hospital",
+                "parameters":[
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description":"Hospital's id",
+                        "required":true,
+                        "schema":{
+                            "type":"integer",
+                            "format":"int64"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"A hospital",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Hospital"
+                                }
+                            }
+                        }
+                    },
+                    "default":{
+                        "description":"Unexpected error"
+                    }
+                }
+            }
+        },
+        "/api/patient/results":{
+            "summary":"Used for getting all the patient's results",
+            "post":{
+                "tags":["orders"],
+                "description":"Creates a new order",
+                "parameters":[
+                    {
+                        "name":"patient",
+                        "in":"query",
+                        "description":"Patient's id",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "name":"doctor",
+                        "in":"query",
+                        "description":"Doctor's id",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "name":"hospital",
+                        "in":"query",
+                        "description":"Hospital's id",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "name":"results",
+                        "in":"query",
+                        "description":"Order's results",
+                        "required":true,
+                        "schema":{
+                            "type":"object"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"An order",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Order"
+                                }
+                            }
+                        }
+                    },
+                    "default":{
+                        "description":"Unexpected error"
+                    }
+                }
+            }
+        },
+        "/api/patient/results/{id}":{
+            "summary":"Used for getting a patient's result by id",
+            "get":{
+                "tags":["orders"],
+                "description":"Returns a patient's result by id",
+                "parameters":[
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description":"Order's id",
+                        "required":true,
+                        "schema":{
+                            "type":"integer",
+                            "format":"int64"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"An order",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Order"
+                                }
+                            }
+                        }
+                    },
+                    "default":{
+                        "description":"Unexpected error"
+                    }
+                }
+            },
+            "delete":{
+                "tags":["orders"],
+                "description":"Deletes a patient's result",
+                "parameters":[
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description":"Order's id",
+                        "required":true,
+                        "schema":{
+                            "type":"integer",
+                            "format":"int64"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"An order",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Order"
+                                }
+                            }
+                        }
+                    },
+                    "default":{
+                        "description":"Unexpected error"
+                    }
+                }
+            },
+            "put":{
+                "tags":["orders"],
+                "description":"Updates a patient's result",
+                "parameters":[
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description":"Order's id",
+                        "required":true,
+                        "schema":{
+                            "type":"integer",
+                            "format":"int64"
+                        }
+                    },
+                    {
+                        "name":"patient",
+                        "in":"query",
+                        "description":"Patient's id",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "name":"doctor",
+                        "in":"query",
+                        "description":"Doctor's id",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "name":"hospital",
+                        "in":"query",
+                        "description":"Hospital's id",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "name":"results",
+                        "in":"query",
+                        "description":"Order's results",
+                        "required":true,
+                        "schema":{
+                            "type":"object"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"An order",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Order"
+                                }
+                            }
+                        }
+                    },
+                    "default":{
+                        "description":"Unexpected error"
+                    }
+                }
+            }
+        },
+        "/api/patients":{
+            "summary":"Used for getting all the patients",
+            "get":{
+                "tags":["patients"],
+                "description":"Returns all the patients",
+                "parameters":[],
+                "responses":{
+                    "200":{
+                        "description":"List of all the patients",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/Patient"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default":{
+                        "description":"Unexpected error"
+                    }
+                }
+            },
+            "post":{
+                "tags":["patients"],
+                "description":"Creates a new patient",
+                "parameters":[
+                    {
+                        "name":"name",
+                        "in":"query",
+                        "description":"Patient's name",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "name":"surname",
+                        "in":"query",
+                        "description":"Patient's surname",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "name":"authInfo",
+                        "in":"query",
+                        "description":"Patient's auth info",
+                        "required":true,
+                        "schema":{
+                            "type":"object",
+                            "properties":{
+                                "login":{
+                                    "type":"string"
+                                },
+                                "password":{
+                                    "type":"string",
+                                    "format":"password"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name":"twofaEnabled",
+                        "in":"query",
+                        "description":"Patient's 2FA enabled",
+                        "required":true,
+                        "schema":{
+                            "type":"boolean"
+                        }
+                    },
+                    {
+                        "name":"twofaSecret",
+                        "in":"query",
+                        "description":"Patient's 2FA secret",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"A patient",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Patient"
+                                }
+                            }
+                        }
+                    },
+                    "default":{
+                        "description":"Unexpected error"
+                    }
+                }
+            }
+        },
+        "/api/patients/{id}":{
+            "summary":"Used for getting a patient by id",
+            "get":{
+                "tags":["patients"],
+                "description":"Returns a patient by id",
+                "parameters":[
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description":"Patient's id",
+                        "required":true,
+                        "schema":{
+                            "type":"integer",
+                            "format":"int64"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"A patient",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Patient"
+                                }
+                            }
+                        }
+                    },
+                    "default":{
+                        "description":"Unexpected error"
+                    }
+                }
+            },
+            "put":{
+                "tags":["patients"],
+                "description":"Updates a patient",
+                "parameters":[
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description":"Patient's id",
+                        "required":true,
+                        "schema":{
+                            "type":"integer",
+                            "format":"int64"
+                        }
+                    },
+                    {
+                        "name":"name",
+                        "in":"query",
+                        "description":"Patient's name",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "name":"surname",
+                        "in":"query",
+                        "description":"Patient's surname",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "name":"authInfo",
+                        "in":"query",
+                        "description":"Patient's auth info",
+                        "required":true,
+                        "schema":{
+                            "type":"object",
+                            "properties":{
+                                "login":{
+                                    "type":"string"
+                                },
+                                "password":{
+                                    "type":"string",
+                                    "format":"password"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name":"twofaEnabled",
+                        "in":"query",
+                        "description":"Patient's 2FA enabled",
+                        "required":true,
+                        "schema":{
+                            "type":"boolean"
+                        }
+                    },
+                    {
+                        "name":"twofaSecret",
+                        "in":"query",
+                        "description":"Patient's 2FA secret",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"A patient",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Patient"
+                                }
+                            }
+                        }
+                    },
+                    "default":{
+                        "description":"Unexpected error"
+                    }
+                }
+            }
+        }   
     },
     "components": {
+        "schemas":{
+            "doctor":{
+                "type":"object",
+                "properties":{
+                    "id":{
+                        "type":"integer",
+                        "format":"int64"
+                    },
+                    "user":{
+                        "type":"string",
+                        "format":"ref"
+                    },
+                    "surname":{
+                        "type":"string"
+                    },
+                    "hospitals":{
+                        "type":"array",
+                        "items":{
+                            "type":"string",
+                            "format":"ref"
+                        }
+                    }
+                }
+            },
+            "hospital":{
+                "type":"object",
+                "properties":{
+                    "id":{
+                        "type":"integer",
+                        "format":"int64"
+                    },
+                    "name":{
+                        "type":"string"
+                    },
+                    "role":{
+                        "type":"string",
+                        "enum":[
+                            "hospital"
+                        ]
+                    },
+                    "authInfo":{
+                        "type":"object",
+                        "properties":{
+                            "login":{
+                                "type":"string"
+                            },
+                            "password":{
+                                "type":"string"
+                            }
+                        }
+                    },
+                    "orders":{
+                        "type":"array",
+                        "items":{
+                            "type":"string",
+                            "format":"ref"
+                        }
+                    },
+                    "doctors":{
+                        "type":"array",
+                        "items":{
+                            "type":"string",
+                            "format":"ref"
+                        }
+                    },
+                    "address":{
+                        "type":"object",
+                        "properties":{
+                            "street":{
+                                "type":"string"
+                            },
+                            "city":{
+                                "type":"string"
+                            },
+                            "zipCode":{
+                                "type":"string"
+                            }
+                        }
+                    }
+                }
+            },
+            "order":{
+                "type":"object",
+                "properties":{
+                    "id":{
+                        "type":"integer",
+                        "format":"int64"
+                    },
+                    "patient":{
+                        "type":"string",
+                        "format":"ref"
+                    },
+                    "doctor":{
+                        "type":"string",
+                        "format":"ref"
+                    },
+                    "hospital":{
+                        "type":"string",
+                        "format":"ref"
+                    },
+                    "createdAt":{
+                        "type":"string",
+                        "format":"date-time"
+                    },
+                    "editedAt":{
+                        "type":"string",
+                        "format":"date-time"
+                    },
+                    "results":{
+                        "type":"object"
+                    }
+                }
+            },
+            "patient":{
+                "type":"object",
+                "properties":{
+                    "name":{
+                        "type":"string"
+                    },
+                    "surname":{
+                        "type":"string"
+                    },
+                    "authInfo":{
+                        "type":"object",
+                        "properties":{
+                            "login":{
+                                "type":"string"
+                            },
+                            "password":{
+                                "type":"string",
+                                "format":"password"
+                            }
+                        }
+                    },
+                    "twofaEnabled":{
+                        "type":"boolean"
+                    },
+                    "twofaSecret":{
+                        "type":"string"
+                    },
+                    "orders":{
+                        "type":"array",
+                        "items":{
+                            "type":"string",
+                            "format":"ref"
+                        }
+                    }
+                }
+            }
+        },
         "securitySchemes":{
             "jwt":{
                 "type":"http",
