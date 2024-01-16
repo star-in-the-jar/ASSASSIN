@@ -4,7 +4,7 @@ const createDoctor = async (req, res) => {
     try {
         const { user, surname } = req.body;
 
-        let doctor = await doctorService.getDoctorByUser({user}) //check if this is correct
+        let doctor = await doctorService.getDoctorByUser({user})
 
         if (!doctor) {
             doctor = await doctorService.createDoctor({user, surname})
