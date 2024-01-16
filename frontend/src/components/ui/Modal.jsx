@@ -29,10 +29,8 @@ const Modal= ({closeModal}) => {
             setShowText(!showText);
           }
           if(isNaN(+one.current.value)){
-            console.log(isNaN(+one.current.value))
             one.current.value='';
           }
-          console.log(isNaN(+one.current.value))
           two.current.focus();
           break;
         case "input-two":
@@ -51,7 +49,7 @@ const Modal= ({closeModal}) => {
             six.current.blur();
             const x=one.current.value+two.current.value+three.current.value+four.current.value+five.current.value+six.current.value;
             if(x!=secret_code){
-              console.log("źle");
+              console.log("Zły kod");
               if(!attempt){
                 setAttempt(!attempt)
               }
@@ -65,7 +63,7 @@ const Modal= ({closeModal}) => {
               one.current.focus();
             }
             else{
-              console.log("dobrze");
+              console.log("Dobry kod");
             }
             break;
 
@@ -119,6 +117,11 @@ const Modal= ({closeModal}) => {
         <div className="input-group">
           <br />
           <input
+            style={{borderStyle:"solid",
+                    borderWidth:"2px",
+                    borderRadius:"10px",
+                    borderColor: showText ? "#C85B5B" : "#8B5BC8"}}
+            className="input-group"
             type={"text"}
             id={"input-one"}
             onKeyUp={handleKeyUp}
@@ -130,6 +133,10 @@ const Modal= ({closeModal}) => {
         <div className="input-group">
           <br />
           <input
+          style={{borderStyle:"solid",
+          borderWidth:"2px",
+          borderRadius:"10px",
+          borderColor: showText ? "#C85B5B" : "#8B5BC8"}}
             type={"text"}
             id={"input-two"}
             onKeyUp={handleKeyUp}
@@ -141,6 +148,10 @@ const Modal= ({closeModal}) => {
         <div className="input-group">
           <br />
           <input
+          style={{borderStyle:"solid",
+          borderWidth:"2px",
+          borderRadius:"10px",
+          borderColor: showText ? "#C85B5B" : "#8B5BC8"}}
             type={"text"}
             id={"input-three"}
             onKeyUp={handleKeyUp}
@@ -152,6 +163,10 @@ const Modal= ({closeModal}) => {
         <div className="input-group">
           <br />
           <input
+          style={{borderStyle:"solid",
+          borderWidth:"2px",
+          borderRadius:"10px",
+          borderColor: showText ? "#C85B5B" : "#8B5BC8"}}
             type={"text"}
             id={"input-four"}
             onKeyUp={handleKeyUp}
@@ -163,6 +178,10 @@ const Modal= ({closeModal}) => {
         <div className="input-group">
           <br />
           <input
+          style={{borderStyle:"solid",
+          borderWidth:"2px",
+          borderRadius:"10px",
+          borderColor: showText ? "#C85B5B" : "#8B5BC8"}}
             type={"text"}
             id={"input-five"}
             onKeyUp={handleKeyUp}
@@ -174,6 +193,10 @@ const Modal= ({closeModal}) => {
         <div className="input-group">
           <br />
           <input
+          style={{borderStyle:"solid",
+                    borderWidth:"2px",
+                    borderRadius:"10px",
+                    borderColor: showText ? "#C85B5B" : "#8B5BC8"}}
             type={"text"}
             id={"input-six"}
             onKeyUp={handleKeyUp}
