@@ -3,9 +3,9 @@ const doctorController = require('../controllers/doctorController');
 
 const router = express.Router();
 
-router.get('/doctors/:id?', doctorController.getDoctorById);
-
 router.get('/doctors', doctorController.getAllDoctors);
+
+router.get('/doctors/:id', doctorController.getDoctorById);
 
 router.post('/doctors', doctorController.createDoctor);
 

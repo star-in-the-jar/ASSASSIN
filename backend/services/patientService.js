@@ -1,3 +1,6 @@
+const mongoose = require('mongoose');
+const PatientModel = require('../models/Patient');
+
 const getPatientByAuthLogin = async (authLogin) => {
     return await PatientModel.findOne({ 'authInfo.login': authLogin });
 }
