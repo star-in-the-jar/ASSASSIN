@@ -1,0 +1,67 @@
+body{
+    background-color: #DCF2FB;
+    height:832px;
+    
+}
+
+  
+.login_view{
+    position: absolute;
+    top:35px;
+    left:450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    background-color: #fff;
+    width: 613px;
+    height: 700px;
+    border-radius: 14px;
+    border: 2px solid #04387C;
+    box-shadow: 0px 4px 4px 0px #00000040;
+
+}
+h5 {
+    color:#000000;
+    margin-top: 35px;
+    height: 56px;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+h4 {
+    color:#000000;
+    position: absolute;
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 27px;
+    letter-spacing: 0em;
+    text-align: center;
+    
+
+    top: 25px;
+    left: 15px;
+    margin: 0;
+    font-weight: 400;
+}
+.hospital{
+    margin-top: 100px;
+}
+h1{
+    color:#000000;
+    margin-top: 130px;
+    font-size: 48px;
+    font-weight: 400;
+    line-height: 60px;
+    letter-spacing: 0em;
+    text-align: center;
+}
+Button{
+    width: 400px ;
+    margin-top: 45px;
+    margin-bottom: 0px;
+}
+

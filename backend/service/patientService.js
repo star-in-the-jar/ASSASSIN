@@ -2,8 +2,8 @@ const qrcode = require("qrcode");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const { authenticator } = require("otplib");
-const env = require("./env");
-const { UserModel } = require("./models.js");
+const env = require("../env");
+const { PatientModel } = require("../models/Patient");
 
 const signup = async (req, res) => {
     return res.status(201).json({
@@ -13,42 +13,38 @@ const signup = async (req, res) => {
 };
 
 const login = async (req, res, next) => {
-    passport.authenticate(
-        "login",
-        { session: false },
-        async (err, user, info) => {
-            if (err || !user) {
-                return res.status(401).json({
-                    message: "Invalid email or password",
-                });
-            }
+    passport.authenticate("login", { session: false }, async (err, user, info) => {
+        if (err || !user) {
+            return res.status(401).json({
+                message: "Invalid login or password",
+            });
+        }
 
-            if (!user.twofaEnabled) {
-                return res.json({
-          message: "Login successful",
-              twofaEnabled: false,
-                    token: jwt.sign(
+        if (!user.twofaEnabled) {
+            return res.json({
+                message: "Login successful",
+                twofaEnabled: false,
+                token: jwt.sign(
                     {
-                        user: { email: user.email },
+                        user: { login: user.authInfo.login },
                     },
                     env.JWT_SECRET
                 ),
             });
-            } else {
-                return res.json({
-                    message: "Please complete 2-factor authentication",
-                    twofaEnabled: true,
-                    loginStep2VerificationToken: jwt.sign(
-                        {
-                            loginStep2Verification: { email: user.email },
-                        },
-                        env.JWT_SECRET,
-                        { expiresIn: "5m" }
-                    ),
-                });
-            }
+        } else {
+            return res.json({
+                message: "Please complete 2-factor authentication",
+                twofaEnabled: true,
+                loginStep2VerificationToken: jwt.sign(
+                    {
+                        loginStep2Verification: { login: user.authInfo.login },
+                    },
+                    env.JWT_SECRET,
+                    { expiresIn: "5m" }
+                ),
+            });
         }
-    )(req, res, next);
+    })(req, res, next);
 };
 
 const profile = async (req, res) => {
@@ -59,7 +55,7 @@ const profile = async (req, res) => {
 };
 
 const generate2faSecret = async (req, res) => {
-    const user = await UserModel.findOne({ email: req.user.email });
+    const user = await PatientModel.findOne({ login: req.user.authInfo.login });
 
     if (user.twofaEnabled) {
         return res.status(400).json({
@@ -77,14 +73,15 @@ const generate2faSecret = async (req, res) => {
         message: "2FA secret generation successful",
         secret: secret,
         qrImageDataUrl: await qrcode.toDataURL(
-            authenticator.keyuri(req.user.email, appName, secret)
+            authenticator.keyuri(req.user.authInfo.login, appName, secret)
         ),
         twofaEnabled: user.twofaEnabled,
     });
 };
 
+
 const verifyOtp = async (req, res) => {
-    const user = await UserModel.findOne({ email: req.user.email });
+    const user = await PatientModel.findOne({ "authInfo.login": req.user.authInfo.login });
     if (user.twofaEnabled) {
         return res.json({
             message: "2FA already verified and enabled",
@@ -123,8 +120,8 @@ const loginStep2 = async (req, res) => {
     }
 
     const token = req.body.twofaToken.replaceAll(" ", "");
-    const user = await UserModel.findOne({
-        email: loginStep2VerificationToken.loginStep2Verification.email,
+    const user = await PatientModel.findOne({
+        "authInfo.login": loginStep2VerificationToken.loginStep2Verification.login,
     });
     if (!authenticator.check(token, user.twofaSecret)) {
         return res.status(400).json({
@@ -135,7 +132,7 @@ const loginStep2 = async (req, res) => {
             message: "OTP verification successful",
             token: jwt.sign(
                 {
-                    user: { email: user.email },
+                    user: { login: user.authInfo.login },
                 },
                 env.JWT_SECRET
             ),
@@ -144,7 +141,7 @@ const loginStep2 = async (req, res) => {
 };
 
 const disable2fa = async (req, res) => {
-    const user = await UserModel.findOne({ email: req.user.email });
+    const user = await PatientModel.findOne({ "authInfo.login": req.user.authInfo.login });
     user.twofaEnabled = false;
     user.twofaSecret = "";
     await user.save();
@@ -154,7 +151,6 @@ const disable2fa = async (req, res) => {
         twofaEnabled: user.twofaEnabled,
     });
 };
-
 
 module.exports = {
     signup,
