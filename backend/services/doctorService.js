@@ -25,7 +25,7 @@ const deleteDoctor = async (doctorId) => {
     return await DoctorModel.findByIdAndDelete(doctorId);
 }
 
-export default {
+module.exports = {
     getAllDoctors,
     getDoctorByUser,
     createDoctor,
