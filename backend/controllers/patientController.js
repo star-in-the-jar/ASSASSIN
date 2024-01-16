@@ -8,7 +8,7 @@ const createPatient = async (req, res) => {
             return res.status(400).json({ message: 'Invalid request. Please provide login and password.' });
         }
 
-        let existingPatient = await patientService.getPatientByAuthLogin(authInfo.login)//PatientModel.findOne({ 'authInfo.login': authInfo.login });
+        let existingPatient = await patientService.getPatientByAuthLogin(authInfo.login)
 
         if (!existingPatient) {
             const newPatient = patientService.createPatient({name, surname, authInfo})
@@ -16,13 +16,7 @@ const createPatient = async (req, res) => {
             await newPatient.save();
             return res.status(201).json({ message: 'Patient created successfully', patient: newPatient });
         } else {
-            // isnt it better to call editPatient(req, res) here or return "Patient already exists"?
-            existingPatient.name = name;
-            existingPatient.surname = surname;
-            existingPatient.authInfo.password = authInfo.password;
-
-            await existingPatient.save();
-            return res.status(200).json({ message: 'Patient updated successfully', patient: existingPatient });
+            return res.status(400).json({ message: 'Patient already exists', patient: existingPatient });
         }
     } catch (error) {
         console.error(error);
