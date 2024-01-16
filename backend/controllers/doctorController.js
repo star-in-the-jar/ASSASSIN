@@ -1,15 +1,13 @@
-const express = require('express');
-const router = express.Router();
-const DoctorModel = require('../models/Doctor');
+const doctorService = require('../services/doctorService')
 
-
-router.post('/doctors', async (req, res) => {
+const createDoctor = async (req, res) => {
     try {
         const { user, surname } = req.body;
-        let doctor = await DoctorModel.findOne({ user });
+
+        let doctor = await doctorService.getDoctorByUser({user}) //check if this is correct
 
         if (!doctor) {
-            doctor = new DoctorModel({ user, surname });
+            doctor = await doctorService.createDoctor({user, surname})
         } else {
             doctor.surname = surname;
         }
@@ -20,49 +18,53 @@ router.post('/doctors', async (req, res) => {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
-});
+}
 
-router.get('/doctors/:id?', async (req, res) => {
+const getAllDoctors = async (req, res) => {
     try {
-        const doctorId = req.params.id;
-
-        if (doctorId) {
-            const doctor = await DoctorModel.findById(doctorId).populate('hospitals');
-            if (!doctor) {
-                return res.status(404).json({ message: 'Doctor not found' });
-            }
-            res.json(doctor);
-        } else {
-            const doctors = await DoctorModel.find().populate('hospitals');
-            res.json(doctors);
-        }
+        const doctors = await doctorService.getAllDoctors()
+        res.json(doctors);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
-});
+}
 
-router.delete('/doctors/:id', async (req, res) => {
+const getDoctorById = async (req, res) => {
     try {
         const doctorId = req.params.id;
-        const doctor = await DoctorModel.findByIdAndDelete(doctorId);
+        const doctor = await doctorService.getDoctorById(doctorId)
         if (!doctor) {
             return res.status(404).json({ message: 'Doctor not found' });
         }
-        res.json({ message: 'Doctor deleted successfully', doctor });
+        res.json(doctor)
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
-});
-router.put('/doctors/:id', async (req, res) => {
+}
+
+const deleteDoctor = async (req, res) => {
+    try {
+        const doctorId = req.params.id;
+        const deletedDoctor = doctorService.deleteDoctor(doctorId)
+        if (!deletedDoctor) {
+            return res.status(404).json({ message: 'Doctor not found' });
+        }
+        res.json({ message: 'Doctor deleted successfully', deletedDoctor});
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+}
+
+const editDoctor = async (req, res) => {
     try {
         const doctorId = req.params.id;
         const { user, surname } = req.body;
 
-        let doctor = await DoctorModel.findById(doctorId);
-
-        if (!doctor) {
+        let doctor = await doctorService.getDoctorById(doctorId)
+        if (!doctor){
             return res.status(404).json({ message: 'Doctor not found' });
         }
 
@@ -76,16 +78,12 @@ router.put('/doctors/:id', async (req, res) => {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
-});
+}
 
-router.get('/doctors', async (req, res) => {
-    try {
-        const doctors = await DoctorModel.find().populate('hospitals');
-        res.json(doctors);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
-});
-
-module.exports = router;
+module.exports = {
+    createDoctor,
+    getAllDoctors,
+    getDoctorById,
+    deleteDoctor,
+    editDoctor
+}

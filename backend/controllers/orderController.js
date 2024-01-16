@@ -1,28 +1,17 @@
-const express = require('express');
-const Order = require('../models/Order');
-const mongoose = require("mongoose");
+const orderService = require('../services/orderService');
 
-const router = express.Router();
-
-
-router.post('/patient/results', async (req, res) => {
+const createOrder = async (req, res) => {
     try {
         const { hospital, doctor, patient, results } = req.body;
 
-        if (!mongoose.Types.ObjectId.isValid(hospital) ||
-            !mongoose.Types.ObjectId.isValid(doctor) ||
-            !mongoose.Types.ObjectId.isValid(patient)) {
+        if (!orderService.checkIfValidId(hospital) ||
+            !orderService.checkIfValidId(doctor) ||
+            !orderService.checkIfValidId(patient) ) {
             return res.status(400).json({ message: 'Invalid ObjectId format for hospital, doctor, or patient.' });
         }
 
-        const newOrder = new Order({
-            hospital,
-            doctor,
-            patient,
-            results,
-        });
-
-        const savedOrder = await newOrder.save();
+        const newOrder = orderService.createOrder({ hospital, doctor, patient, results });
+        await newOrder.save();
 
         res.status(201).json({
             message: 'Results added successfully',
@@ -34,14 +23,13 @@ router.post('/patient/results', async (req, res) => {
             message: 'Internal Server Error',
         });
     }
-});
+}
 
-router.get('/patient/results/:orderId',  async (req, res) => {
+const getOrderById = async (req, res) => {
     try {
         const orderId = req.params.orderId.trim();
 
-        const order = await Order.findById(orderId);
-
+        const order = await orderService.getOrderById(orderId);
         if (!order) {
             return res.status(404).json({
                 message: 'Order not found',
@@ -58,12 +46,13 @@ router.get('/patient/results/:orderId',  async (req, res) => {
             message: 'Internal Server Error',
         });
     }
-});
-router.delete('/patient/results/:orderId', async (req, res) => {
+}
+
+const deleteOrderById = async (req, res) => {
     try {
         const orderId = req.params.orderId;
 
-        const deletedOrder = await Order.findByIdAndDelete(orderId);
+        const deletedOrder = await orderService.deleteOrder(orderId);
 
         if (!deletedOrder) {
             return res.status(404).json({
@@ -81,12 +70,13 @@ router.delete('/patient/results/:orderId', async (req, res) => {
             message: 'Internal Server Error',
         });
     }
-});
-router.put('/patient/results/:orderId', async (req, res) => {
+}
+
+const editOrder = async (req, res) => {
     try {
         const orderId = req.params.orderId.trim();
 
-        const existingOrder = await Order.findById(orderId);
+        let existingOrder = orderService.getOrderById(orderId)
 
         if (!existingOrder) {
             return res.status(404).json({
@@ -96,33 +86,25 @@ router.put('/patient/results/:orderId', async (req, res) => {
 
         const { hospital, doctor, patient, results } = req.body;
 
-        if (hospital) {
-            existingOrder.hospital = hospital;
-        }
-        if (doctor) {
-            existingOrder.doctor = doctor;
-        }
-        if (patient) {
-            existingOrder.patient = patient;
-        }
-        if (results) {
-            existingOrder.results = results;
-        }
-
-        existingOrder.editedAt = new Date();
-
-        const updatedOrder = await existingOrder.save();
+        existingOrder = orderService.editOrder(existingOrder, { hospital, doctor, patient, results })
+        await existingOrder.save();
 
         res.status(200).json({
             message: 'Order updated successfully',
-            order: updatedOrder,
+            order: existingOrder,
         });
+
     } catch (error) {
         console.error(error);
         res.status(500).json({
             message: 'Internal Server Error',
         });
     }
-});
+}
 
-module.exports = router;
+module.exports = {
+    createOrder,
+    getOrderById,
+    deleteOrderById,
+    editOrder,
+};
