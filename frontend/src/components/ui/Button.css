@@ -1,15 +1,5 @@
 .button {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
   gap: 10px;
-
-
-  width: 450px;
-  height: 72px;
-  left: 20px;
-  top: 20px;
 
   border-radius: 14px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -17,27 +7,21 @@
   font-weight: 400;
   font-size: 32px;
   line-height: 38.73px;
-  display: flex;
-  align-items: center;
   text-align: center;
-  flex: none;
-  order: 0;
-  flex-grow: 0;
 }
-  
-  .blue {
-    background-color: #04387C;
-    color: #ffff;
-    white-space: nowrap;
-  }
-  .darkblue{
-    background-color:  #011350;
-    color: #ffff;
-    white-space: nowrap;
-  }
-  .button:active{
-    background-color:  #5751A7;
-    color: #ffff;
-    white-space: nowrap;
-  }
 
+.blue {
+  background-color: #04387c;
+  color: #ffff;
+  white-space: nowrap;
+}
+.darkblue {
+  background-color: #011350;
+  color: #ffff;
+  white-space: nowrap;
+}
+.button:active {
+  background-color: #5751a7;
+  color: #ffff;
+  white-space: nowrap;
+}

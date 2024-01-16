@@ -1,0 +1,33 @@
+.user_data {
+  display: flex;
+  flex-direction: column;
+  row-gap: 50px;
+}
+
+.user_data_left_part {
+  display: flex;
+  flex-direction: column;
+  row-gap: 35px;
+  align-items: center;
+  order: 1;
+}
+
+.user_data_right_part {
+  order: 0;
+}
+
+.user_data_left_part button {
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 1300px) {
+  .user_data {
+    flex-direction: row;
+    column-gap: 50px;
+    row-gap: 0;
+  }
+
+  .user_data_left_part {
+    order: 0;
+  }
+}
