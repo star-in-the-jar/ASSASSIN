@@ -3,11 +3,13 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 36px 249px;
   gap: 10px;
 
-  width: 22px;
-  height: 15px;
+
+  width: 450px;
+  height: 72px;
+  left: 20px;
+  top: 20px;
 
   border-radius: 14px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -22,15 +24,20 @@
   order: 0;
   flex-grow: 0;
 }
+  
+  .blue {
+    background-color: #04387C;
+    color: #ffff;
+    white-space: nowrap;
+  }
+  .darkblue{
+    background-color:  #011350;
+    color: #ffff;
+    white-space: nowrap;
+  }
+  .button:active{
+    background-color:  #5751A7;
+    color: #ffff;
+    white-space: nowrap;
+  }
 
-.blue {
-  background-color: #04387c;
-  color: #ffff;
-  white-space: nowrap;
-}
-
-.purple {
-  background-color: #8b5bc8;
-  color: #ffffff;
-  white-space: nowrap;
-}

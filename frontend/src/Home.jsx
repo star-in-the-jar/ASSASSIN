@@ -17,6 +17,7 @@ const Home = () => {
 
       {/*<Button variant="blue" label="Default" onClick={handleButtonClick} />*/}
       <IntelligentAssistant bloodTestResult={bloodTestResult} />
+
     </div>
   );
 };
