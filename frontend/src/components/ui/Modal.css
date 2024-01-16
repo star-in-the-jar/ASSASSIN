@@ -3,8 +3,8 @@
 
 .modal-container{
     position:fixed;
-    top:0;
-    left: 0;
+    top:25%;
+    left: 25%;
     width: 780px;
     height: 508px;
     border-style: solid;

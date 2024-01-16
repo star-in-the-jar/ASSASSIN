@@ -3,7 +3,7 @@ import "./Modal.css"
 import code from "../../../../exampleData/2FA.json"
 import wykrzyknikImage from "../../assets/erroricon.png"
 
-const Modal= ({closeModal}) => {
+const Modal= () => {
   const secret_code=code.code
 
   const [showText,setShowText]=useState(false);

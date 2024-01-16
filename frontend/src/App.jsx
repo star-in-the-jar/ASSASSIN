@@ -7,6 +7,7 @@ import LoginHospital from './LoginHospital';
 import UiInput from './components/ui/UiInput.jsx';
 import LandingPage from './LandingPage';
 import Test from './Test'
+import TestModal from './TestModal.jsx';
 
 function App() {
   const [inputValue, setInputValue] = useState('');
@@ -46,6 +47,7 @@ function App() {
         <Route path="login" element={<LoginUser />} />
         <Route path="login-hos" element={<LoginHospital />} />
         <Route path="/" element={<LandingPage />} />
+        <Route path="/modal" element={<TestModal />} />
 
       </Routes>
     </BrowserRouter>
