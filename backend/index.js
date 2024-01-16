@@ -1,9 +1,15 @@
 const express = require('express');
 const cors = require("cors");
-const controllers = require("./controllers")
+const Patientservice = require("./service/patientService")
+
 const app = express();
+const orderRoutes = require('./routes/orderRoutes');
+const hospitalRoutes = require('./routes/hospitalRoutes');
+const doctorRoutes = require('./routes/doctorRoutes');
+const patientRoutes = require('./routes/patientRoutes');
 
 const passport = require("passport");
+
 const db = require("./db");
 const auth = require("./auth");
 
@@ -12,37 +18,47 @@ app.use(express.json());
 
 app.use("/api", cors());
 
+app.use('/api', orderRoutes);
+app.use('/api', hospitalRoutes);
+app.use('/api', doctorRoutes);
+app.use('/api', patientRoutes);
+
 app.post(
-    "/api/signup",
+    "/api/patient/signup",
     passport.authenticate("signup", { session: false }),
-    controllers.signup
+    Patientservice.signup
 );
 
-app.post("/api/login", controllers.login);
+
+app.post(
+    "/api/patient/login",
+    passport.authenticate("login", { session: false }),
+    Patientservice.login
+);
 
 app.get(
-    "/api/profile",
+    "/api/patient/profile",
     passport.authenticate("jwt", { session: false }),
-    controllers.profile
+    Patientservice.profile
+);
+
+app.post('/api/patient/generate-2fa-secret', passport.authenticate('jwt', { session: false }), Patientservice.generate2faSecret);
+
+
+app.post(
+    "/api/patient/verify-otp",
+    passport.authenticate("jwt", { session: false }),
+    Patientservice.verifyOtp
 );
 
 app.post(
-    "/api/generate-2fa-secret",
-    passport.authenticate("jwt", { session: false }),
-    controllers.generate2faSecret
+    "/api/patient/login-step2", Patientservice.loginStep2
 );
 
 app.post(
-    "/api/verify-otp",
+    "/api/patient/disable-2fa",
     passport.authenticate("jwt", { session: false }),
-    controllers.verifyOtp
-);
-
-app.post("/api/login-step2", controllers.loginStep2);
-app.post(
-    "/api/disable-2fa",
-    passport.authenticate("jwt", { session: false }),
-    controllers.disable2fa
+    Patientservice.disable2fa
 );
 
 app.listen(PORT, () => {
