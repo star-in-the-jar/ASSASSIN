@@ -8,7 +8,7 @@ ul {
   }
 
   li {
-    padding-top: 37px;
+    padding-top: 30px;
     position: relative;
     left: 62px;
   }
@@ -47,5 +47,10 @@ ul {
     background-color: #14375d;
     border-radius: 82px;
     border: 10px solid #1a1919;
+  }
+
+  .wspolczynnik-container{
+    position: relative;
+    top: -5px;
   }
 

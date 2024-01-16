@@ -1,4 +1,3 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Button.css'; 
@@ -14,7 +13,7 @@ const Button = ({ variant, label, onClick }) => {
 };
 
 Button.propTypes = {
-  variant: PropTypes.oneOf(['blue', 'purple']).isRequired,
+  variant: PropTypes.oneOf(['blue', 'darkblue']).isRequired,
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func,
 };

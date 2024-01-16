@@ -7,6 +7,10 @@ import LoginHospital from './LoginHospital';
 import UiInput from './components/ui/UiInput.jsx';
 import LandingPage from './LandingPage';
 import Test from './Test'
+import TestModal from './TestModal.jsx';
+import PatientResults from './PatientResults.jsx';
+import UserData from './UserData.jsx';
+
 
 function App() {
   const [inputValue, setInputValue] = useState('');
@@ -46,7 +50,10 @@ function App() {
         <Route path="login" element={<LoginUser />} />
         <Route path="login-hos" element={<LoginHospital />} />
         <Route path="/" element={<LandingPage />} />
-
+        <Route path="/modal" element={<TestModal />} />
+        <Route path="/patient-results/download" element={<PatientResults />} />
+        <Route path="/user-data" element={<UserData />} />
+       
       </Routes>
     </BrowserRouter>
   );
