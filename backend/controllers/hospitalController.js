@@ -1,33 +1,30 @@
-const express = require('express');
+const hospitalService = require('../services/hospitalService');
 
-const Hospital = require('../models/Hospital');
-
-const router = express.Router();
-router.post('/hospitals', async (req, res) => {
+const addHospital = async (req, res) => {
     try {
         const hospitalData = req.body;
-        const hospital = await Hospital.create(hospitalData);
+        const hospital = await hospitalService.createHospital(hospitalData)
         res.status(201).json({ message: 'Hospital created successfully', hospital });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
-});
+}
 
-router.get('/hospitals', async (req, res) => {
+const getAllHospitals = async (req, res) => {
     try {
-        const hospitals = await Hospital.find();
+        const hospitals = await hospitalService.getAllHospitals()
         res.status(200).json({ hospitals });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
-});
+}
 
-router.get('/hospitals/:hospitalId', async (req, res) => {
+const getHospitalById = async (req, res) => {
     try {
         const hospitalId = req.params.hospitalId;
-        const hospital = await Hospital.findById(hospitalId);
+        const hospital = await hospitalService.getHospitalById(hospitalId);
         if (!hospital) {
             return res.status(404).json({ message: 'Hospital not found' });
         }
@@ -36,12 +33,12 @@ router.get('/hospitals/:hospitalId', async (req, res) => {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
-});
+}
 
-router.delete('/hospitals/:hospitalId', async (req, res) => {
+const deleteHospital = async (req, res) => {
     try {
         const hospitalId = req.params.hospitalId;
-        const deletedHospital = await Hospital.findByIdAndDelete(hospitalId);
+        const deletedHospital = await hospitalService.deleteHospital(hospitalId);
         if (!deletedHospital) {
             return res.status(404).json({ message: 'Hospital not found' });
         }
@@ -50,15 +47,13 @@ router.delete('/hospitals/:hospitalId', async (req, res) => {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
-});
-router.put('/hospitals/:id', async (req, res) => {
+}
+
+const editHospital = async (req, res) => {
     try {
         const hospitalId = req.params.id;
         const hospitalData = req.body;
-        const hospital = await Hospital.findByIdAndUpdate(hospitalId, hospitalData, {
-            new: true,
-            runValidators: true,
-        });
+        const hospital = await hospitalService.editHospital(hospitalId, hospitalData)
         if (!hospital) {
             return res.status(404).json({ message: 'Hospital not found' });
         }
@@ -67,8 +62,12 @@ router.put('/hospitals/:id', async (req, res) => {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
-});
+}
 
-
-
-module.exports = router;
+module.exports = {
+    addHospital,
+    getAllHospitals,
+    getHospitalById,
+    deleteHospital,
+    editHospital,
+};

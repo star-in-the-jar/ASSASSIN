@@ -1,11 +1,6 @@
-const express = require('express');
-const PatientModel = require('../models/Patient');
-const mongoose = require('mongoose');
+const patientService = require('../services/patientService');
 
-const router = express.Router();
-
-
-router.post('/patients', async (req, res) => {
+const createPatient = async (req, res) => {
     try {
         const { name, surname, authInfo } = req.body;
 
@@ -13,21 +8,15 @@ router.post('/patients', async (req, res) => {
             return res.status(400).json({ message: 'Invalid request. Please provide login and password.' });
         }
 
-        const existingPatient = await PatientModel.findOne({ 'authInfo.login': authInfo.login });
+        let existingPatient = await patientService.getPatientByAuthLogin(authInfo.login)//PatientModel.findOne({ 'authInfo.login': authInfo.login });
 
         if (!existingPatient) {
-            const newPatient = new PatientModel({
-                name,
-                surname,
-                authInfo: {
-                    login: authInfo.login,
-                    password: authInfo.password,
-                },
-            });
+            const newPatient = patientService.createPatient({name, surname, authInfo})
 
             await newPatient.save();
             return res.status(201).json({ message: 'Patient created successfully', patient: newPatient });
         } else {
+            // isnt it better to call editPatient(req, res) here or return "Patient already exists"?
             existingPatient.name = name;
             existingPatient.surname = surname;
             existingPatient.authInfo.password = authInfo.password;
@@ -39,17 +28,16 @@ router.post('/patients', async (req, res) => {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
-});
+}
 
-router.get('/patients/:id', async (req, res) => {
+const getPatientById = async (req, res) => {
     try {
         const patientId = req.params.id;
 
-        if (!mongoose.Types.ObjectId.isValid(patientId)) {
+        if (!patientService.checkIfValidId(patientId)) {
             return res.status(400).json({ message: 'Invalid ObjectId format for patient id.' });
         }
-
-        const patient = await PatientModel.findById(patientId);
+        const patient = await patientService.getPatientById(patientId);
 
         if (!patient) {
             return res.status(404).json({ message: 'Patient not found' });
@@ -60,26 +48,27 @@ router.get('/patients/:id', async (req, res) => {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
-});
-router.get('/patients', async (req, res) => {
+}
+
+const getAllPatients = async (req, res) => {
     try {
-        const patients = await PatientModel.find();
+        const patients = await patientService.getAllPatients();
         res.json(patients);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
-});
+}
 
-router.delete('/patients/:id', async (req, res) => {
+const deletePatient = async (req, res) => {
     try {
         const patientId = req.params.id;
 
-        if (!mongoose.Types.ObjectId.isValid(patientId)) {
+        if (!patientService.checkIfValidId(patientId)) {
             return res.status(400).json({ message: 'Invalid ObjectId format for patient id.' });
         }
 
-        const deletedPatient = await PatientModel.findByIdAndDelete(patientId);
+        const deletedPatient = await patientService.deletePatient(patientId);
 
         if (!deletedPatient) {
             return res.status(404).json({ message: 'Patient not found' });
@@ -90,43 +79,36 @@ router.delete('/patients/:id', async (req, res) => {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
-});
+}
 
-router.put('/patients/:id', async (req, res) => {
+const editPatient = async (req, res) => {
     try {
         const patientId = req.params.id;
 
-        if (!mongoose.Types.ObjectId.isValid(patientId)) {
+        if (!patientService.checkIfValidId(patientId)) {
             return res.status(400).json({ message: 'Invalid ObjectId format for patient id.' });
         }
 
-        const existingPatient = await PatientModel.findById(patientId);
+        let existingPatient = await patientService.getPatientById(patientId)
 
         if (!existingPatient) {
             return res.status(404).json({ message: 'Patient not found' });
         }
 
         const { name, surname, authInfo } = req.body;
-
-        if (name) {
-            existingPatient.name = name;
-        }
-
-        if (surname) {
-            existingPatient.surname = surname;
-        }
-
-        if (authInfo) {
-            existingPatient.authInfo = authInfo;
-        }
-
-        const updatedPatient = await existingPatient.save();
+        patientService.editPatient({ name, surname, authInfo }, existingPatient);
 
         res.json({ message: 'Patient updated successfully', patient: updatedPatient });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
-});
+}
 
-module.exports = router;
+module.exports = {
+    createPatient,
+    getPatientById,
+    getAllPatients,
+    deletePatient,
+    editPatient,
+};
