@@ -1,12 +1,13 @@
 const express = require('express');
 const cors = require("cors");
-const Patientservice = require("./services/patientService")
+const Patientservice = require("./service/patientService")
 
 const app = express();
 const orderRoutes = require('./routes/orderRoutes');
 const hospitalRoutes = require('./routes/hospitalRoutes');
 const doctorRoutes = require('./routes/doctorRoutes');
 const patientRoutes = require('./routes/patientRoutes');
+
 const passport = require("passport");
 
 const db = require("./db");

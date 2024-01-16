@@ -1,4 +1,4 @@
-const DoctorModel = require('../models/DoctorModel');
+const DoctorModel = require('../models/Doctor');
 
 const getAllDoctors = async (req, res) => {
     return await DoctorModel.find().populate('hospitals');

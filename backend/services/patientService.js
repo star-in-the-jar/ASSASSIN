@@ -1,13 +1,3 @@
-    // editPatient()
-        // detelePatient()
-            // getAllPatients()
-                    // getPatientById()
-                            // checkIfValidId()
-
-        // getPatientByAuthLogin()
-
-
-
 const getPatientByAuthLogin = async (authLogin) => {
     return await PatientModel.findOne({ 'authInfo.login': authLogin });
 }
