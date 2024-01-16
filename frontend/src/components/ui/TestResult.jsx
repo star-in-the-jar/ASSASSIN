@@ -17,7 +17,7 @@ const TestResult = ({testResult}) =>{
                 <div className="wyniki-container">
                     WYNIKI BADAŃ
                 </div>
-                <div>
+                <div className="wspolczynnik-container">
                     <ul>
                         <li>RBC M/ul</li>
                         <li>WBC K/ul</li>
