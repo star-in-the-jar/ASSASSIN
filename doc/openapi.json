@@ -877,6 +877,7 @@
         "/api/patient/signup":{
             "summary":"Used for signing up a patient",
             "post":{
+                "security":["login"],
                 "tags":["patients", "login"],
                 "description":"Signs up a patient",
                 "parameters":[
@@ -937,6 +938,7 @@
         "/api/patient/login":{
             "summary":"Used for logging in a patient",
             "post":{
+                "security":["login"],
                 "tags":["patients", "login"],
                 "description":"Logs in a patient",
                 "responses":{
@@ -1037,6 +1039,7 @@
             "summary":"Used for logging in a patient with 2FA",
             "post":{
                 "tags":["patients"],
+                "security":[],
                 "description":"Logs in a patient with 2FA",
                 "parameters":[
                     {
@@ -1091,6 +1094,7 @@
         "/doctor/signup":{
             "summary":"Used for signing up a doctor",
             "post":{
+                "security":["login"],
                 "tags":["doctors", "login"],
                 "description":"Signs up a doctor",
                 "parameters":[
@@ -1151,6 +1155,7 @@
         "/doctor/login":{
             "summary":"Used for logging in a doctor",
             "post":{
+                "security":["login"],
                 "tags":["doctors", "login"],
                 "description":"Logs in a doctor",
                 "responses":{
@@ -1250,6 +1255,7 @@
         "/doctor/login-step2":{
             "summary":"Used for logging in a doctor with 2FA",
             "post":{
+                "security":["login"],
                 "tags":["doctors"],
                 "description":"Logs in a doctor with 2FA",
                 "parameters":[
@@ -1470,6 +1476,7 @@
             },
             "login":{
                 "type":"http",
+                "description":"Basic authorization based on a login and password",
                 "in":"body",
                 "scheme":"basic",
                 "bearerFormat":"{'authInfo':{'login':%s,'password':%s}}}"
@@ -1478,8 +1485,7 @@
     },
     "security": [
         {
-            "jwt": [],
-            "login": []
+            "jwt": []
         }
     ],
     "externalDocs":[

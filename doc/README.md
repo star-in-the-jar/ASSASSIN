@@ -28,3 +28,13 @@ Just run [generateHTML.sh](./generateHTML.sh) and it should create a new directo
 
 Note the lack of extension in the provided filename.
 This is to limit the unexpected behavior of the script.
+
+## openapi
+
+Backend documentation was created in the openapi format.
+In order to convert this documentation to markdown use widdershins.
+
+```bash
+npm install -g widdershins
+widdershins openapi.json --omitHeader -o openapi.md
+```
