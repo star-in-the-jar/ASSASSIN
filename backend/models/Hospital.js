@@ -11,7 +11,6 @@ const hospitalSchema = new mongoose.Schema({
             },
             message: 'Role must be "hospital"',
         },
-        required: true,
     },
     authInfo: {
         login: String,
@@ -29,6 +28,14 @@ const hospitalSchema = new mongoose.Schema({
         street: String,
         zipCode: String,
         city: String,
+    },
+    twofaEnabled: {
+        type: Boolean,
+        default: false,
+    },
+    twofaSecret: {
+        type: String,
+        default: "",
     },
 });
 

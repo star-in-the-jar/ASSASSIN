@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const { authenticator } = require("otplib");
 const env = require("../env");
-const PatientModel = require("../models/Patient");
+const DoctorModel = require("../models/Hospital");
 
 const signup = async (req, res) => {
     return res.status(201).json({
@@ -55,8 +55,8 @@ const profile = async (req, res) => {
 };
 
 const generate2faSecret = async (req, res) => {
-    const user = await PatientModel.findOne({ "authInfo.login":  req.user.login});
-
+    const user = await DoctorModel.findOne({ "authInfo.login":  req.user.login});
+    console.log(user)
     if (req.twofaEnabled) {
         return res.status(400).json({
             message: "2FA already verified and enabled",
@@ -81,7 +81,7 @@ const generate2faSecret = async (req, res) => {
 
 
 const verifyOtp = async (req, res) => {
-    const user = await PatientModel.findOne({ "authInfo.login":  req.user.login });
+    const user = await DoctorModel.findOne({ "authInfo.login":  req.user.login });
     if (user.twofaEnabled) {
         return res.json({
             message: "2FA already verified and enabled",
@@ -122,7 +122,7 @@ const loginStep2 = async (req, res) => {
     }
     console.log(loginStep2VerificationToken);
     const token = req.body.twofaToken.replaceAll(" ", "");
-    const user = await PatientModel.findOne({
+    const user = await DoctorModel.findOne({
         "authInfo.login": loginStep2VerificationToken.loginStep2Verification.login,
     });
     if (!authenticator.check(token, user.twofaSecret)) {
@@ -143,7 +143,7 @@ const loginStep2 = async (req, res) => {
 };
 
 const disable2fa = async (req, res) => {
-    const user = await PatientModel.findOne({ "authInfo.login": req.user.authInfo.login });
+    const user = await DoctorModel.findOne({ "authInfo.login": req.user.authInfo.login });
     user.twofaEnabled = false;
     user.twofaSecret = "";
     await user.save();
