@@ -2,12 +2,12 @@ const passport = require("passport");
 const extractJwt = require("passport-jwt").ExtractJwt;
 const jwtStrategy = require("passport-jwt").Strategy;
 const localStrategy = require("passport-local").Strategy;
-const PatientModel = require("./models/Patient");
-const DoctorModel = require("./models/Hospital");
-const env = require("./env");
+const PatientModel = require("../db/models/Patient");
+const DoctorModel = require("../db/models/Hospital");
+const env = require("../env");
 const bcrypt = require("bcrypt");
 
-
+// do zmiany, nie uwzglednia logowania lekarzy
 passport.use(
     "signup",
     new localStrategy(
@@ -106,4 +106,3 @@ passport.use(
         }
     )
 );
-

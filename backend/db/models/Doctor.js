@@ -3,11 +3,6 @@ const bcrypt = require("bcrypt");
 
 const doctorSchema = new mongoose.Schema({
     id: mongoose.Schema.Types.ObjectId,
-    user: {
-        type: String,
-        ref: 'UserModel',
-        required: true,
-    },
     surname: String,
     hospitals: [{
         type: mongoose.Schema.Types.ObjectId,
