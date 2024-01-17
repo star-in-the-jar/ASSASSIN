@@ -31,8 +31,8 @@ const checkIfValidId = (id) => {
     return mongoose.Types.ObjectId.isValid(id)
 }
 
-const createOrder = async ({ hospital, doctor, patient, results }) => {
-    const newOrder = new Order({ hospital, doctor, patient, results });
+const createOrder = async (order) => {
+    const newOrder = new Order(order);
     return newOrder;
 }
 

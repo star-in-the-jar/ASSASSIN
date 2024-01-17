@@ -11,7 +11,7 @@ const createPatient = async (req, res) => {
         let existingPatient = await patientService.getPatientByAuthLogin(authInfo.login)
 
         if (!existingPatient) {
-            const newPatient = patientService.createPatient({name, surname, authInfo})
+            const newPatient = await patientService.createPatient({name, surname, authInfo})
 
             await newPatient.save();
             return res.status(201).json({ message: 'Patient created successfully', patient: newPatient });
