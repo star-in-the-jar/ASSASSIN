@@ -14,7 +14,7 @@ const editOrder = async (existingOrder, data) => {
     if (data.results) {
         existingOrder.results = data.results;
     }
-
+    console.log(existingOrder);
     existingOrder.editedAt = new Date();
     return existingOrder
 }

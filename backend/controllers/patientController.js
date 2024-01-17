@@ -90,8 +90,8 @@ const editPatient = async (req, res) => {
         }
 
         const { name, surname, authInfo } = req.body;
-        patientService.editPatient({ name, surname, authInfo }, existingPatient);
-
+        const updatedPatient = await patientService.editPatient({ name, surname, authInfo }, existingPatient);
+        updatedPatient.save();
         res.json({ message: 'Patient updated successfully', patient: updatedPatient });
     } catch (error) {
         console.error(error);

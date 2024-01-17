@@ -86,7 +86,7 @@ const editOrder = async (req, res) => {
 
         const { hospital, doctor, patient, results } = req.body;
 
-        existingOrder = orderService.editOrder(existingOrder, { hospital, doctor, patient, results })
+        existingOrder = await orderService.editOrder(existingOrder, { hospital, doctor, patient, results })
         await existingOrder.save();
 
         res.status(200).json({

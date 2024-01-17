@@ -17,7 +17,7 @@ const deleteHospital = async (hospitalId) => {
 }
 
 const editHospital = async (hospitalId, hospitalData) => {
-    await Hospital.findByIdAndUpdate(hospitalId, hospitalData, {
+    return await Hospital.findByIdAndUpdate(hospitalId, hospitalData, {
         new: true,
         runValidators: true,
     });
