@@ -11,12 +11,12 @@ const createPatient = async (req, res) => {
         let existingPatient = await patientService.getPatientByAuthLogin(authInfo.login)
 
         if (!existingPatient) {
-            const newPatient = patientService.createPatient({name, surname, authInfo})
+            const newPatient = await patientService.createPatient({name, surname, authInfo})
 
             await newPatient.save();
             return res.status(201).json({ message: 'Patient created successfully', patient: newPatient });
         } else {
-            res.status(400).json({ message: 'The patient already exists' });
+            return res.status(400).json({ message: 'Patient already exists', patient: existingPatient });
         }
     } catch (error) {
         console.error(error);
@@ -90,8 +90,8 @@ const editPatient = async (req, res) => {
         }
 
         const { name, surname, authInfo } = req.body;
-        patientService.editPatient({ name, surname, authInfo }, existingPatient);
-
+        const updatedPatient = await patientService.editPatient({ name, surname, authInfo }, existingPatient);
+        updatedPatient.save();
         res.json({ message: 'Patient updated successfully', patient: updatedPatient });
     } catch (error) {
         console.error(error);

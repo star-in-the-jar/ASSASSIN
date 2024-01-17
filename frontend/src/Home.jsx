@@ -1,22 +1,23 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import IntelligentAssistant from './components/ui/AssistantComponent';
-import bloodTestResult from '../../exampleData/results.json';
-
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import IntelligentAssistant from "./components/ui/AssistantComponent";
+import bloodTestResult from "../../exampleData/results.json";
+import { getReadableTextsBasedOnBloodResult } from "./utils/getReadableIntelligentAssystantTexts";
 
 const Home = () => {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
     console.log("działa?");
-    navigate('/login');
+    navigate("/login");
   };
+
+  const readableBloodTestResult =
+    getReadableTextsBasedOnBloodResult(bloodTestResult);
 
   return (
     <div className="home">
-
-      {/*<Button variant="blue" label="Default" onClick={handleButtonClick} />*/}
-      <IntelligentAssistant bloodTestResult={bloodTestResult} />
+      <IntelligentAssistant bloodTestResult={readableBloodTestResult} />
     </div>
   );
 };

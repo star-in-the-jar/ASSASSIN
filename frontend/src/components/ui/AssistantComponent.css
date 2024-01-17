@@ -3,6 +3,7 @@ body {
 }
 
 .assistant-component-container {
+  background-color: #fff;
   border: 2px solid #04387c;
   border-radius: 14px;
   width: 550px;
@@ -11,11 +12,10 @@ body {
 
 .header-container h2 {
   width: 100%;
-  font-family: Kumbh sans-serif;
   font-size: 40px;
   text-align: center;
   color: #04387c;
-  font-weight: 400;
+  font-weight: 500;
   position: relative;
 }
 
@@ -75,4 +75,14 @@ body {
 .left-result-container,
 .right-result-container {
   text-align: left;
+}
+
+.result-container h3 {
+  font-family: "Kumbh Sans", sans-serif;
+}
+
+.result-container ul li {
+  font-size: 17px;
+  font-family: "Kumbh Sans", sans-serif;
+  margin-bottom: 5px;
 }

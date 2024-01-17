@@ -2,37 +2,35 @@ const passport = require("passport");
 const extractJwt = require("passport-jwt").ExtractJwt;
 const jwtStrategy = require("passport-jwt").Strategy;
 const localStrategy = require("passport-local").Strategy;
-const {PatientModel } = require("./models/Patient");
-const env = require("./env");
+const PatientModel = require("../db/models/Patient");
+const DoctorModel = require("../db/models/Hospital");
+const env = require("../env");
 const bcrypt = require("bcrypt");
 
-
-
+// do zmiany, nie uwzglednia logowania lekarzy
 passport.use(
     "signup",
     new localStrategy(
         {
-            usernameField: "login",
-            passwordField: "password",
+            usernameField: "authInfo[login]",
+            passwordField: "authInfo[password]",
             passReqToCallback: true,
         },
         async (req, login, password, done) => {
             try {
-                if (await PatientModel.findOne({ "authInfo.login": login })) {
+                if (await PatientModel.findOne({ "login": login })) {
                     return done(null, false, {
                         message: `User with login ${login} already exists`,
                     });
                 }
-
                 const hashedPassword = await bcrypt.hash(password, 10);
+
 
                 const user = await PatientModel.create({
                     authInfo: {
                         login: login,
                         password: hashedPassword,
                     },
-                    name: req.body.name,
-                    surname: req.body.surname,
                 });
 
                 return done(null, {
@@ -50,8 +48,8 @@ passport.use(
     "login",
     new localStrategy(
         {
-            usernameField: "login",
-            passwordField: "password",
+            usernameField: "authInfo[login]",
+            passwordField: "authInfo[password]",
             passReqToCallback: true,
         },
         async (req, login, password, done) => {
@@ -63,7 +61,6 @@ passport.use(
                         message: "Invalid login or password",
                     });
                 }
-
                 const validate = await user.verifyPassword(password);
 
                 if (!validate) {
@@ -84,7 +81,7 @@ passport.use(
 
 passport.use(
     "jwt",
-    new jwtStrategy(
+        new jwtStrategy(
         {
             secretOrKey: env.JWT_SECRET,
             jwtFromRequest: extractJwt.fromAuthHeaderAsBearerToken(),
@@ -92,16 +89,20 @@ passport.use(
         async (token, done) => {
             try {
                 const user = await PatientModel.findOne({
-                    login: token.user.authInfo.login,
+                    "authInfo.login": token.user.login,
                 });
+                if (!user) {
+                    return done(null, false);
+                }
+                console.log("getloginFromToken Success");
                 return done(null, {
-                    login: user.login,
+                    login: user.authInfo.login,
                     twofaEnabled: user.twofaEnabled,
                 });
             } catch (error) {
+                console.log("strategy error");
                 return done(error);
             }
         }
     )
 );
-
