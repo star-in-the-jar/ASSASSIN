@@ -10,12 +10,12 @@ const createOrder = async (req, res) => {
             return res.status(400).json({ message: 'Invalid ObjectId format for hospital, doctor, or patient.' });
         }
 
-        const newOrder = orderService.createOrder({ hospital, doctor, patient, results });
+        const newOrder = await orderService.createOrder({ hospital, doctor, patient, results });
         await newOrder.save();
 
         res.status(201).json({
             message: 'Results added successfully',
-            order: savedOrder,
+            order: newOrder,
         });
     } catch (error) {
         console.error(error);
@@ -86,7 +86,7 @@ const editOrder = async (req, res) => {
 
         const { hospital, doctor, patient, results } = req.body;
 
-        existingOrder = orderService.editOrder(existingOrder, { hospital, doctor, patient, results })
+        existingOrder = await orderService.editOrder(existingOrder, { hospital, doctor, patient, results })
         await existingOrder.save();
 
         res.status(200).json({

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const PatientModel = require('../models/Patient');
+const PatientModel = require('../db/models/Patient');
 
 const getPatientByAuthLogin = async (authLogin) => {
     return await PatientModel.findOne({ 'authInfo.login': authLogin });
@@ -26,7 +26,7 @@ const getPatientById = async (patientId) => {
 }
 
 const deletePatient = async (patientId) => {
-    await PatientModel.findByIdAndDelete(patientId);
+    return await PatientModel.findByIdAndDelete(patientId);
 }
 
 const editPatient = async ({name, surname, authInfo}, existingPatient) => {
@@ -42,8 +42,13 @@ const editPatient = async ({name, surname, authInfo}, existingPatient) => {
         existingPatient.authInfo = authInfo;
     }
 
-    return await existingPatient.save();
+    return existingPatient;
 }
+
+const getPatientByLogin = async (login) => {
+    return await PatientModel.findOne({ "authInfo.login":  login});
+}
+
 
 module.exports = {
     getAllPatients,
@@ -52,5 +57,6 @@ module.exports = {
     getPatientById,
     deletePatient,
     editPatient,
-    checkIfValidId
+    checkIfValidId,
+    getPatientByLogin
 }

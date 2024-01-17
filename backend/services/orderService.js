@@ -1,20 +1,19 @@
 const mongoose = require('mongoose');
-const Order = require('../models/Order');
+const Order = require('../db/models/Order');
 
-const editOrder = async (existingOrder, { hospital, doctor, patient, results }) => {
-    if (hospital) {
-        existingOrder.hospital = hospital;
+const editOrder = async (existingOrder, data) => {
+    if (data.hospital) {
+        existingOrder.hospital = data.hospital;
     }
-    if (doctor) {
-        existingOrder.doctor = doctor;
+    if (data.doctor) {
+        existingOrder.doctor = data.doctor;
     }
-    if (patient) {
-        existingOrder.patient = patient;
+    if (data.patient) {
+        existingOrder.patient = data.patient;
     }
-    if (results) {
-        existingOrder.results = results;
+    if (data.results) {
+        existingOrder.results = data.results;
     }
-
     existingOrder.editedAt = new Date();
     return existingOrder
 }
@@ -31,8 +30,8 @@ const checkIfValidId = (id) => {
     return mongoose.Types.ObjectId.isValid(id)
 }
 
-const createOrder = async ({ hospital, doctor, patient, results }) => {
-    const newOrder = new Order({ hospital, doctor, patient, results });
+const createOrder = async (order) => {
+    const newOrder = new Order(order);
     return newOrder;
 }
 
