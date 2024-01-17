@@ -99,7 +99,6 @@ const patientVerifyOTP = async (req, res) => {
 const patientLoginStep2 = async (req, res) => {
     let loginStep2VerificationToken = null;
     try {
-        console.log(req.body);
         const step2VerificationToken = authService.verifyJwtToken(req.body.loginStep2VerificationToken)
         loginStep2VerificationToken = step2VerificationToken
 
@@ -108,7 +107,6 @@ const patientLoginStep2 = async (req, res) => {
             message: err,
         });
     }
-    console.log(loginStep2VerificationToken);
     const token = req.body.twofaToken.replaceAll(" ", "");
     const user = await patientService.getPatientByLogin(loginStep2VerificationToken.loginStep2Verification.login)
 
@@ -235,7 +233,6 @@ const doctorVerifyOTP = async (req, res) => {
 const doctorLoginStep2 = async (req, res) => {
     let loginStep2VerificationToken = null;
     try {
-        console.log(req.body);
         loginStep2VerificationToken = authService.verifyJwtToken(req.body.loginStep2VerificationToken)
 
     } catch (err) {
@@ -243,7 +240,6 @@ const doctorLoginStep2 = async (req, res) => {
             message: err,
         });
     }
-    console.log(loginStep2VerificationToken);
     const token = req.body.twofaToken.replaceAll(" ", "");
     const user = await doctorService.getDoctorByLogin(loginStep2VerificationToken.loginStep2Verification.login)
 
