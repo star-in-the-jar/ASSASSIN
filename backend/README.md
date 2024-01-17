@@ -9,18 +9,13 @@ For your convenience it has been converted to a more readable [markdown file](..
 
 - [index.js](./index.js) - creates the backend api
 - [env.js](./env.js) - defines commonly used environment variables
-- [db.js](./db.js) - connects with the database
-- [auth.js](./auth.js) - declares authentication strategies for passport.js
 
 ## Subdirectories
 
 - [controllers](./controllers/) - contains backend endpoint route controllers
-- [models](./models) - contains database model definitions
+- [db](./db) - contains database related files like connection definitions and model definitions
 - [routes](./routes/) - contains route definitions
-- [service](./service/) - contains some services
-- [services](./services/) - contains the other services
-
-~~code quality increases with the number of service folders~~
+- [services](./services/) - contains services
 
 ## How to start
 
