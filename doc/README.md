@@ -38,3 +38,18 @@ In order to convert this documentation to markdown use widdershins.
 npm install -g widdershins
 widdershins openapi.json --omitHeader -o openapi.md
 ```
+
+## makefile
+
+For my own convenience I created a makefile for doing all the cool things with the documentation.
+In order to use the makefile you need to have [make](https://www.gnu.org/software/make/) installed.
+Make is a tool for bundling together commands.
+Once you have make installed you can call make targets using the following command:
+
+```bash
+make <target>
+make opisSystemu.pdf
+```
+
+The one abstract make target there is, is the clean target.
+It will clean out all the temp files created by latex.
