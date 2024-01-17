@@ -1,18 +1,18 @@
 const mongoose = require('mongoose');
 const Order = require('../db/models/Order');
 
-const editOrder = async (existingOrder, { hospital, doctor, patient, results }) => {
-    if (hospital) {
-        existingOrder.hospital = hospital;
+const editOrder = async (existingOrder, data) => {
+    if (data.hospital) {
+        existingOrder.hospital = data.hospital;
     }
-    if (doctor) {
-        existingOrder.doctor = doctor;
+    if (data.doctor) {
+        existingOrder.doctor = data.doctor;
     }
-    if (patient) {
-        existingOrder.patient = patient;
+    if (data.patient) {
+        existingOrder.patient = data.patient;
     }
-    if (results) {
-        existingOrder.results = results;
+    if (data.results) {
+        existingOrder.results = data.results;
     }
 
     existingOrder.editedAt = new Date();
