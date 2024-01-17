@@ -1,60 +1,51 @@
-body{
-    background-color: #DCF2FB;
-    height:832px;
-    
+body {
+  background-color: #dcf2fb;
 }
 
-  
-.results_view{
-    position: absolute;
-    top:65px;
-    left:330px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: left;
-    background-color: #fff;
-    width: 882px;
-    height: 701px;
-    border-radius: 14px;
-    border: 2px solid #04387C;
-    box-shadow: 0px 4px 4px 0px #00000040;
-
-
-
-
+.results_view {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  background-color: #fff;
+  width: 882px;
+  height: 701px;
+  border-radius: 14px;
+  border: 2px solid #04387c;
+  box-shadow: 0px 4px 4px 0px #00000040;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 h4 {
-    color:#000000;
-    position: absolute;
-    font-size: 22px;
-    font-weight: 300;
-    line-height: 27px;
-    letter-spacing: 0em;
-    text-align: center;
-    
+  color: #000000;
+  position: absolute;
+  font-size: 22px;
+  font-weight: 300;
+  line-height: 27px;
+  letter-spacing: 0em;
+  text-align: center;
 
-    top: 25px;
-    left: 15px;
-    margin: 0;
-    font-weight: 400;
+  top: 25px;
+  left: 15px;
+  margin: 0;
+  font-weight: 400;
 }
 
-h3{
-    color:#000000;
-    margin-top: 0px;
-    font-family:  "Kumbh Sans";
-    font-size: 40px;
-    font-weight: 500;
-    line-height: 50px;
-    letter-spacing: 0em;
-    text-align: center;
-
+h3 {
+  color: #000000;
+  margin-top: 0px;
+  font-family: "Kumbh Sans";
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 50px;
+  letter-spacing: 0em;
+  text-align: center;
 }
-Button{
-    width: 400px ;
-    margin-top: -20px;
-    margin-bottom: 0px;
+.results_view button {
+  width: 400px;
+  margin-top: -20px;
+  margin-bottom: 0px;
 }
-
