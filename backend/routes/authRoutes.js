@@ -1,93 +1,91 @@
 const express = require('express');
 const passport = require("passport");
-const Patientservice = require("../service/patientService");
-const Doctorservice  = require("../service/doctorService");
+const authController = require("../controllers/authController");
 
 const router = express.Router();
 
 router.post(
     "/patient/signup",
     passport.authenticate("signup", { session: false }),
-    Patientservice.signup
+    authController.patientSignup
 );
-
 
 router.post(
     "/patient/login",
     passport.authenticate("login", { session: false }),
-    Patientservice.login
+    authController.patientLogin
 );
 
 router.get(
     "/patient/profile",
     passport.authenticate("jwt", { session: false }),
-    Patientservice.profile
+    authController.patientProfile
 );
 
 router.post(
     '/patient/generate-2fa-secret',
     passport.authenticate('jwt', { session: false }),
-    Patientservice.generate2faSecret
+    authController.patientGenerate2FASecret
 );
 
 
 router.post(
     "/patient/verify-otp",
     passport.authenticate("jwt", { session: false }),
-    Patientservice.verifyOtp
+    authController.patientVerifyOTP
 );
 
 router.post(
-    "/patient/login-step2", Patientservice.loginStep2
+    "/patient/login-step2", authController.patientLoginStep2
 );
 
 router.post(
     "/patient/disable-2fa",
     passport.authenticate("jwt", { session: false }),
-    Patientservice.disable2fa
+    authController.patientDisable2FA
 );
 
 router.post(
     "/doctor/signup",
     passport.authenticate("signup", { session: false }),
-    Doctorservice.signup
+    authController.doctorSignup
 );
 
 
 router.post(
     "/doctor/login",
     passport.authenticate("login", { session: false }),
-    Doctorservice.login
+    authController.doctorLogin
 );
 
 router.get(
     "/doctor/profile",
     passport.authenticate("jwt", { session: false }),
-    Doctorservice.profile
+    authController.doctorProfile
 );
 
 router.post(
     '/doctor/generate-2fa-secret',
     passport.authenticate('jwt', { session: false }),
-    Doctorservice.generate2faSecret
+    authController.doctorGenerate2FASecret
 );
 
 
 router.post(
     "/doctor/verify-otp",
     passport.authenticate("jwt", { session: false }),
-    Doctorservice.verifyOtp
+    authController.doctorVerifyOTP
 );
 
 router.post(
     "/doctor/login-step2",
-    Doctorservice.loginStep2
+    authController.doctorLoginStep2
 );
 
 router.post(
     "/doctor/disable-2fa",
     passport.authenticate("jwt", { session: false }),
-    Doctorservice.disable2fa
+    authController.doctorDisable2FA
 );
 
 module.exports = router;

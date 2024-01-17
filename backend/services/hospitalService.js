@@ -1,4 +1,4 @@
-const Hospital = require('../models/Hospital');
+const Hospital = require('../db/models/Hospital');
 
 const createHospital = async (hospitalData) => {
     return Hospital.create(hospitalData);
