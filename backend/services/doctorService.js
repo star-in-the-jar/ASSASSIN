@@ -4,8 +4,8 @@ const getAllDoctors = async () => {
     return await DoctorModel.find().populate('hospitals');
 }
 
-const getDoctorByUser = async (user) => {
-    return await DoctorModel.findOne(user);
+const getDoctorBySurname = async (surname) => {
+    return await DoctorModel.findOne(surname);
 }
 
 const createDoctor = async (doctorData) => {
@@ -31,7 +31,7 @@ const getDoctorByLogin = async (login) => {
 
 module.exports = {
     getAllDoctors,
-    getDoctorByUser,
+    getDoctorBySurname,
     createDoctor,
     getDoctorById,
     deleteDoctor,
