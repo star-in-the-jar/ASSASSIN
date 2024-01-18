@@ -13,7 +13,7 @@ const patientSignup = async (req, res) => {
 }
 
 const patientLogin = async (req, res, next) => {
-    passport.authenticate("login", { session: false }, async (err, user, info) => {
+    passport.authenticate("loginPatient", { session: false }, async (err, user, info) => {
         if (err || !user) {
             return res.status(401).json({
                 message: "Invalid login or password",
@@ -21,7 +21,7 @@ const patientLogin = async (req, res, next) => {
         }
 
         if (!user.twofaEnabled) {
-            const signedToken = authService.signLoginToken(user, secret)
+            const signedToken = authService.signLoginToken(user)
             return res.json({
                 message: "Login successful",
                 twofaEnabled: false,
@@ -145,7 +145,7 @@ const doctorSignup = async (req, res) => {
 }
 
 const doctorLogin = async (req, res, next) => {
-    passport.authenticate("login", { session: false }, async (err, user, info) => {
+    passport.authenticate("loginDoctor", { session: false }, async (err, user, info) => {
         if (err || !user) {
             return res.status(401).json({
                 message: "Invalid login or password",

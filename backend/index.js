@@ -8,15 +8,14 @@ const doctorRoutes = require('./routes/doctorRoutes');
 const patientRoutes = require('./routes/patientRoutes');
 const authRoutes = require('./routes/authRoutes');
 
-const passport = require("passport");
-
 const db = require("./db/dbConnection");
-const auth = require("./services/authService");
+const logger = require("./middleware/loggerMiddleware");
 
 const PORT = 3000;
 
 app.use(express.json());
 app.use("/api", cors());
+app.use(logger);
 
 app.use('/api', orderRoutes);
 app.use('/api', hospitalRoutes);

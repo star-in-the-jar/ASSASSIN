@@ -8,32 +8,32 @@ const router = express.Router();
 
 router.post(
     "/patient/signup",
-    passport.authenticate("signup", { session: false }),
+    passport.authenticate("signupPatient", { session: false }),
     authController.patientSignup
 );
 
 router.post(
     "/patient/login",
-    passport.authenticate("login", { session: false }),
+    passport.authenticate("loginPatient", { session: false }),
     authController.patientLogin
 );
 
 router.get(
     "/patient/profile",
-    passport.authenticate("jwt", { session: false }),
+    passport.authenticate("jwtPatient", { session: false }),
     authController.patientProfile
 );
 
 router.post(
     '/patient/generate-2fa-secret',
-    passport.authenticate('jwt', { session: false }),
+    passport.authenticate('jwtPatient', { session: false }),
     authController.patientGenerate2FASecret
 );
 
 
 router.post(
     "/patient/verify-otp",
-    passport.authenticate("jwt", { session: false }),
+    passport.authenticate("jwtPatient", { session: false }),
     authController.patientVerifyOTP
 );
 
@@ -43,39 +43,39 @@ router.post(
 
 router.post(
     "/patient/disable-2fa",
-    passport.authenticate("jwt", { session: false }),
+    passport.authenticate("jwtPatient", { session: false }),
     authController.patientDisable2FA
 );
 
 router.post(
     "/doctor/signup",
-    passport.authenticate("signup", { session: false }),
+    passport.authenticate("signupDoctor", { session: false }),
     authController.doctorSignup
 );
 
 
 router.post(
     "/doctor/login",
-    passport.authenticate("login", { session: false }),
+    passport.authenticate("loginDoctor", { session: false }),
     authController.doctorLogin
 );
 
 router.get(
     "/doctor/profile",
-    passport.authenticate("jwt", { session: false }),
+    passport.authenticate("jwtDoctor", { session: false }),
     authController.doctorProfile
 );
 
 router.post(
     '/doctor/generate-2fa-secret',
-    passport.authenticate('jwt', { session: false }),
+    passport.authenticate('jwtDoctor', { session: false }),
     authController.doctorGenerate2FASecret
 );
 
 
 router.post(
     "/doctor/verify-otp",
-    passport.authenticate("jwt", { session: false }),
+    passport.authenticate("jwtDoctor", { session: false }),
     authController.doctorVerifyOTP
 );
 
@@ -86,7 +86,7 @@ router.post(
 
 router.post(
     "/doctor/disable-2fa",
-    passport.authenticate("jwt", { session: false }),
+    passport.authenticate("jwtDoctor", { session: false }),
     authController.doctorDisable2FA
 );
 

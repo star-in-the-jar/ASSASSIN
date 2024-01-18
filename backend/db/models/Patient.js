@@ -2,8 +2,14 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 const patientSchema = new mongoose.Schema({
-    name: String,
-    surname: String,
+    name: {
+        type: String,
+        default: "",
+    },
+    surname: {
+        type: String,
+        default: "",
+    },
     authInfo: {
         login: {
             type: String,
@@ -27,6 +33,7 @@ const patientSchema = new mongoose.Schema({
     orders: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Order',
+        default: []
     }],
 });
 

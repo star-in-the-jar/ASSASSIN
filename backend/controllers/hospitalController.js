@@ -1,9 +1,11 @@
 const hospitalService = require('../services/hospitalService');
+const authService = require('../services/authService');
 
 const addHospital = async (req, res) => {
     try {
         const hospitalData = req.body;
         const hospital = await hospitalService.createHospital(hospitalData)
+        await hospital.save();
         res.status(201).json({ message: 'Hospital created successfully', hospital });
     } catch (error) {
         console.error(error);
