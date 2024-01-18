@@ -4,7 +4,6 @@ const bcrypt = require("bcrypt");
 const patientSchema = new mongoose.Schema({
     name: String,
     surname: String,
-
     authInfo: {
         login: {
             type: String,

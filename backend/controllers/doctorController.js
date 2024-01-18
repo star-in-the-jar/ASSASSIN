@@ -2,12 +2,12 @@ const doctorService = require('../services/doctorService')
 
 const createDoctor = async (req, res) => {
     try {
-        const { user, surname } = req.body;
+        const {surname} = req.body;
 
-        let doctor = await doctorService.getDoctorByUser({user})
+        let doctor = await doctorService.getDoctorBySurname({surname})
 
         if (!doctor) {
-            doctor = await doctorService.createDoctor({user, surname})
+            doctor = await doctorService.createDoctor({surname})
         } else {
             doctor.surname = surname;
         }
@@ -61,14 +61,13 @@ const deleteDoctor = async (req, res) => {
 const editDoctor = async (req, res) => {
     try {
         const doctorId = req.params.id;
-        const { user, surname } = req.body;
+        const {surname } = req.body;
 
         let doctor = await doctorService.getDoctorById(doctorId)
         if (!doctor){
             return res.status(404).json({ message: 'Doctor not found' });
         }
 
-        doctor.user = user || doctor.user;
         doctor.surname = surname || doctor.surname;
 
         await doctor.save();
