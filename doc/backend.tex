@@ -2,6 +2,7 @@
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows}
 \tikzstyle{module} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black]
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30, aspect=2]
 \usetikzlibrary{positioning, fit, calc, chains}
 
 \title{Dokumentacja Techniczna Backend}
@@ -210,33 +211,43 @@ Kilka z nich jest przedstawionych poniżej.
 
 \begin{figure}[h]
     \centering
-    \begin{tikzpicture}[node distance=3cm]
-        
+    \begin{tikzpicture}[start chain=1 going below]
+        \node[module, fill=teal!30, on chain] (login) {POST /api/patient/login};
+        \node[decision, on chain] (account) {Konto istnieje?};
+        \node[decision, on chain] (2fa) {2FA?};
+        \node[module, fill=blue!30, right of=2fa, xshift=4cm] (loginStep2) {POST /api/patient/login-step2};
+        \node[module, fill=red!30, on chain] (profile) {GET /api/patient/profile};
+        \node[module, fill=orange!30, on chain] (order) {GET /api/patient/results/:id};
+
+        \draw[->] (login) -- (account);
+        \draw[->] (account) -- node[anchor=south west] {Tak} (2fa);
+        \draw[->] (account.east) -| node[anchor=north east] {Nie} (3, -1) |-  (login.east);
+        \draw[->] (2fa) -- node[anchor=north east] {Tak} (loginStep2);
+        \draw[->] (2fa) -- node[anchor=south west] {Nie} (profile);
+        \draw[->] (loginStep2) |- (profile);
+        \draw[->] (profile) -- (order);
     \end{tikzpicture}
-    \caption{Schemat logowania lekarza\label{fig:loginDoc}}
-\end{figure}
-
-\begin{figure}[h]
-    \centering
-    
-    \caption{Schemat logowania pacjenta\label{fig:login}}
-\end{figure}
-
-\begin{figure}[h]
-    \centering
-    
-    \caption{Schemat wprowadzania wyników\label{fig:dataInput}}
-\end{figure}
-
-\begin{figure}[h]
-    \centering
-    
     \caption{Schemat wyświetlania wyników\label{fig:dataOutput}}
 \end{figure}
 
 \begin{figure}[h]
     \centering
-    
+    \begin{tikzpicture}[start chain=1 going below]
+        \node[module, fill=teal!30, on chain] (login) {POST /api/doctor/login};
+        \node[decision, on chain] (account) {Konto istnieje?};
+        \node[decision, on chain] (2fa) {2FA?};
+        \node[module, fill=blue!30, right of=2fa, xshift=4cm] (loginStep2) {POST /api/doctor/login-step2};
+        \node[module, fill=red!30, on chain] (profile) {GET /api/doctor/profile};
+        \node[module, fill=orange!30, on chain] (order) {GET /api/patient/results/:id};
+
+        \draw[->] (login) -- (account);
+        \draw[->] (account) -- node[anchor=south west] {Tak} (2fa);
+        \draw[->] (account.east) -| node[anchor=north east] {Nie} (3, -1) |-  (login.east);
+        \draw[->] (2fa) -- node[anchor=north east] {Tak} (loginStep2);
+        \draw[->] (2fa) -- node[anchor=south west] {Nie} (profile);
+        \draw[->] (loginStep2) |- (profile);
+        \draw[->] (profile) -- (order);
+    \end{tikzpicture}
     \caption{Schemat wyświetlania wyników przez lekarza\label{fig:dataOutputDoc}}
 \end{figure}
 
