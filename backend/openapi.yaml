@@ -209,6 +209,7 @@ paths:
             application/json:
               example:
                 message: 'Patient not found'
+                
   /api/patient/results:
     post:
       summary: Creates a new blood test result associated with a patient.
@@ -438,6 +439,7 @@ paths:
             application/json:
               example:
                 message: "Internal server error"
+                
   /api/hospitals:
     get:
       summary: Returns all hospitals
@@ -685,7 +687,452 @@ paths:
             application/json:
               example:
                 message: 'Hospital not found'
-
+  
+  /api/doctors:
+    get:
+      summary: Returns all doctors
+      tags:
+        - Doctors
+      description: Retrieve a list of doctors from the database
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example:
+                - _id: "65a83f0fb19d10g06719f4d2"
+                  surname: "Smith"
+                  hospitals: 
+                    ["65a83eaab19b10f86719f4c6"]
+                  __v: 0
+                - _id: "65a83f0fb19d10g06719f4d2"
+                  surname: "Doe"
+                  hospitals: 
+                    []
+                  __v: 0
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                message: "Internal server error"
+    post:
+      summary: Creates a new doctor
+      tags:
+        - Doctors
+      description: Sends the data needed to create a Doctor object in the database.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              surname: "Doe"
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              example:
+                - message: 'Doctor created or updated successfully'
+                  doctor:
+                    _id: "65a83f0fb19b10f86719f4d2"
+                    surname: "Doe"
+                    hospitals: []
+                    __v: 0
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                message: "Internal server error"
+  /api/doctors/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the doctor
+      schema:
+        type: string
+    get:
+      summary: Returns doctor by ID
+      tags:
+        - Doctors
+      description: Retrieve a doctor by their ID from the database
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example:
+                _id: "65a83f0fb19b10f86719f4d2"
+                surname: "Doe"
+                hospitals: []
+                __v: 0
+        '404':
+          description: Doctor does not exist
+          content:
+            application/json:
+              example:
+                message: "Doctor not found"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                message: "Internal server error"
+    put:
+      summary: Edits a doctors's data
+      tags:
+        - Doctors
+      description: Update a Doctor object in the database with provided data
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              surname: "Doe"
+              hospitals: ["65b99f0sb29b10f86779f4d6"]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example:
+                - message: 'Doctor updated successfully'
+                  doctor:
+                    _id: "65a83f0fb19b10f86719f4d2"
+                    surname: "Doe"
+                    hospitals: ["65b99f0sb29b10f86779f4d6"]
+                    __v: 0
+        '404':
+          description: Doctor does not exists
+          content:
+            application/json:
+              example:
+                message: "Doctor not found"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                message: "Internal server error"
+    delete:
+      summary: Deletes a doctor
+      tags:
+        - Doctors
+      description: Delete a Doctor object from the database
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example:
+                message: "Doctor deleted successfully"
+                deletedDoctor:
+                  _id: "65a83f0fb19b10f86719f4d2"
+                  surname: "Doe"
+                  hospitals: []
+                  __v: 0
+        '404':
+          description: Doctor not found
+          content:
+            application/json:
+              example:
+                message: 'Doctor not found'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                message: "Internal server error"
+  
+  /api/{person}/signup:
+    post:
+      summary: Signup route for doctors and patients
+      tags: 
+        - Auth (experimental)
+      description: Signup for doctors or patients
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+                authInfo:
+                 login: "johnDoe"
+                 password: "password"
+      parameters:
+        - name: person
+          in: path
+          description: Type of person (doctor or patient)
+          required: true
+          schema:
+            type: string
+            enum: [doctor, patient]
+      responses:
+        '200':
+          description: Successful signup
+          content:
+            application/json:
+              example:
+                message: 'Login successful'
+                user:
+                  login: "johnDoe"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                message: "Unauthorized"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                message: "Internal server error"
+  /api/{person}/login:
+    post:
+      summary: Login route for doctors and patients
+      tags: 
+        - Auth (experimental)
+      description: Login for doctors or patients
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+                authInfo:
+                 login: "johnDoe"
+                 password: "password"
+      parameters:
+        - name: person
+          in: path
+          description: Type of person (doctor or patient)
+          required: true
+          schema:
+            type: string
+            enum: [doctor, patient]
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              example:
+                message: 'Login successful'
+                twofaEnabled: false
+                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImxvZ2luIjoiOEVTVElORzIzNDM0MzI0MjMifSwiaWF0IjoxNzA1NTkzNzIzfQ.aKD_odtRJAjtL64ng9s_peAtP72yOjPQoc2trlZS0Lo"
+        '401':
+          description: Invalid login or password
+          content:
+            application/json:
+              example:
+                message: "Invalid login or password"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                message: "Internal server error"
+  /api/{person}/generate-2fa-secret:
+    post:
+      summary: Generate 2FA secret token
+      tags: 
+        - Auth (experimental)
+      description: Generate 2FA secret token for a patient or a doctor, used when turning on the 2FA login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+                token: "530125"
+      parameters:
+        - name: person
+          in: path
+          description: Type of person (doctor or patient)
+          required: true
+          schema:
+            type: string
+            enum: [doctor, patient]
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              example:
+                message: ""
+        '400':
+          description: 2FA already activated
+          content:
+            application/json:
+              example:
+                message: "2FA already verified and enabled"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                message: "Internal server error"
+  /api/{person}/verify-otp:
+    post:
+      summary: Verify OTP code for a user
+      tags: 
+        - Auth (experimental)
+      description: Checks if OTP given by the user is correct for their account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+                user:
+                  login: "johnDoe"
+                token: "530125"
+      parameters:
+        - name: person
+          in: path
+          description: Type of person (doctor or patient)
+          required: true
+          schema:
+            type: string
+            enum: [doctor, patient]
+      responses:
+        '200':
+          description: OTP verification successful
+          content:
+            application/json:
+              example:
+                message: "OTP verification successful"
+                twofaEnabled: true
+        '400':
+          description: Bad token
+          content:
+            application/json:
+              example:
+                message: "OTP verification failed: Invalid token"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                message: "Internal server error"
+  /api/{person}/login-step2:
+    post:
+      summary: Verify 2FA user data for log in purposes
+      tags: 
+        - Auth (experimental)
+      description: Verifies user's 2FA login token and 2FA code for log in purposes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+                loginStep2VerificationToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpblN0ZXAyVmVyaWZpY2F0aW9uIjp7ImxvZ2luIjoiVEVTVFNBU0RBU0RBU0RTUzIzIn0sImlhdCI6MTcwNTQzOTMyMCwiZXhwIioxNzA1NDN5NjLwfQ.XzlW3GRdiuJlYAUR3l_gjaOApz2yeZACky0qX4pvaf8"
+                token: "530125"
+      parameters:
+        - name: person
+          in: path
+          description: Type of person (doctor or patient)
+          required: true
+          schema:
+            type: string
+            enum: [doctor, patient]
+      responses:
+        '200':
+          description: OTP verification successful
+          content:
+            application/json:
+              example:
+                message: "OTP verification successful"
+                token: "signed-token"
+        '400':
+          description: Bad token
+          content:
+            application/json:
+              example:
+                message: "OTP verification failed: Invalid token"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                message: "Internal server error"
+  /api/{person}/disable-2fa:
+    post:
+      summary: Disables 2FA login for a given user
+      tags: 
+        - Auth (experimental)
+      description: Deletes user 2FA login token and disables the route
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              questionmark:
+                xd: null
+      parameters:
+        - name: person
+          in: path
+          description: Type of person (doctor or patient)
+          required: true
+          schema:
+            type: string
+            enum: [doctor, patient]
+      responses:
+        '200':
+          description: 2FA disabled sucessfully
+          content:
+            application/json:
+              example:
+                message: "2FA disabled successfully"
+                twofaEnabled: false
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                message: "Internal server error"
+  /api/{person}/profile:
+    post:
+      summary: Displays user data
+      tags: 
+        - Auth (experimental)
+      description: Return user data associated with given JWT token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              questionmark:
+                xd: null
+      parameters:
+        - name: person
+          in: path
+          description: Type of person (doctor or patient)
+          required: true
+          schema:
+            type: string
+            enum: [doctor, patient]
+      responses:
+        '200':
+          description: 2FA disabled sucessfully
+          content:
+            application/json:
+              example:
+                message: "Success"
+                user:
+                  _id: "65a83f0fb19b10f86719f4d2"
+                  name: "John"
+                  surname: "Doe"
+                  twofaEnabled: false
+                  twofaSecret: ""
+                  orders: []
+                  authInfo: 
+                    login: "johnDoe"
+                    password: "hashedpassword"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                message: "Internal server error"
 components:
   schemas:
     Doctor:
