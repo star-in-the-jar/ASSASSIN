@@ -2,6 +2,7 @@ const env = require("../env");
 const qrcode = require("qrcode");
 const jwt = require("jsonwebtoken");
 const { authenticator } = require("otplib");
+const bcrypt = require("bcrypt");
 
 const signLoginToken = (user) => {
     return jwt.sign(
@@ -10,6 +11,10 @@ const signLoginToken = (user) => {
             },
             env.JWT_SECRET
     )
+}
+
+const hashPassword = async (password) => {
+    return await bcrypt.hash(password, 10);
 }
 
 const sign2FAToken = (user) => {
@@ -49,5 +54,6 @@ module.exports = {
     generateSecret,
     generateQRCode,
     verifyJwtToken,
-    checkTokenValidity
+    checkTokenValidity,
+    hashPassword
 };

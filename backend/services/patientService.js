@@ -13,6 +13,12 @@ const createPatient = async ({name, surname, authInfo}) => {
     return newPatient;
 }
 
+const createPatientAuth = async ({login, password}) => {
+    const newPatient = new PatientModel({
+        authInfo: {login: login, password: password}});
+    return newPatient;
+}
+
 const checkIfValidId = (id) => {
     return mongoose.Types.ObjectId.isValid(id)
 }
@@ -29,7 +35,7 @@ const deletePatient = async (patientId) => {
     return await PatientModel.findByIdAndDelete(patientId);
 }
 
-const editPatient = async ({name, surname, authInfo}, existingPatient) => {
+const editPatient = ({name, surname, authInfo}, existingPatient) => {
     if (name) {
         existingPatient.name = name;
     }
@@ -58,5 +64,6 @@ module.exports = {
     deletePatient,
     editPatient,
     checkIfValidId,
-    getPatientByLogin
+    getPatientByLogin,
+    createPatientAuth
 }

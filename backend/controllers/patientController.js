@@ -1,8 +1,9 @@
 const patientService = require('../services/patientService');
+const authService = require('../services/authService');
 
 const createPatient = async (req, res) => {
     try {
-        const { name, surname, authInfo } = req.body;
+        let { name, surname, authInfo } = req.body;
 
         if (!authInfo || !authInfo.login || !authInfo.password) {
             return res.status(400).json({ message: 'Invalid request. Please provide login and password.' });
@@ -11,6 +12,7 @@ const createPatient = async (req, res) => {
         let existingPatient = await patientService.getPatientByAuthLogin(authInfo.login)
 
         if (!existingPatient) {
+            authInfo.password = await authService.hashPassword(authInfo.password);
             const newPatient = await patientService.createPatient({name, surname, authInfo})
 
             await newPatient.save();
@@ -84,13 +86,19 @@ const editPatient = async (req, res) => {
         }
 
         let existingPatient = await patientService.getPatientById(patientId)
-
         if (!existingPatient) {
             return res.status(404).json({ message: 'Patient not found' });
         }
 
-        const { name, surname, authInfo } = req.body;
-        const updatedPatient = await patientService.editPatient({ name, surname, authInfo }, existingPatient);
+        let { name, surname, authInfo } = req.body;
+        authInfo.password = await authService.hashPassword(authInfo.password);
+
+        const isPatientOfSameLogin = await patientService.getPatientByAuthLogin(authInfo.login);
+        if (isPatientOfSameLogin) {
+            return res.status(400).json({ message: 'Patient with this login already exists' });
+        }
+
+        const updatedPatient = patientService.editPatient({ name, surname, authInfo }, existingPatient);
         updatedPatient.save();
         res.json({ message: 'Patient updated successfully', patient: updatedPatient });
     } catch (error) {
