@@ -10,6 +10,7 @@
 \usepackage{listings}
 \usepackage{titlesec}
 \usepackage[T1]{fontenc}
+\usepackage{hyperref}
   
 %larger skip definitions
 \newcommand{\hugeskip}{
@@ -84,3 +85,18 @@
   \parfillskip \z@skip}
 \makeatother
 
+\lstdefinelanguage{JavaScript}{
+  morekeywords=[1]{break, continue, delete, else, for, function, if, in,
+    new, return, this, typeof, var, void, while, with},
+  % Literals, primitive types, and reference types.
+  morekeywords=[2]{false, null, true, boolean, number, undefined,
+    Array, Boolean, Date, Math, Number, String, Object},
+  % Built-ins.
+  morekeywords=[3]{eval, parseInt, parseFloat, escape, unescape},
+  sensitive,
+  morecomment=[s]{/*}{*/},
+  morecomment=[l]//,
+  morecomment=[s]{/**}{*/}, % JavaDoc style comments
+  morestring=[b]',
+  morestring=[b]"
+}[keywords, comments, strings]
