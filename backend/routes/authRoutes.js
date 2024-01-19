@@ -18,7 +18,7 @@ router.post(
     authController.patientLogin
 );
 
-router.get(
+router.post(
     "/patient/profile",
     passport.authenticate("jwtPatient", { session: false }),
     authController.patientProfile
@@ -46,6 +46,8 @@ router.post(
     passport.authenticate("jwtPatient", { session: false }),
     authController.patientDisable2FA
 );
+
+////////---------------------------------////////////////////
 
 router.post(
     "/doctor/signup",
