@@ -8,6 +8,8 @@ import UiInput from "./components/ui/UiInput.jsx";
 import LandingPage from "./LandingPage";
 import PatientResults from "./PatientResults.jsx";
 import UserData from "./UserData.jsx";
+import LoggedPage from "./LoggedPage";
+import LoggedPageHospital from "./LoggedPageHospital";
 
 function App() {
   const [inputValue, setInputValue] = useState("");
@@ -48,6 +50,8 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/patient-results/download" element={<PatientResults />} />
         <Route path="/user-data" element={<UserData />} />
+        <Route path="/logged-in" element={<LoggedPage />} />
+        <Route path="/logged-in-hospital" element={<LoggedPageHospital />} />
       </Routes>
     </BrowserRouter>
   );
