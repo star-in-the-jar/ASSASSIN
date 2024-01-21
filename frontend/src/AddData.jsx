@@ -4,7 +4,6 @@ import Button from "./components/ui/Button";
 import "./AddData.css"
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import AddResults from "./AddResults";
 
 const AddData= () =>{
 
@@ -18,6 +17,9 @@ const AddData= () =>{
     const handleButtonClick=()=>{
         if((!isNaN(+testNumber)&&testNumber.length==12)&&docSurname.length>0&&(!isNaN(+pesel)&&pesel.length==11)){
             navigate("/add-data/add-results",{state:{testNumber:testNumber,docSurname:docSurname,pesel:pesel}})
+        }
+        else{
+            console.log("Wrong data!")
         }
 
     }
