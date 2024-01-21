@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: doc
+        working-directory: ./doc
     steps:
       - name: Configure
         run: sudo apt install make && make requirements
