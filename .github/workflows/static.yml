@@ -29,12 +29,15 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Configure
-        run: cd doc && apt install make && make requirements
-      - name: Build
-        run: make opisSystemu.html
+
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Install packages
+        working-directory: ./doc
+        run: ./configure
+      - name: Build
+        working-directory: ./doc
+        run: make index.html
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
