@@ -32,7 +32,7 @@ jobs:
       - uses: awalsh128/cache-apt-pkgs-action@latest
         with:
           packages: texlive-latex-base texlive-latex-extra texlive-science tex-common texlive-plain-generic markdown
-          version: 1.0
+          execute_install_scripts: true
       - name: Checkout
         uses: actions/checkout@v4
       - name: Build
