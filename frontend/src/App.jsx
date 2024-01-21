@@ -10,6 +10,8 @@ import PatientResults from "./PatientResults.jsx";
 import UserData from "./UserData.jsx";
 import AddData from "./AddData.jsx"
 import AddResults from "./AddResults.jsx";
+import LoggedPage from "./LoggedPage";
+import LoggedPageHospital from "./LoggedPageHospital";
 
 function App() {
   const [inputValue, setInputValue] = useState("");
@@ -52,6 +54,8 @@ function App() {
         <Route path="/user-data" element={<UserData />} />
         <Route path="/add-data" element={<AddData />} />
         <Route path="/add-data/add-results" element={<AddResults/>} />
+        <Route path="/logged-in" element={<LoggedPage />} />
+        <Route path="/logged-in-hospital" element={<LoggedPageHospital />} />
       </Routes>
     </BrowserRouter>
   );
