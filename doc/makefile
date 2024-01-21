@@ -4,10 +4,10 @@ documentation: backend.pdf backend.html opisSystemu.pdf opisSystemu.html openapi
 openapi.md: openapi.json
 	widdershins openapi.json --omitHeader -l -o openapi.md
 
-*.pdf: *.tex
+%.pdf: *.tex
 	pdflatex *.tex
 
-*.html: *.tex
+%.html: *.tex
 	htlatex *.tex
 
 backend.pdf: backend.tex
