@@ -8,6 +8,8 @@ import UiInput from "./components/ui/UiInput.jsx";
 import LandingPage from "./LandingPage";
 import PatientResults from "./PatientResults.jsx";
 import UserData from "./UserData.jsx";
+import AddData from "./AddData.jsx"
+import AddResults from "./AddResults.jsx";
 import LoggedPage from "./LoggedPage";
 import LoggedPageHospital from "./LoggedPageHospital";
 
@@ -50,6 +52,8 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/patient-results/download" element={<PatientResults />} />
         <Route path="/user-data" element={<UserData />} />
+        <Route path="/add-data" element={<AddData />} />
+        <Route path="/add-data/add-results" element={<AddResults/>} />
         <Route path="/logged-in" element={<LoggedPage />} />
         <Route path="/logged-in-hospital" element={<LoggedPageHospital />} />
       </Routes>
