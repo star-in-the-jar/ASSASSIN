@@ -29,12 +29,11 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - uses: awalsh128/cache-apt-pkgs-action@latest
-        with:
-          packages: make texlive-latex-base texlive-latex-extra texlive-science tex-common texlive-plain-generic markdown
-          execute_install_scripts: true
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Configure
+        working-directory: ./doc
+        run: sudo apt install make && ./configure
       - name: Build
         working-directory: ./doc
         run: make opisSystemu.html && make backend.html && make userManual.html && make openapi.html
