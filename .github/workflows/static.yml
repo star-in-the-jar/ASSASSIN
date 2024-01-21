@@ -28,12 +28,13 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app
     steps:
       - name: Configure
-        working-directory: "doc"
         run: sudo apt install make && make requirements
       - name: Build
-        working-directory: "doc"
         run: make opisSystemu.html
       - name: Checkout
         uses: actions/checkout@v4
