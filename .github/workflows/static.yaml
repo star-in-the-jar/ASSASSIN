@@ -29,8 +29,10 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - name: Configure
+        run: cd doc && apt install make && make requirements
       - name: Build
-        run: cd doc && make opisSystemu.html
+        run:  make opisSystemu.html
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Pages
