@@ -29,16 +29,15 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Install packages
-        uses: awalsh128/cache-apt-pkgs-action@latest
-        with:
-          packages: make texlive-latex-base texlive-latex-extra texlive-science tex-common texlive-plain-generic markdown
-          execute_install_scripts: true
+
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Install packages
+        working-directory: ./doc
+        run: ./configure
       - name: Build
         working-directory: ./doc
-        run: sudo apt install texlive-plain-generic && install make opisSystemu.html
+        run: install make opisSystemu.html
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
