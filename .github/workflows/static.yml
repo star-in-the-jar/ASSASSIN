@@ -28,16 +28,16 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./doc
     steps:
-      - name: Configure
-        run: sudo apt install make && make requirements
-      - name: Build
-        run: make opisSystemu.html
+      
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Configure
+        working-directory: ./doc
+        run: sudo apt install make && make requirements
+      - name: Build
+        working-directory: ./doc
+        run: make opisSystemu.html
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
