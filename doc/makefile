@@ -14,7 +14,7 @@ openapi.html: openapi.md
 	markdown openapi.md > openapi.html
 
 index.html: documentation
-	markdown ../README.md > index.html
+	markdown index.md > index.html
 
 clean:
 	rm -f *.aux *.log *.out *.4ct *.4tc *.dvi *.idv *.lg *.tmp *.xref *.fdb_latexmk *.fls *.synctex.gz *.toc
