@@ -37,7 +37,7 @@ jobs:
         run: ./configure
       - name: Build
         working-directory: ./doc
-        run: install make opisSystemu.html
+        run: make opisSystemu.html
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
