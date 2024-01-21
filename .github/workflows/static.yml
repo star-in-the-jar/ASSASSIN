@@ -37,7 +37,7 @@ jobs:
         run: ./configure
       - name: Build
         working-directory: ./doc
-        run: make opisSystemu.html && make backend.html && make userManual.html && make openapi.html
+        run: make index.html
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
