@@ -30,10 +30,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Configure
-        working-directory: "./doc"
+        working-directory: "doc"
         run: sudo apt install make && make requirements
       - name: Build
-        working-directory: "./doc"
+        working-directory: "doc"
         run: make opisSystemu.html
       - name: Checkout
         uses: actions/checkout@v4
