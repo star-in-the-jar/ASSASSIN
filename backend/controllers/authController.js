@@ -108,7 +108,7 @@ const patientLoginStep2 = async (req, res) => {
         });
     }
     const token = req.body.twofaToken.replaceAll(" ", "");
-    const user = await patientService.getPatientByLogin(loginStep2VerificationToken.loginStep2Verification.login)
+    const user = await patientService.getPatientByLogin(loginStep2VerificationToken.user.login)
 
     const tokenCheck = authService.checkTokenValidity(token, user.twofaSecret)
 
@@ -187,10 +187,10 @@ const doctorGenerate2FASecret = async (req, res) => {
         });
     }
 
-    const secret = authService.generateSecret();
+    const secret = await authService.generateSecret();
 
     user.twofaSecret = secret;
-    user.save();
+    await user.save();
     const appName = "2FALogin";
 
     return res.json({

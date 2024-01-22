@@ -113,14 +113,14 @@ passport.use(
         },
         async (req, login, password, done) => {
             try {
-                const patientExists = await doctorService.getDoctorByLogin(login);
-                if (patientExists) {
+                const doctorExists = await doctorService.getDoctorByLogin(login);
+                if (doctorExists) {
                     return done(null, false, {
                         message: `User with login ${login} already exists`,
                     });
                 }
                 const hashedPassword = await bcrypt.hash(password, 10);
-
+                console.log(login)
                 const user = await doctorService.createDoctorAuth({ //??????????
                     login: login,
                     password: hashedPassword,
@@ -134,7 +134,7 @@ passport.use(
                 await user.save();
 
                 return done(null, {
-                    login: user.authInfo.login,
+                    login: "" //user.authInfo.login,
                 });
             } catch (error) {
                 console.error(error);
