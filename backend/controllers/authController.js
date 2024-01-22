@@ -12,6 +12,8 @@ const patientSignup = async (req, res) => {
     });
 }
 
+
+
 const patientLogin = async (req, res, next) => {
     passport.authenticate("loginPatient", { session: false }, async (err, user, info) => {
         if (err || !user) {

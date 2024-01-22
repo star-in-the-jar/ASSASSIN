@@ -11,6 +11,8 @@ router.get('/patients', patientController.getAllPatients);
 
 router.delete('/patients/:id', patientController.deletePatient);
 
+router.delete('/patients/login/:login', patientController.deletePatientByLogin);
+
 router.put('/patients/:id', patientController.editPatient);
 
 module.exports = router;

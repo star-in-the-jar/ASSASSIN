@@ -35,6 +35,10 @@ const deletePatient = async (patientId) => {
     return await PatientModel.findByIdAndDelete(patientId);
 }
 
+const deletePatientByLogin = async (login) => {
+    return await PatientModel.findOneAndDelete({ 'authInfo.login': login });
+};
+
 const editPatient = ({name, surname, authInfo}, existingPatient) => {
     if (name) {
         existingPatient.name = name;
@@ -65,5 +69,6 @@ module.exports = {
     editPatient,
     checkIfValidId,
     getPatientByLogin,
-    createPatientAuth
+    createPatientAuth,
+    deletePatientByLogin,
 }
