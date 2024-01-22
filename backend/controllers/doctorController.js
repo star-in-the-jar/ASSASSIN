@@ -13,7 +13,7 @@ const createDoctor = async (req, res) => {
         }
 
         await doctor.save();
-        res.status(201).json({ message: 'Doctor created or updated successfully', doctor });
+        res.status(201).json({ message: 'Doctor created successfully', doctor });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
