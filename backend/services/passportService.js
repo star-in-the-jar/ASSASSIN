@@ -87,7 +87,7 @@ passport.use(
         },
         async (token, done) => {
             try {
-                const user = patientService.getPatientByLogin(token.user.login);
+                const user = await patientService.getPatientByLogin(token.user.login);
                 if (!user) {
                     return done(null, false);
                 }
@@ -154,7 +154,7 @@ passport.use(
         },
         async (req, login, password, done) => {
             try {
-                const user = doctorService.getDoctorByLogin(login);
+                const user = await doctorService.getDoctorByLogin(login);
                 if (!user) {
                     return done(null, false, {
                         message: "Invalid login or password",
@@ -187,7 +187,7 @@ passport.use(
         },
         async (token, done) => {
             try {
-                const user = doctorService.getDoctorByLogin(token.user.login);
+                const user = await doctorService.getDoctorByLogin(token.user.login);
                 if (!user) {
                     return done(null, false);
                 }
