@@ -21,7 +21,9 @@
 
 \subsection{Endpointy}
 
-%TODO place the endpoints here
+Dokumentacja endpointów jest dostępna w formacie OpenAPI 3.0.0.
+Dostępna jest w \href{https://github.com/Stanlee77/ASSASSIN/blob/master/backend/openapi.yaml}{surowym formacie}, \href{https://github.com/Stanlee77/ASSASSIN/blob/master/doc/openapi.md}{reprezentacji Markdown} oraz na \href{https://stanlee77.github.io/ASSASSIN/openapi.html}{Github Pages}.
+Dodatkowo wraz z backendem dostarczona jest dokumentacja w formacie Swagger UI pod ścieżką \codeword{\docs}.
 
 \subsection{Autoryzacja}
 
@@ -91,8 +93,11 @@ Schemat zależności między modułami znajduje się na schemacie \ref{fig:depen
             \tikzstyle{service} = [route, fill=yellow!30]
             \tikzstyle{dbModel} = [route, orange!50, text=black, draw=black]
 
-            \node[module, fill=green!30] (index) {index.js};
-    
+            \node[module, fill=teal!30] (server) {server.js};
+            
+            \node[module, fill=green!30, below of=server] (index) {index.js};
+            \node[module, fill=red!30, below of=index, xshift=-8cm] (logger) {loggerMiddleware.js};
+
             \node[module, fill=orange!30, below of=index, xshift=-8cm] (db) {dbConnection.js};
             
             \node[route, below of=index, yshift=-1cm] (patient) {patientRoutes.js};
@@ -122,6 +127,7 @@ Schemat zależności między modułami znajduje się na schemacie \ref{fig:depen
             \node[module, fill=yellow!30, below of=auth, yshift=-2cm] (passportService) {passportService.js};
             \node[module, fill=red!30, below of=auth, xshift=0cm, yshift=1cm] (env) {env.js};
 
+            \draw[->] (index) -- (server);
             \draw[->] (db) -- (index);
             \draw[->] (auth) -- (index);
             \draw[->] (env) -- (auth);

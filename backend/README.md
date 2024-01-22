@@ -2,11 +2,13 @@
 
 ## API Specification
 
-Specification in the openapi format is available [here](../doc/openapi.json).
+Specification in the openapi format is available [here](openapi.yaml).
 For your convenience it has been converted to a more readable [markdown file](../doc/openapi.md).
+Additionally Swagger documentation is available at the '/docs' path once the backend is running.
 
 ## Files
 
+- [server.js](./server.js) - loads the backend and middleware
 - [index.js](./index.js) - creates the backend api
 - [env.js](./env.js) - defines commonly used environment variables
 
@@ -16,6 +18,8 @@ For your convenience it has been converted to a more readable [markdown file](..
 - [db](./db) - contains database related files like connection definitions and model definitions
 - [routes](./routes/) - contains route definitions
 - [services](./services/) - contains services
+- [tests](./__tests__/) - contains backend tests
+- [middleware](./middleware/) - contains backend middleware like logger
 
 ## How to start
 
