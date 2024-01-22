@@ -55,12 +55,12 @@ const patientGenerate2FASecret = async (req, res) => {
         });
     }
 
-    const secret = authService.generateSecret();
+    const secret = await authService.generateSecret();
 
     user.twofaSecret = secret;
-    user.save();
+    await user.save();
     const appName = "2FALogin";
-    qrImage = await authService.generateQRCode(login, appName, secret)
+    qrImage = await authService.generateQRCode(req.user.login, appName, secret)
     return res.json({
         message: "2FA secret generation successful",
         secret: secret,
