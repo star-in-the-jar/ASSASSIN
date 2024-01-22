@@ -77,6 +77,23 @@ const deletePatient = async (req, res) => {
     }
 }
 
+const deletePatientByLogin = async (req, res) => {
+    try {
+        const login = req.params.login;
+
+        const deletedPatient = await patientService.deletePatientByLogin(login);
+
+        if (!deletedPatient) {
+            return res.status(404).json({ message: 'Patient not found' });
+        }
+
+        res.json({ message: 'Patient deleted successfully', patient: deletedPatient });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+}
+
 const editPatient = async (req, res) => {
     try {
         const patientId = req.params.id;
@@ -113,4 +130,5 @@ module.exports = {
     getAllPatients,
     deletePatient,
     editPatient,
+    deletePatientByLogin,
 };

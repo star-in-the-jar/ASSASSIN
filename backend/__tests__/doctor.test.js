@@ -59,8 +59,7 @@ describe('UPDATE Doctors by ID - UPDATE /api/doctors/:doctorId', () => {
             .post('/api/doctors')
             .send({
                     "surname": "xd"
-                }
-            );
+                });
         expect(createResponse.statusCode).toBe(201);
         expect(createResponse.body.message).toBe('Doctor created successfully');
         const createdDoctorId = createResponse.body.doctor._id;
@@ -77,3 +76,4 @@ describe('UPDATE Doctors by ID - UPDATE /api/doctors/:doctorId', () => {
         expect(deleteResponse.body.message).toBe('Doctor deleted successfully');
     });
 });
+

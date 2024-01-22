@@ -129,3 +129,4 @@ describe('UPDATE Hospital - PUT /api/hospitals/:id', () => {
         await request(app).delete(`/api/hospitals/${createdHospitalId}`);
     });
 });
+
