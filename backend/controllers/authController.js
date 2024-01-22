@@ -13,7 +13,7 @@ const patientSignup = async (req, res) => {
 }
 
 const patientLogin = async (req, res, next) => {
-    passport.authenticate("login", { session: false }, async (err, user, info) => {
+    passport.authenticate("loginPatient", { session: false }, async (err, user, info) => {
         if (err || !user) {
             return res.status(401).json({
                 message: "Invalid login or password",
@@ -21,7 +21,7 @@ const patientLogin = async (req, res, next) => {
         }
 
         if (!user.twofaEnabled) {
-            const signedToken = authService.signLoginToken(user, secret)
+            const signedToken = authService.signLoginToken(user)
             return res.json({
                 message: "Login successful",
                 twofaEnabled: false,
@@ -55,12 +55,12 @@ const patientGenerate2FASecret = async (req, res) => {
         });
     }
 
-    const secret = authService.generateSecret();
+    const secret = await authService.generateSecret();
 
     user.twofaSecret = secret;
-    user.save();
+    await user.save();
     const appName = "2FALogin";
-    qrImage = await authService.generateQRCode(login, appName, secret)
+    qrImage = await authService.generateQRCode(req.user.login, appName, secret)
     return res.json({
         message: "2FA secret generation successful",
         secret: secret,
@@ -145,7 +145,7 @@ const doctorSignup = async (req, res) => {
 }
 
 const doctorLogin = async (req, res, next) => {
-    passport.authenticate("login", { session: false }, async (err, user, info) => {
+    passport.authenticate("loginDoctor", { session: false }, async (err, user, info) => {
         if (err || !user) {
             return res.status(401).json({
                 message: "Invalid login or password",

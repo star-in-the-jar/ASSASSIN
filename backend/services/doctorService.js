@@ -1,4 +1,5 @@
 const DoctorModel = require('../db/models/Doctor');
+const HospitalModel = require('../db/models/Hospital');
 
 const getAllDoctors = async () => {
     return await DoctorModel.find().populate('hospitals');
@@ -11,6 +12,20 @@ const getDoctorBySurname = async (surname) => {
 const createDoctor = async (doctorData) => {
     let doctor = new DoctorModel(doctorData);
     return doctor;
+}
+
+const createDoctorAuth = async ({login, password}) => {
+    const hospital = await HospitalModel.findOne({authInfo: {login: login, password: password}});
+    if (!hospital) {
+        return null;
+    }
+    const newDoctor = new DoctorModel({
+        surname: "",
+        hospitals: [
+            hospital
+        ]
+    });
+    return newDoctor;
 }
 
 const getDoctorById = async (doctorId) => {
@@ -35,5 +50,6 @@ module.exports = {
     createDoctor,
     getDoctorById,
     deleteDoctor,
-    getDoctorByLogin
+    getDoctorByLogin,
+    createDoctorAuth
 }
