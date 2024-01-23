@@ -3,6 +3,22 @@ import "./Modal.css";
 import code from "../../../../exampleData/2FA.json";
 import wykrzyknikImage from "../../assets/erroricon.png";
 
+
+
+
+export function TextFail() {
+  return (
+    <div className="text-fail">
+      <strong>Nieprawidłowy kod</strong>
+      <img
+        className="wykrzyknik"
+        src={wykrzyknikImage}
+        alt="wykrzyknik"
+      ></img>
+    </div>
+  );
+}
+
 const Modal = ({ onCodeFilled }) => {
   const secret_code = code.code;
 
@@ -93,18 +109,6 @@ const Modal = ({ onCodeFilled }) => {
     }
   }
 
-  function TextFail() {
-    return (
-      <div className="text-fail">
-        <strong>Nieprawidłowy kod</strong>
-        <img
-          className="wykrzyknik"
-          src={wykrzyknikImage}
-          alt="wykrzyknik"
-        ></img>
-      </div>
-    );
-  }
 
   return (
     <div className="modal-container">

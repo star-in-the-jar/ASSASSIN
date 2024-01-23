@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">61.26% </span>
+                <span class="strong">66.81% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>136/222</span>
+                <span class='fraction'>151/226</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">12.5% </span>
+                <span class="strong">22.22% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/8</span>
+                <span class='fraction'>2/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/3</span>
+                <span class='fraction'>2/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">61.26% </span>
+                <span class="strong">66.81% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>136/222</span>
+                <span class='fraction'>151/226</span>
             </div>
         
             
@@ -285,7 +285,11 @@
 <a name='L220'></a><a href='#L220'>220</a>
 <a name='L221'></a><a href='#L221'>221</a>
 <a name='L222'></a><a href='#L222'>222</a>
-<a name='L223'></a><a href='#L223'>223</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L223'></a><a href='#L223'>223</a>
+<a name='L224'></a><a href='#L224'>224</a>
+<a name='L225'></a><a href='#L225'>225</a>
+<a name='L226'></a><a href='#L226'>226</a>
+<a name='L227'></a><a href='#L227'>227</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -304,6 +308,22 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -380,18 +400,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -512,6 +520,22 @@ import "./Modal.css";
 import code from "../../../../exampleData/2FA.json";
 import wykrzyknikImage from "../../assets/erroricon.png";
 &nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+export function TextFail() {
+  return (
+    &lt;div className="text-fail"&gt;
+      &lt;strong&gt;Nieprawidłowy kod&lt;/strong&gt;
+      &lt;img
+        className="wykrzyknik"
+        src={wykrzyknikImage}
+        alt="wykrzyknik"
+      &gt;&lt;/img&gt;
+    &lt;/div&gt;
+  );
+}
+&nbsp;
 const Modal = ({ onCodeFilled }) =&gt; {
   const secret_code = code.code;
 &nbsp;
@@ -602,18 +626,6 @@ const Modal = ({ onCodeFilled }) =&gt; {
 <span class="cstat-no" title="statement not covered" >    }</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-<span class="fstat-no" title="function not covered" >  function TextFail() {</span>
-<span class="cstat-no" title="statement not covered" >    return (</span>
-<span class="cstat-no" title="statement not covered" >      &lt;div className="text-fail"&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;strong&gt;Nieprawidłowy kod&lt;/strong&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;img</span>
-<span class="cstat-no" title="statement not covered" >          className="wykrzyknik"</span>
-<span class="cstat-no" title="statement not covered" >          src={wykrzyknikImage}</span>
-<span class="cstat-no" title="statement not covered" >          alt="wykrzyknik"</span>
-<span class="cstat-no" title="statement not covered" >        &gt;&lt;/img&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;/div&gt;</span>
-<span class="cstat-no" title="statement not covered" >    );</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
   return (
     &lt;div className="modal-container"&gt;
@@ -736,7 +748,7 @@ export default Modal;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-22T17:43:43.857Z
+                at 2024-01-23T14:10:42.074Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>
