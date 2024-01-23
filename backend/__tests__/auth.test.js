@@ -62,23 +62,23 @@ describe('Patient Authentication and Profile Tests', () => {
         expect(response.statusCode).toBe(200);
     });
 
-    // test('Patient 2-Step-Login - POST /api/patient/login-step2', async () => {
-    //     const response = await request(app)
-    //         .post('/api/patient/login')
-    //         .send({
-    //             "authInfo": {
-    //                 "login": "TESTING12308",
-    //                 "password": "testing23324324"
-    //             }
-    //         });
-    //     expect(response.body.twofaEnabled).toBe(true);
-    //     // const loginstep2code = response.body.loginStep2VerificationToken
-    //     const loginstep2response = await request(app)
-    //         .post('/api/patient/login-step2')
-    //         .send({
-    //             "loginStep2VerificationToken": `${patientToken}`,
-    //             "twofaToken": `${decode}`
-    //         });
-    //     expect(loginstep2response.statusCode).toBe(200);
-    // });
+    test('Patient 2-Step-Login - POST /api/patient/login-step2', async () => {
+        const response = await request(app)
+            .post('/api/patient/login')
+            .send({
+                "authInfo": {
+                    "login": "TESTING12308",
+                    "password": "testing23324324"
+                }
+            });
+        expect(response.body.twofaEnabled).toBe(true);
+        const loginstep2code = response.body.loginStep2VerificationToken
+        const loginstep2response = await request(app)
+            .post('/api/patient/login-step2')
+            .send({
+                "loginStep2VerificationToken": `${loginstep2code}`,
+                "twofaToken": `${decode}`
+            });
+        expect(loginstep2response.statusCode).toBe(200);
+    });
 });

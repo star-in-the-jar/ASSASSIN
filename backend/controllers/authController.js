@@ -242,7 +242,7 @@ const patientDisable2FA = async (req, res) => {
 //         });
 //     }
 //     const token = req.body.twofaToken.replaceAll(" ", "");
-//     const user = await doctorService.getDoctorByLogin(loginStep2VerificationToken.loginStep2Verification.login)
+//     const user = await doctorService.getDoctorByLogin(loginStep2VerificationToken.user.login)
 //
 //     const tokenCheck = authService.checkTokenValidity(token, user.twofaSecret)
 //

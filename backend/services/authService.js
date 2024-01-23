@@ -18,9 +18,10 @@ const hashPassword = async (password) => {
 }
 
 const sign2FAToken = (user) => {
-    jwt.sign(
+    return jwt.sign(
             {
-                loginStep2Verification: { login: user.authInfo.login },
+                //loginStep2Verification
+                user: { login: user.authInfo.login },
             },
             env.JWT_SECRET,
             { expiresIn: "5m" }
