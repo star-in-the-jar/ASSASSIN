@@ -1,14 +1,14 @@
 
 documentation: backend.pdf backend.html opisSystemu.pdf opisSystemu.html openapi.html userManual.html userManual.pdf
 
-openapi.md: openapi.json
-	widdershins openapi.json --omitHeader -l -o openapi.md
+openapi.md: ../backend/openapi.yaml
+	widdershins ../backend/openapi.yaml --omitHeader -l -o openapi.md
 
 %.pdf: %.tex
 	pdflatex $<
 
 %.html: %.tex
-	htlatex $<
+	htlatex $< "xhtml,charset=utf-8" " -cunihtf -utf8"
 
 openapi.html: openapi.md
 	markdown openapi.md > openapi.html

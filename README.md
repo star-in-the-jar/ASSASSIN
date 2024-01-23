@@ -19,4 +19,5 @@ More detailed documentation in Polish is stored [here](./doc) and includes:
 - [User manual](./doc/userManual.pdf)
 - [Backend internal documentation](./doc/backend.pdf)
 
+HTML representations of the documentation files can be found on our [Github Pages](https://stanlee77.github.io/ASSASSIN/).
 Additionally you can find more detailed documentation in the [backend](./backend/) and [frontend](./frontend/) subfolder READMEs.
