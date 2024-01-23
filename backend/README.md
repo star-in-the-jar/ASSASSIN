@@ -1,25 +1,25 @@
-# Backend code
+# Backend
 
 ## API Specification
 
-Specification in the openapi format is available [here](openapi.yaml).
-For your convenience it has been converted to a more readable [markdown file](../doc/openapi.md).
+Specification in the openapi format is available [here](https://github.com/Stanlee77/ASSASSIN/blob/master/backend/openapi.yaml).
+For your convenience it has been converted to a more readable [markdown file](https://github.com/Stanlee77/ASSASSIN/blob/master/doc/openapi.md).
 Additionally Swagger documentation is available at the '/docs' path once the backend is running.
 
 ## Files
 
-- [server.js](./server.js) - loads the backend and middleware
-- [index.js](./index.js) - creates the backend api
-- [env.js](./env.js) - defines commonly used environment variables
+- [server.js](https://github.com/Stanlee77/ASSASSIN/blob/master/backend/server.js) - loads the backend and middleware
+- [index.js](https://github.com/Stanlee77/ASSASSIN/blob/master/backend/index.js) - creates the backend api
+- [env.js](https://github.com/Stanlee77/ASSASSIN/blob/master/backend/env.js) - defines commonly used environment variables
 
 ## Subdirectories
 
-- [controllers](./controllers/) - contains backend endpoint route controllers
-- [db](./db) - contains database related files like connection definitions and model definitions
-- [routes](./routes/) - contains route definitions
-- [services](./services/) - contains services
-- [tests](./__tests__/) - contains backend tests
-- [middleware](./middleware/) - contains backend middleware like logger
+- [controllers](https://github.com/Stanlee77/ASSASSIN/blob/master/backend/controllers/) - contains backend endpoint route controllers
+- [db](https://github.com/Stanlee77/ASSASSIN/blob/master/backend/db) - contains database related files like connection definitions and model definitions
+- [routes](https://github.com/Stanlee77/ASSASSIN/blob/master/backend/routes/) - contains route definitions
+- [services](https://github.com/Stanlee77/ASSASSIN/blob/master/backend/services/) - contains services
+- [tests](https://github.com/Stanlee77/ASSASSIN/blob/master/backend/__tests__/) - contains backend tests
+- [middleware](https://github.com/Stanlee77/ASSASSIN/blob/master/backend/middleware/) - contains backend middleware like logger
 
 ## How to start
 
@@ -46,3 +46,5 @@ Additionally Swagger documentation is available at the '/docs' path once the bac
     ```bash
     node index.js
     ```
+
+You can find more broad documentation on backend architecture and design [here](https://github.com/Stanlee77/ASSASSIN/blob/master/doc/backend.pdf)

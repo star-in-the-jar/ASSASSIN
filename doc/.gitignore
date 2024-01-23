@@ -12,3 +12,6 @@
 *.lg
 *.tmp
 *.xref
+node_modules
+jsdoc
+package*

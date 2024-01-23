@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Defines the Hospital model schema for the database.
+ * @module Hospital
+ */
+
 const mongoose = require('mongoose');
 
 const hospitalSchema = new mongoose.Schema({

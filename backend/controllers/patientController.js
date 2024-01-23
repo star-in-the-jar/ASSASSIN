@@ -1,6 +1,25 @@
+/**
+ * @fileoverview This file contains the controller functions for managing patients.
+ * It includes functions for creating a new patient, retrieving a patient by ID,
+ * retrieving all patients, deleting a patient by ID, deleting a patient by login,
+ * and editing a patient by ID.
+ * @module patientController
+ */
 const patientService = require('../services/patientService');
 const authService = require('../services/authService');
 
+/**
+ * Creates a new patient.
+ * @param {Object} req - The request object.
+ * @param {Object} req.body - The request body.
+ * @param {string} req.body.name - The name of the patient.
+ * @param {string} req.body.surname - The surname of the patient.
+ * @param {Object} req.body.authInfo - The authentication information of the patient.
+ * @param {string} req.body.authInfo.login - The login of the patient.
+ * @param {string} req.body.authInfo.password - The password of the patient.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - The created patient object or an error message.
+ */
 const createPatient = async (req, res) => {
     try {
         let { name, surname, authInfo } = req.body;
@@ -26,6 +45,13 @@ const createPatient = async (req, res) => {
     }
 }
 
+/**
+ * Retrieves a patient by their ID.
+ * @param {Object} req - The request object.
+ * @param {string} req.params.id - The ID of the patient.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - The patient object or an error message.
+ */
 const getPatientById = async (req, res) => {
     try {
         const patientId = req.params.id;
@@ -46,6 +72,12 @@ const getPatientById = async (req, res) => {
     }
 }
 
+/**
+ * Retrieves all patients.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - The array of patient objects or an error message.
+ */
 const getAllPatients = async (req, res) => {
     try {
         const patients = await patientService.getAllPatients();
@@ -56,6 +88,13 @@ const getAllPatients = async (req, res) => {
     }
 }
 
+/**
+ * Deletes a patient by their ID.
+ * @param {Object} req - The request object.
+ * @param {string} req.params.id - The ID of the patient.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - The deleted patient object or an error message.
+ */
 const deletePatient = async (req, res) => {
     try {
         const patientId = req.params.id;
@@ -77,6 +116,13 @@ const deletePatient = async (req, res) => {
     }
 }
 
+/**
+ * Deletes a patient by their login.
+ * @param {Object} req - The request object.
+ * @param {string} req.params.login - The login of the patient.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - The deleted patient object or an error message.
+ */
 const deletePatientByLogin = async (req, res) => {
     try {
         const login = req.params.login;
@@ -94,6 +140,19 @@ const deletePatientByLogin = async (req, res) => {
     }
 }
 
+/**
+ * Edits a patient by their ID.
+ * @param {Object} req - The request object.
+ * @param {string} req.params.id - The ID of the patient.
+ * @param {Object} req.body - The request body.
+ * @param {string} req.body.name - The updated name of the patient.
+ * @param {string} req.body.surname - The updated surname of the patient.
+ * @param {Object} req.body.authInfo - The updated authentication information of the patient.
+ * @param {string} req.body.authInfo.login - The updated login of the patient.
+ * @param {string} req.body.authInfo.password - The updated password of the patient.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - The updated patient object or an error message.
+ */
 const editPatient = async (req, res) => {
     try {
         const patientId = req.params.id;
