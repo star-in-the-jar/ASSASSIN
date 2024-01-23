@@ -72,12 +72,11 @@ describe('Patient Authentication and Profile Tests', () => {
     //             }
     //         });
     //     expect(response.body.twofaEnabled).toBe(true);
-    //     const loginstep2code = response.body.loginStep2VerificationToken
-    //
+    //     // const loginstep2code = response.body.loginStep2VerificationToken
     //     const loginstep2response = await request(app)
     //         .post('/api/patient/login-step2')
     //         .send({
-    //             "loginStep2VerificationToken": `${loginstep2code}`,
+    //             "loginStep2VerificationToken": `${patientToken}`,
     //             "twofaToken": `${decode}`
     //         });
     //     expect(loginstep2response.statusCode).toBe(200);
