@@ -41,7 +41,6 @@ const patientLogin = async (req, res, next) => {
 };
 
 const patientProfile = async (req, res) => {
-    console.log(req.user);
     return res.json({
         message: "Success",
         user: req.user,
@@ -111,8 +110,7 @@ const patientLoginStep2 = async (req, res) => {
         });
     }
     const token = req.body.twofaToken.replaceAll(" ", "");
-    const user = await patientService.getPatientByLogin(loginStep2VerificationToken.loginStep2Verification.login)
-
+    const user = await patientService.getPatientByLogin(loginStep2VerificationToken.user.login)
     const tokenCheck = authService.checkTokenValidity(token, user.twofaSecret)
 
     if (!tokenCheck) {

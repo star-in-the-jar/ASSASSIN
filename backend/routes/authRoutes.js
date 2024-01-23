@@ -18,7 +18,7 @@ router.post(
     authController.patientLogin
 );
 
-router.post(
+router.get(
     "/patient/profile",
     passport.authenticate("jwtPatient", { session: false }),
     authController.patientProfile
