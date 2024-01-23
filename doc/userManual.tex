@@ -10,6 +10,10 @@
 
 \tableofcontents
 
+\HUGEskip
+
+\section{Wstęp}
+
 System ASSASSIN jest przeznaczony dla szpitali, klinik i laboratoriów.
 Ta instrukcja powinna być używana przez personel medyczny oraz pacjentów.
 Częścią wspólną systemu jest strona główna, która jest przedstawiona na schemacie \ref{fig:mainPage}.
@@ -23,12 +27,21 @@ Częścią wspólną systemu jest strona główna, która jest przedstawiona na 
 W lewym górnym rogu znajduje się przycisk prowadzący do logowania personelu medycznego.
 Z kolei w prawym górnym rogu znajduje się przycisk prowadzący do logowania pacjenta.
 
-%TODO sekcja na 2FA
+\section{Weryfikacja dwuetapowa}
+
+Weryfikacja dwuetapowa odbywa się na zasadzie mechanizmu \href{https://pl.wikipedia.org/wiki/Has%C5%82o_jednorazowe}{OTP}.
+Mechanizm OTP(one time password) działa na zasadzie wspólnego klucza pomiędzy serwerem a aplikacją autentykacyjną.
+Klucz jest wykorzystywany do generowania kodów jednorazowych, które tracą ważność co 30 sekund.
+Aplikacje autentykacyjne, które generują klucze jednorazowe na podstawie wspólnego klucza są dostępne na wszystkie popularne platformy mobilne.
+Polecamy aplikację \href{https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=pl}{Google Authenticator}.
+Po zalogowaniu się do systemu, użytkownik powinien wpisać kod wygenerowany przez aplikację autentykacyjną.
+Weryfikacja dwuetapowa jest opcjonalna i może być włączona lub wyłączona przez administratora systemu.
 
 \section{Pacjent}
 
 W systemie ASSASSIN pacjent ma możliwość przeglądania swoich wyników badań.
 Na tym się kończy jego rola w systemie.
+Pacjent nie ma możliwości przeglądania wyników badań innych pacjentów.
 
 \subsection{Tworzenie konta}
 
@@ -94,8 +107,23 @@ Widok wyników badań jest przedstawiony na schemacie \ref{fig:results}.
 
 Przez kliknięcie przycisku \textit{Pobierz} pacjent powinien pobrać plik z wynikami badań w postaci pliku PDF.
 
-%TODO dodać opis lekarza
+\section{Personel medyczny}
 
+W odróżnieniu od pacjentów personel medyczny nie ma osobnych kont.
 
+\subsection{Logowanie}
+
+Autoryzacja personelu następuje przez placówkę medyczną.
+W momencie logowania personel medyczny podaje login szpitala, hasło oraz kod 2FA.
+W przypadku niepowodzenia personel medyczny powinien skontaktować się z administratorem systemu.
+Po zalogowaniu personel medyczny powinien zostać zabrany do strony profilowej.
+
+\subsection{Dostęp do wyników}
+
+Strona profilowa personelu medycznego jest bardzo podobna do strony profilowej pacjenta.
+Różnica polega na tym, że personel medyczny ma dostęp do wyników badań wszystkich pacjentów swojej placówki medycznej.
+Wystarczy jedynie podać dane pacjenta w widoku wprowadzania danych identyfikujących badanie.
+Po podaniu danych identyfikujących badanie personel medyczny powinien zostać zabrany do strony z wynikami.
+Widok wyników badań jest identyczny jak w przypadku pacjenta.
 
 \end{document}

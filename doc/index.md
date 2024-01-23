@@ -2,7 +2,7 @@
 
 Tutaj przechowywana jest cała dokumentacja systemu ASSASSIN.
 
-- [Opis systemu](./opisSystemu.html) [📄](./opisSystemu.pdf)
-- [Instrukcja](./userManual.html) [📄](./userManual.pdf)
-- [Dokumentacja backendu](./backend.html) [📄](./backend.pdf)
-- [Dokumentacja API](./openapi.html) [📄](./openapi.md) [🛠️](./openapi.json)
+- [Opis systemu](https://stanlee77.github.io/ASSASSIN/opisSystemu.html) [📄](./opisSystemu.pdf)
+- [Instrukcja](https://stanlee77.github.io/ASSASSIN/userManual.html) [📄](./userManual.pdf)
+- [Dokumentacja backendu](https://stanlee77.github.io/ASSASSIN/backend.html) [📄](./backend.pdf)
+- [Dokumentacja API](https://stanlee77.github.io/ASSASSIN/openapi.html) [📄](./openapi.md) [🛠️](./openapi.json)
