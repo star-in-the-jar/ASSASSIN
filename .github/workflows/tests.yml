@@ -13,14 +13,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Change directory to ./backend
-        run: cd backend
-
-      - name: show files
-        run: ls -la
-
       - name: Install dependencies
-        run: npm install
+        run: cd backend && npm install
 
       - name: Run tests
-        run: npm run test:ci
+        run: cd backend && npm run test:ci
