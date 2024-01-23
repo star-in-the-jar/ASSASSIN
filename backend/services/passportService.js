@@ -86,11 +86,13 @@ passport.use(
             jwtFromRequest: extractJwt.fromAuthHeaderAsBearerToken(),
         },
         async (token, done) => {
+            console.log(token.user.login);
             try {
                 const user = await patientService.getPatientByLogin(token.user.login);
                 if (!user) {
                     return done(null, false);
                 }
+                console.log(user.authInfo.login);
                 return done(null, {
                     login: user.authInfo.login,
                     twofaEnabled: user.twofaEnabled,

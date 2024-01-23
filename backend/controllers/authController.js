@@ -41,6 +41,7 @@ const patientLogin = async (req, res, next) => {
 };
 
 const patientProfile = async (req, res) => {
+    console.log(req.user);
     return res.json({
         message: "Success",
         user: req.user,
