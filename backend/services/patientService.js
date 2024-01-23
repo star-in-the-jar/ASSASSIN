@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const PatientModel = require('../models/Patient');
+const PatientModel = require('../db/models/Patient');
 
 const getPatientByAuthLogin = async (authLogin) => {
     return await PatientModel.findOne({ 'authInfo.login': authLogin });
@@ -10,6 +10,12 @@ const createPatient = async ({name, surname, authInfo}) => {
         name,
         surname,
         authInfo: {login: authInfo.login, password: authInfo.password}});
+    return newPatient;
+}
+
+const createPatientAuth = async ({login, password}) => {
+    const newPatient = new PatientModel({
+        authInfo: {login: login, password: password}});
     return newPatient;
 }
 
@@ -26,10 +32,14 @@ const getPatientById = async (patientId) => {
 }
 
 const deletePatient = async (patientId) => {
-    await PatientModel.findByIdAndDelete(patientId);
+    return await PatientModel.findByIdAndDelete(patientId);
 }
 
-const editPatient = async ({name, surname, authInfo}, existingPatient) => {
+const deletePatientByLogin = async (login) => {
+    return await PatientModel.findOneAndDelete({ 'authInfo.login': login });
+};
+
+const editPatient = ({name, surname, authInfo}, existingPatient) => {
     if (name) {
         existingPatient.name = name;
     }
@@ -42,8 +52,13 @@ const editPatient = async ({name, surname, authInfo}, existingPatient) => {
         existingPatient.authInfo = authInfo;
     }
 
-    return await existingPatient.save();
+    return existingPatient;
 }
+
+const getPatientByLogin = async (login) => {
+    return await PatientModel.findOne({ "authInfo.login":  login});
+}
+
 
 module.exports = {
     getAllPatients,
@@ -52,5 +67,8 @@ module.exports = {
     getPatientById,
     deletePatient,
     editPatient,
-    checkIfValidId
+    checkIfValidId,
+    getPatientByLogin,
+    createPatientAuth,
+    deletePatientByLogin,
 }

@@ -1,16 +1,31 @@
-const DoctorModel = require('../models/Doctor');
+const DoctorModel = require('../db/models/Doctor');
+const HospitalModel = require('../db/models/Hospital');
 
-const getAllDoctors = async (req, res) => {
+const getAllDoctors = async () => {
     return await DoctorModel.find().populate('hospitals');
 }
 
-const getDoctorByUser = async (user) => {
-    return await DoctorModel.findOne(user);
+const getDoctorBySurname = async (surname) => {
+    return await DoctorModel.findOne(surname);
 }
 
-const createDoctor = async ({user, surname}) => {
-    let doctor = new DoctorModel({ user, surname });
+const createDoctor = async (doctorData) => {
+    let doctor = new DoctorModel(doctorData);
     return doctor;
+}
+
+const createDoctorAuth = async ({login, password}) => {
+    const hospital = await HospitalModel.findOne({authInfo: {login: login, password: password}});
+    if (!hospital) {
+        return null;
+    }
+    const newDoctor = new DoctorModel({
+        surname: "",
+        hospitals: [
+            hospital
+        ]
+    });
+    return newDoctor;
 }
 
 const getDoctorById = async (doctorId) => {
@@ -25,10 +40,16 @@ const deleteDoctor = async (doctorId) => {
     return await DoctorModel.findByIdAndDelete(doctorId);
 }
 
+const getDoctorByLogin = async (login) => {
+    return await DoctorModel.findOne({ "authInfo.login":  login});
+}
+
 module.exports = {
     getAllDoctors,
-    getDoctorByUser,
+    getDoctorBySurname,
     createDoctor,
     getDoctorById,
-    deleteDoctor
+    deleteDoctor,
+    getDoctorByLogin,
+    createDoctorAuth
 }

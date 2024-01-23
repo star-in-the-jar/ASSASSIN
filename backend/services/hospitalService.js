@@ -1,9 +1,11 @@
-const Hospital = require('../models/Hospital');
+const Hospital = require('../db/models/Hospital');
+const authService = require('./authService');
 
 const createHospital = async (hospitalData) => {
-    return Hospital.create(hospitalData);
+    hospitalData.authInfo.password = await authService.hashPassword(hospitalData.authInfo.password);
+    const newHospital = new Hospital(hospitalData)
+    return newHospital;
 }
-
 const getAllHospitals = async () => {
     return await Hospital.find();
 }
@@ -17,7 +19,7 @@ const deleteHospital = async (hospitalId) => {
 }
 
 const editHospital = async (hospitalId, hospitalData) => {
-    await Hospital.findByIdAndUpdate(hospitalId, hospitalData, {
+    return await Hospital.findByIdAndUpdate(hospitalId, hospitalData, {
         new: true,
         runValidators: true,
     });

@@ -30,7 +30,7 @@ Wyniki badań są dostępne poprzez aplikację mobilną oraz stronę internetow�
 Dodatkowo system umożliwia odebranie wyników badań fizycznie w placówce medycznej.
 Ogólny schemat systemu jest przedstawiony na schemacie \ref{fig:system}.
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{Level_1_C4_Model.png}
     \caption{Schemat systemu ASSASSIN\label{fig:system}}
@@ -42,7 +42,7 @@ System posiada trzy role użytkowników: pacjent, personel medyczny oraz adminis
 Każda rola definiuje co użytkownik może robić w systemie.
 Poniżej przedstawiono szczegółowy opis każdej z ról, a na schemacie \ref{fig:roles} przedstawiono graficznie relacje między rolami.
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \begin{tikzpicture}[node distance=3cm]
         \node[role, fill=orange!30] (admin) {Administrator};
@@ -71,9 +71,8 @@ Dobrze to wpływa na koszty utrzymania systemu oraz na bezpieczeństwo użytkown
 \subsection{Personel Medyczny}
 
 Konto personelu medycznego jest tworzone przez administratora.
-Jest ono powiązane z konkretną placówką medyczną oraz konkretnym mailem firmowym.
-Podobnie jak konta pacjentów jest ono identyfikowane poprzez anonimowy login, hasło oraz aplikację 2FA.
-Co za tym idzie personel medyczny nie może przeglądać wyników badań pacjentów innych placówek medycznych.
+Jest ono powiązane z konkretną placówką medyczną oraz konkretnym nazwiskiem.
+Autoryzacja personelu medycznego następuje poprzez placówkę medyczną.
 Personel medyczny może dodawać wyniki badań do systemu oraz przeglądać wyniki badań pacjentów swojej placówki medycznej.
 Dostęp do konta personelu medycznego jest możliwy tylko z poziomu sieci wewnętrznej placówki medycznej.
 W ten sposób minimalizowane jest ryzyko wycieku danych osobowych pacjentów poprzez błąd użytkownika.
@@ -90,11 +89,25 @@ Administrator nie ma dostępu do wyników badań pacjentów.
 Bezpieczeństwo systemu oraz przechowywanych danych było priorytetem podczas projektowania systemu.
 Poprzez zastosowanie 2FA oraz anonimowych loginów minimalizowane jest ryzyko wycieku danych osobowych pacjentów poprzez błąd użytkownika.
 Konta personelu medycznego są zabezpieczone poprzez blokadę zdalnego logowania i w ten sposób włamanie się na konto personelu jest znacznie utrudnione.
+Przykładowy widok weryfikacji dwu stopniowej jest przedstawiony na schemacie \ref{fig:2FA}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{2FA on log.png}
+    \caption{Widok weryfikacji dwu stopniowej\label{fig:2FA}}
+\end{figure}
 
 \section{Dostęp do badań}
 
 Badania są dostępne poprzez aplikację mobilną oraz stronę internetową w postaci wirtualnej.
 Można też na podstawie badań wygenerować i pobrać z systemu pdf.
 Wyniki badań są dostępne tylko dla uprawnionych osób.
+Widok pobierania wyników jest przedstawiony na schemacie \ref{fig:results}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{wyniki-szpital.png}
+    \caption{Widok pobierania wyników\label{fig:results}}
+\end{figure}
 
 \end{document}
