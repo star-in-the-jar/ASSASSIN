@@ -3,7 +3,7 @@ name: Run backend tests before master merge
 on:
   push:
     branches:
-      - automatic-tests
+      - master
 
 jobs:
   test:
