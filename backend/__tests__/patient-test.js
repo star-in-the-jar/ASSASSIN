@@ -9,6 +9,7 @@ describe("Patient Controller Get ALL TEST", () => {
 });
 describe('Patient Controller POST TEST', () => {
     test('Add Patient - POST /api/patients', async () => {
+        
         const createResponse = await request(app)
             .post('/api/patients')
             .send({
@@ -20,9 +21,9 @@ describe('Patient Controller POST TEST', () => {
                 },
             });
         const createdPatientId = createResponse.body.patient._id;
+        await request(app).delete(`/api/patients/${createdPatientId}`);
         expect(createResponse.statusCode).toBe(201);
         expect(createResponse.body.message).toBe('Patient created successfully');
-        await request(app).delete(`/api/patients/${createdPatientId}`);
     });
 });
 
@@ -42,9 +43,9 @@ describe('Get Patient by ID - GET /api/patients/:patientId', () => {
         expect(createResponse.statusCode).toBe(201);
         expect(createResponse.body.message).toBe('Patient created successfully');
         const getResponse = await request(app).get(`/api/patients/${createdPatientId}`);
+        await request(app).delete(`/api/patients/${createdPatientId}`);
         expect(getResponse.statusCode).toBe(200);
         expect(getResponse.body.name).toBe('Patient');
-        await request(app).delete(`/api/patients/${createdPatientId}`);
     });
 });
 describe('DELETE Patient by ID - DELETE /api/patients/:patientId', () => {

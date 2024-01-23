@@ -124,9 +124,10 @@ describe('UPDATE Hospital - PUT /api/hospitals/:id', () => {
         expect(editResponse.body.message).toBe('Hospital updated successfully');
 
         const getEditedHospitalResponse = await request(app).get(`/api/hospitals/${createdHospitalId}`);
+        await request(app).delete(`/api/hospitals/${createdHospitalId}`);
         expect(getEditedHospitalResponse.statusCode).toBe(200);
         expect(getEditedHospitalResponse.body.hospital.name).toBe('EDITEDHospital');
-        await request(app).delete(`/api/hospitals/${createdHospitalId}`);
+
     });
 });
 

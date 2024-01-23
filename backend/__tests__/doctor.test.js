@@ -16,9 +16,9 @@ describe('Doctors Controller POST TEST', () => {
                 }
             );
         const createdDoctorId = createResponse.body.doctor._id;
+        request(app).delete(`api/doctors/${createdDoctorId}`)
         expect(createResponse.statusCode).toBe(201);
         expect(createResponse.body.message).toBe('Doctor created successfully');
-        request(app).delete(`api/doctors/${createdDoctorId}`)
     });
 });
 describe('Get Doctor by ID - GET /api/hospitals/:doctorId', () => {
@@ -32,9 +32,9 @@ describe('Get Doctor by ID - GET /api/hospitals/:doctorId', () => {
         expect(createResponse.statusCode).toBe(201);
         expect(createResponse.body.message).toBe('Doctor created successfully');
         const getResponse = await request(app).get(`/api/doctors/${createdDoctorId}`);
+        request(app).delete(`api/doctors/${createdDoctorId}`);
         expect(getResponse.statusCode).toBe(200);
         expect(getResponse.body.surname).toBe('Surname');
-        request(app).delete(`api/doctors/${createdDoctorId}`);
     });
 });
 

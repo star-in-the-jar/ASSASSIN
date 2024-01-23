@@ -24,10 +24,9 @@ describe('Order Controller POST TEST', () => {
                 }
             });
         const createdOrderId = createResponse.body.order_id;
+        await request(app).delete(`/api/patient/results/${createdOrderId}`);
         expect(createResponse.statusCode).toBe(201);
         expect(createResponse.body.message).toBe('Results added successfully');
-        await request(app).delete(`/api/patient/results/${createdOrderId}`);
-
     });
 });
 
@@ -143,10 +142,11 @@ describe('UPDATE Order - PUT /patient/results/:id', () => {
         expect(editResponse.body.message).toBe('Order updated successfully');
 
         const getEditedOrderResponse = await request(app).get(`/api/patient/results/${createdOrderId}`);
+        await request(app).delete(`/api/patient/results/${createdOrderId}`);
         expect(getEditedOrderResponse.statusCode).toBe(200);
         if (getEditedOrderResponse.body.results) {
             expect(getEditedOrderResponse.body.results.wbc).toBe('420');
         }
-        await request(app).delete(`/api/patient/results/${createdOrderId}`);
+        
     });
 });
