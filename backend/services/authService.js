@@ -41,9 +41,10 @@ const hashPassword = async (password) => {
  * @returns {string} - The signed 2FA token.
  */
 const sign2FAToken = (user) => {
-    jwt.sign(
+    return jwt.sign(
             {
-                loginStep2Verification: { login: user.authInfo.login },
+                //loginStep2Verification
+                user: { login: user.authInfo.login },
             },
             env.JWT_SECRET,
             { expiresIn: "5m" }

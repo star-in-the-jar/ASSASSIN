@@ -49,47 +49,47 @@ router.post(
 
 ////////---------------------------------////////////////////
 
-router.post(
-    "/doctor/signup",
-    passport.authenticate("signupDoctor", { session: false }),
-    authController.doctorSignup
-);
-
-
-router.post(
-    "/doctor/login",
-    passport.authenticate("loginDoctor", { session: false }),
-    authController.doctorLogin
-);
-
-router.get(
-    "/doctor/profile",
-    passport.authenticate("jwtDoctor", { session: false }),
-    authController.doctorProfile
-);
-
-router.post(
-    '/doctor/generate-2fa-secret',
-    passport.authenticate('jwtDoctor', { session: false }),
-    authController.doctorGenerate2FASecret
-);
-
-
-router.post(
-    "/doctor/verify-otp",
-    passport.authenticate("jwtDoctor", { session: false }),
-    authController.doctorVerifyOTP
-);
-
-router.post(
-    "/doctor/login-step2",
-    authController.doctorLoginStep2
-);
-
-router.post(
-    "/doctor/disable-2fa",
-    passport.authenticate("jwtDoctor", { session: false }),
-    authController.doctorDisable2FA
-);
+// router.post(
+//     "/doctor/signup",
+//     passport.authenticate("signupDoctor", { session: false }),
+//     authController.doctorSignup
+// );
+//
+//
+// router.post(
+//     "/doctor/login",
+//     passport.authenticate("loginDoctor", { session: false }),
+//     authController.doctorLogin
+// );
+//
+// router.get(
+//     "/doctor/profile",
+//     passport.authenticate("jwtDoctor", { session: false }),
+//     authController.doctorProfile
+// );
+//
+// router.post(
+//     '/doctor/generate-2fa-secret',
+//     passport.authenticate('jwtDoctor', { session: false }),
+//     authController.doctorGenerate2FASecret
+// );
+//
+//
+// router.post(
+//     "/doctor/verify-otp",
+//     passport.authenticate("jwtDoctor", { session: false }),
+//     authController.doctorVerifyOTP
+// );
+//
+// router.post(
+//     "/doctor/login-step2",
+//     authController.doctorLoginStep2
+// );
+//
+// router.post(
+//     "/doctor/disable-2fa",
+//     passport.authenticate("jwtDoctor", { session: false }),
+//     authController.doctorDisable2FA
+// );
 
 module.exports = router;

@@ -186,181 +186,139 @@ const patientDisable2FA = async (req, res) => {
     });
 };
 
-/**
- * Handles doctor signup.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Object} The response object.
- */
-const doctorSignup = async (req, res) => {
-    return res.status(201).json({
-        message: "Signup successful",
-        user: req.user,
-    });
-}
 
-/**
- * Handles doctor login.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @param {Function} next - The next middleware function.
- * @returns {Object} The response object.
- */
-const doctorLogin = async (req, res, next) => {
-    passport.authenticate("loginDoctor", { session: false }, async (err, user, info) => {
-        if (err || !user) {
-            return res.status(401).json({
-                message: "Invalid login or password",
-            });
-        }
-
-        if (!user.twofaEnabled) {
-            signedToken = authService.signLoginToken(user)
-            return res.json({
-                message: "Login successful",
-                twofaEnabled: false,
-                token: signedToken
-            });
-        } else {
-            loginStep2VerificationToken = authService.sign2FAToken(user)
-            return res.json({
-                message: "Please complete 2-factor authentication",
-                twofaEnabled: true,
-                loginStep2VerificationToken: loginStep2VerificationToken
-            });
-        }
-    })(req, res, next);
-};
-
-/**
- * Handles doctor profile.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Object} The response object.
- */
-const doctorProfile = async (req, res) => {
-    return res.json({
-        message: "Success",
-        user: req.user,
-    });
-};
-
-/**
- * Generates 2FA secret for the doctor.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Object} The response object.
- */
-const doctorGenerate2FASecret = async (req, res) => {
-    const user = await doctorService.getDoctorByLogin(req.user.login)
-
-    if (req.twofaEnabled) {
-        return res.status(400).json({
-            message: "2FA already verified and enabled",
-            twofaEnabled: req.twofaEnabled,
-        });
-    }
-
-    const secret = authService.generateSecret();
-
-    user.twofaSecret = secret;
-    user.save();
-    const appName = "2FALogin";
-
-    return res.json({
-        message: "2FA secret generation successful",
-        secret: secret,
-        qrImageDataUrl: authService.generateQRCode(login, appName, secret),
-        twofaEnabled: user.twofaEnabled,
-    });
-};
-
-/**
- * Verifies OTP for the doctor.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Object} The response object.
- */
-const doctorVerifyOTP = async (req, res) => {
-    const user = await doctorService.getDoctorByLogin(req.user.login)
-    if (user.twofaEnabled) {
-        return res.json({
-            message: "2FA already verified and enabled",
-            twofaEnabled: user.twofaEnabled,
-        });
-    }
-
-    const token = req.body.token.replaceAll(" ", "");
-
-    const tokenCheck = authService.checkTokenValidity(token, user.twofaSecret)
-
-    if (!tokenCheck) {
-        return res.status(400).json({
-            message: "OTP verification failed: Invalid token",
-            twofaEnabled: user.twofaEnabled,
-        });
-    } else {
-        user.twofaEnabled = true;
-        user.save();
-
-        return res.json({
-            message: "OTP verification successful",
-            twofaEnabled: user.twofaEnabled,
-        });
-    }
-};
-
-/**
- * Handles step 2 of doctor login.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Object} The response object.
- */
-const doctorLoginStep2 = async (req, res) => {
-    let loginStep2VerificationToken = null;
-    try {
-        loginStep2VerificationToken = authService.verifyJwtToken(req.body.loginStep2VerificationToken)
-
-    } catch (err) {
-        return res.status(401).json({
-            message: err,
-        });
-    }
-    const token = req.body.twofaToken.replaceAll(" ", "");
-    const user = await doctorService.getDoctorByLogin(loginStep2VerificationToken.loginStep2Verification.login)
-
-    const tokenCheck = authService.checkTokenValidity(token, user.twofaSecret)
-
-    if (!tokenCheck) {
-        return res.status(400).json({
-            message: "OTP verification failed: Invalid token",
-        });
-    } else {
-        signedToken = authService.signLoginToken(user)
-        return res.json({
-            message: "OTP verification successful",
-            token: signedToken
-        });
-    }
-};
-
-/**
- * Disables 2FA for the doctor.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Object} The response object.
- */
-const doctorDisable2FA = async (req, res) => {
-    let user = await doctorService.getDoctorByLogin(req.user.authInfo.login)
-    user.twofaEnabled = false;
-    user.twofaSecret = "";
-    await user.save();
-
-    return res.json({
-        message: "2FA disabled successfully",
-        twofaEnabled: user.twofaEnabled,
-    });
-};
+// const doctorSignup = async (req, res) => {
+//     return res.status(201).json({
+//         message: "Signup successful",
+//         user: req.user,
+//     });
+// }
+//
+// const doctorLogin = async (req, res, next) => {
+//     passport.authenticate("loginDoctor", { session: false }, async (err, user, info) => {
+//         if (err || !user) {
+//             return res.status(401).json({
+//                 message: "Invalid login or password",
+//             });
+//         }
+//
+//         if (!user.twofaEnabled) {
+//             signedToken = authService.signLoginToken(user)
+//             return res.json({
+//                 message: "Login successful",
+//                 twofaEnabled: false,
+//                 token: signedToken
+//             });
+//         } else {
+//             loginStep2VerificationToken = authService.sign2FAToken(user)
+//             return res.json({
+//                 message: "Please complete 2-factor authentication",
+//                 twofaEnabled: true,
+//                 loginStep2VerificationToken: loginStep2VerificationToken
+//             });
+//         }
+//     })(req, res, next);
+// };
+//
+// const doctorProfile = async (req, res) => {
+//     return res.json({
+//         message: "Success",
+//         user: req.user,
+//     });
+// };
+//
+// const doctorGenerate2FASecret = async (req, res) => {
+//     const user = await doctorService.getDoctorByLogin(req.user.login)
+//
+//     if (req.twofaEnabled) {
+//         return res.status(400).json({
+//             message: "2FA already verified and enabled",
+//             twofaEnabled: req.twofaEnabled,
+//         });
+//     }
+//
+//     const secret = authService.generateSecret();
+//
+//     user.twofaSecret = secret;
+//     user.save();
+//     const appName = "2FALogin";
+//
+//     return res.json({
+//         message: "2FA secret generation successful",
+//         secret: secret,
+//         qrImageDataUrl: authService.generateQRCode(login, appName, secret),
+//         twofaEnabled: user.twofaEnabled,
+//     });
+// };
+//
+// const doctorVerifyOTP = async (req, res) => {
+//     const user = await doctorService.getDoctorByLogin(req.user.login)
+//     if (user.twofaEnabled) {
+//         return res.json({
+//             message: "2FA already verified and enabled",
+//             twofaEnabled: user.twofaEnabled,
+//         });
+//     }
+//
+//     const token = req.body.token.replaceAll(" ", "");
+//
+//     const tokenCheck = authService.checkTokenValidity(token, user.twofaSecret)
+//
+//     if (!tokenCheck) {
+//         return res.status(400).json({
+//             message: "OTP verification failed: Invalid token",
+//             twofaEnabled: user.twofaEnabled,
+//         });
+//     } else {
+//         user.twofaEnabled = true;
+//         user.save();
+//
+//         return res.json({
+//             message: "OTP verification successful",
+//             twofaEnabled: user.twofaEnabled,
+//         });
+//     }
+// };
+//
+// const doctorLoginStep2 = async (req, res) => {
+//     let loginStep2VerificationToken = null;
+//     try {
+//         loginStep2VerificationToken = authService.verifyJwtToken(req.body.loginStep2VerificationToken)
+//
+//     } catch (err) {
+//         return res.status(401).json({
+//             message: err,
+//         });
+//     }
+//     const token = req.body.twofaToken.replaceAll(" ", "");
+//     const user = await doctorService.getDoctorByLogin(loginStep2VerificationToken.user.login)
+//
+//     const tokenCheck = authService.checkTokenValidity(token, user.twofaSecret)
+//
+//     if (!tokenCheck) {
+//         return res.status(400).json({
+//             message: "OTP verification failed: Invalid token",
+//         });
+//     } else {
+//         signedToken = authService.signLoginToken(user)
+//         return res.json({
+//             message: "OTP verification successful",
+//             token: signedToken
+//         });
+//     }
+// };
+//
+// const doctorDisable2FA = async (req, res) => {
+//     let user = await doctorService.getDoctorByLogin(req.user.authInfo.login)
+//     user.twofaEnabled = false;
+//     user.twofaSecret = "";
+//     await user.save();
+//
+//     return res.json({
+//         message: "2FA disabled successfully",
+//         twofaEnabled: user.twofaEnabled,
+//     });
+// };
 
 module.exports = {
     patientSignup,
@@ -370,11 +328,11 @@ module.exports = {
     patientVerifyOTP,
     patientLoginStep2,
     patientDisable2FA,
-    doctorSignup,
-    doctorLogin,
-    doctorProfile,
-    doctorGenerate2FASecret,
-    doctorVerifyOTP,
-    doctorLoginStep2,
-    doctorDisable2FA
+    // doctorSignup,
+    // doctorLogin,
+    // doctorProfile,
+    // doctorGenerate2FASecret,
+    // doctorVerifyOTP,
+    // doctorLoginStep2,
+    // doctorDisable2FA
 };
