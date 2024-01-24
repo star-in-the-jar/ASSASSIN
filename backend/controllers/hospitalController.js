@@ -1,6 +1,19 @@
+/**
+ * @fileoverview Hospital Controller
+ * This file contains the controller functions for managing hospitals.
+ * @module hospitalController
+ */
+
 const hospitalService = require('../services/hospitalService');
 const authService = require('../services/authService');
 
+/**
+ * Add a new hospital.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the hospital is created.
+ */
 const addHospital = async (req, res) => {
     try {
         const hospitalData = req.body;
@@ -13,6 +26,13 @@ const addHospital = async (req, res) => {
     }
 }
 
+/**
+ * Get all hospitals.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves with the list of hospitals.
+ */
 const getAllHospitals = async (req, res) => {
     try {
         const hospitals = await hospitalService.getAllHospitals()
@@ -23,6 +43,13 @@ const getAllHospitals = async (req, res) => {
     }
 }
 
+/**
+ * Get a hospital by its ID.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves with the hospital.
+ */
 const getHospitalById = async (req, res) => {
     try {
         const hospitalId = req.params.hospitalId;
@@ -37,6 +64,13 @@ const getHospitalById = async (req, res) => {
     }
 }
 
+/**
+ * Delete a hospital by its ID.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the hospital is deleted.
+ */
 const deleteHospital = async (req, res) => {
     try {
         const hospitalId = req.params.hospitalId;
@@ -51,6 +85,13 @@ const deleteHospital = async (req, res) => {
     }
 }
 
+/**
+ * Edit a hospital by its ID.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the hospital is updated.
+ */
 const editHospital = async (req, res) => {
     try {
         const hospitalId = req.params.id;

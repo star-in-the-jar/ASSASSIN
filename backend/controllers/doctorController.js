@@ -1,5 +1,22 @@
+/**
+ * @fileoverview This file contains the controller functions for managing doctors.
+ * It includes functions for creating, retrieving, updating, and deleting doctors.
+ * The controller functions interact with the doctorService module to perform the necessary operations.
+ * @module doctorController
+ */
 const doctorService = require('../services/doctorService')
 
+/**
+ * Creates a new doctor or updates an existing doctor with the given surname.
+ * If a doctor with the given surname already exists, it updates the surname.
+ * Otherwise, it creates a new doctor with the given surname.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} req.body - The request body.
+ * @param {string} req.body.surname - The surname of the doctor.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the doctor is created or updated.
+ */
 const createDoctor = async (req, res) => {
     try {
         const {surname} = req.body;
@@ -20,6 +37,13 @@ const createDoctor = async (req, res) => {
     }
 }
 
+/**
+ * Retrieves all doctors.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves with the list of doctors.
+ */
 const getAllDoctors = async (req, res) => {
     try {
         const doctors = await doctorService.getAllDoctors()
@@ -30,6 +54,14 @@ const getAllDoctors = async (req, res) => {
     }
 }
 
+/**
+ * Retrieves a doctor by their ID.
+ * 
+ * @param {Object} req - The request object.
+ * @param {string} req.params.id - The ID of the doctor.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves with the doctor or an error message if not found.
+ */
 const getDoctorById = async (req, res) => {
     try {
         const doctorId = req.params.id;
@@ -44,6 +76,14 @@ const getDoctorById = async (req, res) => {
     }
 }
 
+/**
+ * Deletes a doctor by their ID.
+ * 
+ * @param {Object} req - The request object.
+ * @param {string} req.params.id - The ID of the doctor.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves with a success message or an error message if not found.
+ */
 const deleteDoctor = async (req, res) => {
     try {
         const doctorId = req.params.id;
@@ -58,6 +98,16 @@ const deleteDoctor = async (req, res) => {
     }
 }
 
+/**
+ * Updates the surname of a doctor by their ID.
+ * 
+ * @param {Object} req - The request object.
+ * @param {string} req.params.id - The ID of the doctor.
+ * @param {Object} req.body - The request body.
+ * @param {string} req.body.surname - The new surname of the doctor.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves with the updated doctor or an error message if not found.
+ */
 const editDoctor = async (req, res) => {
     try {
         const doctorId = req.params.id;

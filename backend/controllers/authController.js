@@ -1,3 +1,10 @@
+/**
+ * @fileoverview This file contains the controller functions for handling authentication related operations for patients and doctors.
+ * It includes functions for patient signup, patient login, patient profile, generating 2FA secret for patients, verifying OTP for patients,
+ * handling step 2 of patient login, disabling 2FA for patients, doctor signup, doctor login, doctor profile, generating 2FA secret for doctors,
+ * verifying OTP for doctors, handling step 2 of doctor login, and disabling 2FA for doctors.
+ * @module authController
+ */
 const passport = require("passport");
 const passportStrategies = require("../services/passportService");
 
@@ -5,6 +12,12 @@ const patientService = require("../services/patientService");
 const doctorService = require("../services/doctorService");
 const authService = require("../services/authService");
 
+/**
+ * Handles patient signup.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object.
+ */
 const patientSignup = async (req, res) => {
     return res.status(201).json({
         message: "Signup successful",
@@ -12,8 +25,13 @@ const patientSignup = async (req, res) => {
     });
 }
 
-
-
+/**
+ * Handles patient login.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {Function} next - The next middleware function.
+ * @returns {Object} The response object.
+ */
 const patientLogin = async (req, res, next) => {
     passport.authenticate("loginPatient", { session: false }, async (err, user, info) => {
         if (err || !user) {
@@ -40,6 +58,12 @@ const patientLogin = async (req, res, next) => {
     })(req, res, next);
 };
 
+/**
+ * Handles patient profile.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object.
+ */
 const patientProfile = async (req, res) => {
     return res.json({
         message: "Success",
@@ -47,6 +71,12 @@ const patientProfile = async (req, res) => {
     });
 };
 
+/**
+ * Generates 2FA secret for the patient.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object.
+ */
 const patientGenerate2FASecret = async (req, res) => {
     let user = await patientService.getPatientByLogin(req.user.login)
 
@@ -71,6 +101,12 @@ const patientGenerate2FASecret = async (req, res) => {
     });
 };
 
+/**
+ * Verifies OTP for the patient.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object.
+ */
 const patientVerifyOTP = async (req, res) => {
     let user = await patientService.getPatientByLogin(req.user.login)
     if (user.twofaEnabled) {
@@ -98,6 +134,12 @@ const patientVerifyOTP = async (req, res) => {
     }
 };
 
+/**
+ * Handles step 2 of patient login.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object.
+ */
 const patientLoginStep2 = async (req, res) => {
     let loginStep2VerificationToken = null;
     try {
@@ -126,6 +168,12 @@ const patientLoginStep2 = async (req, res) => {
     }
 };
 
+/**
+ * Disables 2FA for the patient.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object.
+ */
 const patientDisable2FA = async (req, res) => {
     let user = await patientService.getPatientByLogin(req.user.authInfo.login)
     user.twofaEnabled = false;
@@ -137,6 +185,7 @@ const patientDisable2FA = async (req, res) => {
         twofaEnabled: user.twofaEnabled,
     });
 };
+
 
 // const doctorSignup = async (req, res) => {
 //     return res.status(201).json({

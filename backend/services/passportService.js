@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Passport service module for authentication and authorization.
+ * @module passportService
+ */
+
 const passport = require("passport");
 const extractJwt = require("passport-jwt").ExtractJwt;
 const jwtStrategy = require("passport-jwt").Strategy;
@@ -9,6 +14,17 @@ const doctorService = require("../services/doctorService");
 const env = require("../env");
 const bcrypt = require("bcrypt");
 
+/**
+ * Passport strategy for signing up a patient.
+ * @name signupPatient
+ * @function
+ * @memberof module:passportService
+ * @param {Object} req - The request object.
+ * @param {string} login - The login username.
+ * @param {string} password - The password.
+ * @param {function} done - The callback function.
+ * @returns {Promise} - A promise that resolves when the signup process is complete.
+ */
 passport.use(
     "signupPatient",
     new localStrategy(
@@ -44,6 +60,17 @@ passport.use(
     )
 );
 
+/**
+ * Passport strategy for logging in a patient.
+ * @name loginPatient
+ * @function
+ * @memberof module:passportService
+ * @param {Object} req - The request object.
+ * @param {string} login - The login username.
+ * @param {string} password - The password.
+ * @param {function} done - The callback function.
+ * @returns {Promise} - A promise that resolves when the login process is complete.
+ */
 passport.use(
     "loginPatient",
     new localStrategy(
@@ -78,9 +105,18 @@ passport.use(
     )
 );
 
+/**
+ * Passport strategy for authenticating a patient using JWT.
+ * @name jwtPatient
+ * @function
+ * @memberof module:passportService
+ * @param {Object} token - The JWT token.
+ * @param {function} done - The callback function.
+ * @returns {Promise} - A promise that resolves when the authentication process is complete.
+ */
 passport.use(
     "jwtPatient",
-        new jwtStrategy(
+    new jwtStrategy(
         {
             secretOrKey: env.JWT_SECRET,
             jwtFromRequest: extractJwt.fromAuthHeaderAsBearerToken(),
@@ -101,7 +137,6 @@ passport.use(
         }
     )
 );
-
 
 // passport.use(
 //     "signupDoctor",
